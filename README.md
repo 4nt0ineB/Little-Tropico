@@ -14,11 +14,12 @@ Tropico
 │   └───main
 │       │
 │       └───resources
-│               init_scenarios.json
-│               test.json
-|               └─── """scenario's folder name"""
-│                       yourevent1.json
-│                       yourevent2.json
-│                       youreventx.json
+│           │    init_scenarios.json     <---- here update with your scenario
+│           │    test.json
+|           └─── scenarios   
+|                    └─── """scenario's folder name"""
+│                           yourevent_1.json
+│                           yourevent_2.json
+│                           yourevent_x.json
 ```
 
