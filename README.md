@@ -16,7 +16,7 @@ Tropico
 │       └───resources
 │               init_scenarios.json
 │               test.json
-|               └─── **"scenario's folder name"**
+|               └─── """scenario's folder name"""
 │                       yourevent1.json
 │                       yourevent2.json
 │                       youreventx.json
