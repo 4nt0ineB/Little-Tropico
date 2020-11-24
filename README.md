@@ -13,12 +13,20 @@ Tropico
 │   └───main
 │       │
 │       └───resources
-│           │    init_scenarios.json
-│           │    test.json
-|           └─── scenarios   
-|                    └─── """scenario's folder name"""
-│                           yourevent_1.json
-│                           yourevent_2.json
-│                           yourevent_x.json
+│           │    factions.json      <-- add your custom classe names, right here
+│           |    fields.json        <-- here your custom field of activity names
+|           |
+            ├───events
+            │   ├───Commons                <-- The events from this folder will be in every games
+            │   │       base1.json
+            │   │
+            |   | <--------------------------- make your own events and put them in a folder here
+            │   └───"Custom event package"    
+            │           event_custom1.json
+            │
+            └───scenarios
+                    sandbox.json
 ```
 
+### Format
+If you want to make your own scenarios and events make sure to respect the correct format of the .json. To do so, you can check out the example files (explenation in it), or either look by yourself in those already maked.
