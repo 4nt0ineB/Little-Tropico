@@ -14,6 +14,7 @@ public class GameUtils {
      * @param path Path to json file
      * */
     public static Object jsonToObject(String path){
+
         try(FileReader filereader = new FileReader(new File(path).getAbsolutePath())) {
             JSONParser jsonTest = new JSONParser();
             Object jsonObject = jsonTest.parse(filereader);
@@ -22,5 +23,12 @@ public class GameUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int idByHashString(String string){
+        char[] ascii = string.toCharArray();
+        int i = 0;
+        for(char c: ascii){ i+=c; }
+        return i;
     }
 }

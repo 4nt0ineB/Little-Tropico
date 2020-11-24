@@ -8,7 +8,10 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Set;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Tropico App main
@@ -23,9 +26,16 @@ public class App
     }
 
     private static Game initGame(){
-        String factionsPath = "./src/main/resources/test.json";
-        Set<Faction> factions = Faction.initFaction(factionsPath);
 
+        /* Paths */
+        String pathToScenarios = ".\\src\\main\\resources\\scenarios\\";
+
+
+        /* Init events and Scenarios*/
+        List<Event> events = Event.initEvents(pathToScenarios);
+
+
+        /**
         JSONParser jsonTest = new JSONParser();
         String test = new File("./src/main/resources/test.json").getAbsolutePath();
         try(FileReader filereader = new FileReader(test)){
@@ -38,10 +48,12 @@ public class App
         } catch (IOException | ParseException e){
             e.printStackTrace();
         }
+         */
         return new Game();
     }
 
     private static void startGame(Game game){
+        // To do.
         int x= 0;
     }
 
