@@ -1,5 +1,6 @@
 package dut.info.console;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ public class Game {
 	private Event events;
 	private Event nextEvents;
 	private List<Faction> factions;
+	private List<Field> fields;
 
 	public Game() {
 	}

@@ -14,7 +14,30 @@
         {
           "name" : "Capitalists",
           "effect": 10
-        }
+        },
+        {
+          "name" : "Loyalists",
+          "effect": 10
+        },
+        {
+          "name" : "Militarists",
+          "effect": 10
+        },
+        {
+          "name" : "Ecologists",
+          "effect": 10
+        },
+        {
+          "name" : "Nationalists",
+          "effect": 10
+        },
+        {
+          "name" : "Religious",
+          "effect": 10
+        },
+
+
+
       ],
       "fields" : [
         {

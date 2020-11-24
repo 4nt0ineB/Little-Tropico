@@ -22,7 +22,7 @@ public class Event {
 
 	private Event(Season season, String packageTitle, String title, List<Action> actions) {
 		this.title = Objects.requireNonNull(title, "Event's title can't be null");
-		this.id = GameUtils.idByHashString(title);
+		id = GameUtils.idByHashString(title);
 		this.packageTitle = Objects.requireNonNull(packageTitle);
 		this.season = season;
 		this.actions = actions;
@@ -42,9 +42,8 @@ public class Event {
 		return this.title;
 	}
 
-	public Action getActions() {
-		// TODO - implement Event.getActions
-		throw new UnsupportedOperationException();
+	public List<Action> getActions() {
+		return actions;
 	}
 
 
@@ -115,21 +114,29 @@ public class Event {
 						String[] properties = {"factions", "fields"};
 						for (String prop: properties
 							 ) {
-							JSONArray propArray = (JSONArray) action.get(properties);
+							JSONArray propArray = (JSONArray) action.get(prop);
 							if(propArray != null){
 								propArray.forEach(obj ->{
 									JSONObject property = ((JSONObject) ((Object) obj));
-									String factionName = (String) property.get("name");
+									String name = (String) property.get("name");
+									if(prop.equals("factions")){
+										if(!Faction.exist(name)){
+											throw new IllegalArgumentException("Faction doesn't exist. Check factions.json");
+										}
+									}else{
+										if(!Field.exist(name)){
+											throw new IllegalArgumentException("Field doesn't exist. Check fields.json");
+
+										}
+									}
+
 									int effect = (int) (long) property.get("effect");
-									switch (prop){
-										case "factions": // Factions effects
-											factionsEffects.put(GameUtils.idByHashString(factionName), effect);
-											break;
-										case "fields": // Fields effects
-											fieldsEffects.put(GameUtils.idByHashString(factionName), effect);
-											break;
-										default:
-											throw new IllegalStateException("The property "+ prop +" shouldn't exist.");
+									switch (prop) {
+										// Factions effects
+										case "factions" -> factionsEffects.put(GameUtils.idByHashString(name), effect);
+										// Fields effects
+										case "fields" -> fieldsEffects.put(GameUtils.idByHashString(name), effect);
+										default -> throw new IllegalStateException("The property " + prop + " shouldn't exist.");
 									}
 								});
 							}
@@ -142,17 +149,21 @@ public class Event {
 							repO.forEach(p -> { repercussions.add(GameUtils.idByHashString((String) p)); });
 						}
 
-						actions.add(new Action(actionTitle, factionsEffects, fieldsEffects, repercussions));
+						actions.add(new Action(actionTitle, (HashMap<Integer, Integer>) factionsEffects.clone(), (HashMap<Integer, Integer>) fieldsEffects.clone(), repercussions));
+
+						factionsEffects.clear();
+						fieldsEffects.clear();
+
 					});
 
 					//Package title
 					String packageTitle = f.getParentFile().getName();
 
-
 					eventsList.add(new Event(season, packageTitle, title, actions));
+
 				});
 			}catch(Exception e){
-			    System.out.println(e);
+			    //System.out.println(e);
 				String scenarioName = f.getParentFile().getName();
 				Set<String> filesName = failedFiles.get(scenarioName);
 				if(null == filesName){
@@ -163,11 +174,13 @@ public class Event {
 					failedFiles.get(scenarioName).add(f.getName());
 					Game.MCP.addFailedEventFile(failedFiles); // put in a error history
 				}
-				continue;
 			}
-
 		}
 		return eventsList;
 	}
 
+	@Override
+	public String toString(){
+		return title+ "\n ";
+	}
 }

@@ -31,6 +31,7 @@ public class App
 
         /* Paths */
         String pathToFactionsFile = ".\\src\\main\\resources\\factions.json";
+        String pathToFieldsFile = ".\\src\\main\\resources\\fields.json";
         String pathToScenariosDir = ".\\src\\main\\resources\\scenarios\\";
         String pathToEventsDir = ".\\src\\main\\resources\\events\\";
 
@@ -38,11 +39,17 @@ public class App
         List<Faction> factions = Faction.initFaction(pathToFactionsFile);
         game.setFactions(factions);
 
+        /* Init fields */
+        List<Field> fields = Field.initField(pathToFieldsFile);
+
         /* Init scenarios */
         List<Scenario> scenarios = Scenario.initScenarios(pathToScenariosDir);
 
         /* Init events from packages*/
         List<Event> events = Event.initEvents(pathToEventsDir);
+        if(!events.isEmpty()){
+            System.out.println(events.get(0).getActions());
+        }
 
         return game;
     }

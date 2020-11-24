@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Scenario {
+
     private final int id;
     private final String title;
     private final int generalSatisfaction;
@@ -20,7 +21,7 @@ public class Scenario {
     private Scenario(String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure) {
         this.title = Objects.requireNonNull(title);
         assert title.isEmpty() != true;
-        this.id = GameUtils.idByHashString(title);
+        id = GameUtils.idByHashString(title);
         this.generalSatisfaction = generalSatisfaction;
         this.facPercentage = facPercentage;
         this.filPercentage = filPercentage;
@@ -57,8 +58,10 @@ public class Scenario {
 
             factionException.forEach(fac -> {
                 JSONObject exc = (JSONObject) fac;
+                String name = (String) exc.get("name");
+                assert (Faction.exist(name));
                 facPercentage.put(
-                        GameUtils.idByHashString((String) exc.get("name")),
+                        GameUtils.idByHashString(name),
                         (int) (long) exc.get("percentage")
                 );
             });
@@ -81,8 +84,6 @@ public class Scenario {
 
             scenarios.add(new Scenario(title, generalSatisfaction, facPercentage, followers, filPercentage, treasure));
         } );
-
-        System.out.println(scenarios.get(0));
         return new ArrayList<>();
     }
 

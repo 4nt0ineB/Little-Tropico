@@ -34,8 +34,8 @@ public class Action {
 		return this.title;
 	}
 
-	public int getFactions() {
-		return factionsEffects.get(1);
+	public Integer getFactions() {
+		return factionsEffects.get(GameUtils.idByHashString("Capitalists"));
 	}
 
 	public int getFields() {
@@ -43,6 +43,11 @@ public class Action {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String toString(){
+		String str = ""+factionsEffects;
+		return str;
+	}
 
 
 }

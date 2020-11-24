@@ -7,6 +7,8 @@ import java.util.*;
 
 public class Faction {
 
+	private static Set<Faction> listFactions = new HashSet<>();
+
 	private final int id;
 	private final String name;
 	private Double approbationPercentage;
@@ -15,9 +17,31 @@ public class Faction {
 
 	public Faction(String name) {
 		this.name = Objects.requireNonNull(name, "Faction must have a name");
-		this.id = GameUtils.idByHashString(name);
+		id = GameUtils.idByHashString(name);
 		approbationPercentage = 0.0d;
-		this.nbrSupporters = 0;
+		nbrSupporters = 0;
+		addFaction(this);
+	}
+
+	private static void addFaction(Faction faction){
+		listFactions.add(faction);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Faction faction = (Faction) o;
+		return id == faction.id;
+	}
+
+	public static boolean exist(String n){
+		return listFactions.stream().anyMatch(x -> x.getId() == GameUtils.idByHashString(n));
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 	public int getId() {
@@ -45,10 +69,10 @@ public class Faction {
      * @return*/
 	public static List<Faction> initFaction(String pathToFactionsFile){
 		List<Faction> factions = new ArrayList<>();
-		Object jsonEvents = GameUtils.jsonToObject(pathToFactionsFile);
-		JSONArray events = (JSONArray) jsonEvents;
-		assert events != null;
-		Object o1 = events.get(0);
+		Object jsonFactions = GameUtils.jsonToObject(pathToFactionsFile);
+		JSONArray factionsAr = (JSONArray) jsonFactions;
+		assert factionsAr != null;
+		Object o1 = factionsAr.get(0);
 		JSONObject ev1 = (JSONObject) o1;
 		JSONArray factionNames = (JSONArray) ev1.get("names");
 		factionNames.forEach(x -> { factions.add(new Faction((String) x)); });
