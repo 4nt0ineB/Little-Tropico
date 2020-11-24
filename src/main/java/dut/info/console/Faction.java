@@ -13,11 +13,15 @@ public class Faction {
 	private int nbrSupporters;
 
 
-	public Faction(int id, String name, double initApprobationPercentage, int nbrSupporters) {
-		this.id = id;
+	public Faction(String name) {
 		this.name = Objects.requireNonNull(name, "Faction must have a name");
-		approbationPercentage = initApprobationPercentage;
-		this.nbrSupporters = nbrSupporters;
+		this.id = GameUtils.idByHashString(name);
+		approbationPercentage = 0.0d;
+		this.nbrSupporters = 0;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	/**
@@ -37,16 +41,17 @@ public class Faction {
 
 	/**
 	 * Factory returning Set of factions
-	 * @param factionsPath Path to faction json file
-	 * */
-	public static Set<Faction> initFaction(String factionsPath){
-		Set<Faction> factions = new HashSet<>();
-		Object jsonEvents = GameUtils.jsonToObject(factionsPath);
+     * @param pathToFactionsFile Path to faction json file
+     * @return*/
+	public static List<Faction> initFaction(String pathToFactionsFile){
+		List<Faction> factions = new ArrayList<>();
+		Object jsonEvents = GameUtils.jsonToObject(pathToFactionsFile);
 		JSONArray events = (JSONArray) jsonEvents;
 		assert events != null;
 		Object o1 = events.get(0);
 		JSONObject ev1 = (JSONObject) o1;
-		System.out.println(ev1.get("title"));
+		JSONArray factionNames = (JSONArray) ev1.get("names");
+		factionNames.forEach(x -> { factions.add(new Faction((String) x)); });
 		return factions;
 	}
 }

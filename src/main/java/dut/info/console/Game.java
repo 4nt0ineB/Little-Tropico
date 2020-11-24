@@ -1,4 +1,9 @@
 package dut.info.console;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 public class Game {
 
 	private double difficulty;
@@ -7,6 +12,7 @@ public class Game {
 	private Island island;
 	private Event events;
 	private Event nextEvents;
+	private List<Faction> factions;
 
 	public Game() {
 	}
@@ -39,4 +45,41 @@ public class Game {
 		throw new UnsupportedOperationException();
 	}
 
+    public void setFactions(List<Faction> factions) {
+		this.factions = factions;
+    }
+
+    public Faction getFactionById(int id){
+		return (Faction) factions.stream().filter(f -> f.getId() == id);
+	}
+
+	/**
+	 * Master Control Program
+	 * This nested class store all errors of the game from the init of the files to the end of the party.
+	 * */
+	public static class MCP{
+		private static HashMap<String, Set<String>> failedEventsFiles;
+
+		/**
+		 * add all the data from parsing error in the field assigned for it in the class
+		 * @param files all the files name by their Scenario name if the parsing failed
+		 */
+		public static void addFailedEventFile(HashMap<String, Set<String>> files){
+			failedEventsFiles.putAll(files);
+		}
+
+		@Override
+		public String toString(){
+			StringBuilder sb = new StringBuilder();
+			if(failedEventsFiles != null){
+				sb.append("[Failed scenarios files to read]");
+				failedEventsFiles.forEach((x, y) -> {
+					sb.append("| Scenario\n");
+					y.forEach(name -> sb.append("\t").append(name).append("\n"));
+				});
+			}
+			return sb.toString();
+		}
+
+	}
 }

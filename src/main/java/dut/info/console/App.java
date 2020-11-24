@@ -27,29 +27,24 @@ public class App
 
     private static Game initGame(){
 
+        Game game = new Game();
+
         /* Paths */
-        String pathToScenarios = ".\\src\\main\\resources\\scenarios\\";
+        String pathToFactionsFile = ".\\src\\main\\resources\\factions.json";
+        String pathToScenariosDir = ".\\src\\main\\resources\\scenarios\\";
+        String pathToEventsDir = ".\\src\\main\\resources\\events\\";
 
+        /* Init factions */
+        List<Faction> factions = Faction.initFaction(pathToFactionsFile);
+        game.setFactions(factions);
 
-        /* Init events and Scenarios*/
-        List<Event> events = Event.initEvents(pathToScenarios);
+        /* Init scenarios */
+        List<Scenario> scenarios = Scenario.initScenarios(pathToScenariosDir);
 
+        /* Init events from packages*/
+        List<Event> events = Event.initEvents(pathToEventsDir);
 
-        /**
-        JSONParser jsonTest = new JSONParser();
-        String test = new File("./src/main/resources/test.json").getAbsolutePath();
-        try(FileReader filereader = new FileReader(test)){
-            Object jsonEvents = jsonTest.parse(filereader);
-            JSONArray events = (JSONArray) jsonEvents;
-            Object o1 = events.get(0);
-            JSONObject ev1 = (JSONObject) o1;
-            System.out.println(ev1.get("title"));
-
-        } catch (IOException | ParseException e){
-            e.printStackTrace();
-        }
-         */
-        return new Game();
+        return game;
     }
 
     private static void startGame(Game game){

@@ -1,6 +1,5 @@
 [
 {
-  "id" : 0,
   "season" : 2,
   "title" : "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région.",
   "actions": [
@@ -26,6 +25,9 @@
           "name" : "Agriculture",
           "effect": 10
         }
+      ],
+      "repercussions": [
+        "developp"
       ]
     },
     {
@@ -43,8 +45,7 @@
       "season": 2,
       "title": "Accepter sous conditions d’aide financière de la part de l’OCU."
     }
-  ],
-  "repercussions": [2,6,5]
+  ]
 }
   
 ]
