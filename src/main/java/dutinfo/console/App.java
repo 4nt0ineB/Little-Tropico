@@ -22,8 +22,6 @@ public class App
 
     private static Game initGame(){
 
-        Game game = new Game();
-
         /* Paths */
         String pathToFactionsFile = ".\\src\\main\\resources\\factions.json";
         String pathToFieldsFile = ".\\src\\main\\resources\\fields.json";
@@ -32,7 +30,6 @@ public class App
 
         /* Init factions */
         List<Faction> factions = Faction.initFaction(pathToFactionsFile);
-        game.setFactions(factions);
 
         /* Init fields */
         List<Field> fields = Field.initField(pathToFieldsFile);
@@ -44,17 +41,37 @@ public class App
         // <package id, event list>
         HashMap<Integer, List<Event>> events = Event.initEvents(pathToEventsDir);
 
-        if(!events.isEmpty()){
-            System.out.println(events);
-        }
-
-        
-        return game;
+        return new Game(factions, fields, scenarios, events);
     }
 
     private static void startGame(Game game){
-        // To do.
-        int x= 0;
+
+        System.out.println(
+                "\n████████╗██████╗  ██████╗ ██████╗ ██╗ ██████╗ ██████╗\n" +
+                  "╚══██╔══╝██╔══██╗██╔═══██╗██╔══██╗██║██╔════╝██╔═══██╗\n" +
+                  "   ██║   ██████╔╝██║   ██║██████╔╝██║██║     ██║   ██║\n" +
+                  "   ██║   ██╔══██╗██║   ██║██╔═══╝ ██║██║     ██║   ██║\n" +
+                  "   ██║   ██║  ██║╚██████╔╝██║     ██║╚██████╗╚██████╔╝\n" +
+                  "   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ \n");
+
+
+        boolean menu = true;
+        while (menu){
+
+
+
+
+            boolean party = true;
+            while(party){
+
+            break;
+
+
+
+
+            }
+            break;
+        }
     }
 
 }

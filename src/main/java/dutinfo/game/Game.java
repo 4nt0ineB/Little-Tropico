@@ -3,35 +3,48 @@ package dutinfo.game;
 import dutinfo.game.environment.Island;
 import dutinfo.game.environment.Season;
 import dutinfo.game.events.Event;
+import dutinfo.game.events.Scenario;
 import dutinfo.game.society.Faction;
+import dutinfo.game.society.Field;
 import dutinfo.game.society.President;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 public class Game {
 
-	private double difficulty;
-	private Season season;
-	private President president;
-	private Island island;
-	private Event events;
-	private Event nextEvents;
-	private List<Faction> factions;
-	private List<Field> fields;
+	private enum Difficulty{
+		EASY(0.5), NORMAL(1), HARD(2);
+		private double multiplier;
+		Difficulty(double multiplier){
+			this.multiplier = multiplier;
+		}
+	}
 
-	public Game() {
+	private Island island;
+	private Difficulty difficulty;
+	private HashMap<Integer, List<Event>> events;
+	private Event event;
+	private Event nextEvents;
+	List<Faction> factions;
+	List<Field> fields;
+	List<Scenario> scenarios;
+
+	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios, HashMap<Integer, List<Event>> events){
+		this.factions = factions;
+		this.fields = fields;
+		this.scenarios = scenarios;
+		this.difficulty = Difficulty.NORMAL;
+	}
+
+	public void setDifficulty(Difficulty difficulty){
+		this.difficulty = difficulty;
 	}
 
 	public void checkDefeat() {
 		// TODO - implement Game.checkDefeat
 		throw new UnsupportedOperationException();
-	}
-
-	public President getPresident() {
-		return this.president;
 	}
 
 	public Island getIsland() {

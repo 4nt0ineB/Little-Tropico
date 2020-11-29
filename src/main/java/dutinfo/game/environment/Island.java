@@ -1,37 +1,32 @@
 package dutinfo.game.environment;
+
+import dutinfo.game.society.Faction;
+import dutinfo.game.society.President;
+
+import java.lang.reflect.Field;
+import java.util.List;
+
 public class Island {
 
-	private Double industryPercentage;
-	private Double agriculturePercentage;
+	private Season currentSeason;
+	private President president;
+	private List<Faction> factions;
+	private List<Field> fields;
 	private Double treasury;
 
-	public Double getIndustryPercentage() {
-		return this.industryPercentage;
-	}
 
-	/**
-	 * 
-	 * @param industryPercentage
-	 */
-	public void setIndustryPercentage(Double industryPercentage) {
-		this.industryPercentage = industryPercentage;
-	}
-
-	public Double getAgriculturePercentage() {
-		return this.agriculturePercentage;
-	}
-
-	/**
-	 * 
-	 * @param agriculturePercentage
-	 */
-	public void setAgriculturePercentage(Double agriculturePercentage) {
-		this.agriculturePercentage = agriculturePercentage;
+	public Island(President president, List<Faction> factions, List<Field> fields, double treasury){
+		this.president = president;
+		this.factions = factions;
+		this.fields = fields;
+		this.treasury = treasury;
 	}
 
 	public Double getTreasury() {
-		return this.treasury;
+		return treasury;
 	}
+
+
 
 	/**
 	 * 
