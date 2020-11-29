@@ -21,5 +21,8 @@
       "percentage": 15
     }
   ],
-  "treasure": 200
+  "treasure": 200,
+  "event_packages": [
+    "developp"
+  ]
 }

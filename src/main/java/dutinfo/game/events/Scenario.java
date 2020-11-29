@@ -1,11 +1,14 @@
-package dut.info.console;
+package dutinfo.game.events;
 
+import dutinfo.game.GameUtils;
+import dutinfo.game.society.Faction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.*;
+
 
 public class Scenario {
 
@@ -16,9 +19,10 @@ public class Scenario {
     private final int followers;
     private final HashMap<Integer, Integer> filPercentage;
     private final int treasure;
+    private final Set<Integer> eventPackIds;
 
 
-    private Scenario(String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure) {
+    private Scenario(String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure, Set<Integer> packageIds) {
         this.title = Objects.requireNonNull(title);
         assert title.isEmpty() != true;
         id = GameUtils.idByHashString(title);
@@ -27,12 +31,13 @@ public class Scenario {
         this.filPercentage = filPercentage;
         this.followers = followers;
         this.treasure = treasure;
+        this.eventPackIds = packageIds;
     }
 
     /** Return the list of all scenarios objects
      * @param pathToScenarioDir Path to the scenarios directory
      * */
-    public static ArrayList<Scenario> initScenarios(String pathToScenarioDir){
+    public static List<Scenario> initScenarios(String pathToScenarioDir){
 
         // All scenarios json
         List<File> scenariosJson = GameUtils.allJsonFromDir(Paths.get(pathToScenarioDir).toFile());
@@ -82,9 +87,15 @@ public class Scenario {
             //Treasure
             int treasure = (int) (long) ar.get("treasure");
 
-            scenarios.add(new Scenario(title, generalSatisfaction, facPercentage, followers, filPercentage, treasure));
+            //Event packages
+            Set<Integer> packageIds = new HashSet<>();
+            packageIds.add(GameUtils.idByHashString("Commons")); // <---- Very important : add the common event package (present in each scenario)
+            JSONArray pNames = (JSONArray) ar.get("event_packages");
+            pNames.forEach(x->packageIds.add(GameUtils.idByHashString((String) x)));
+
+            scenarios.add(new Scenario(title, generalSatisfaction, facPercentage, followers, filPercentage, treasure, packageIds));
         } );
-        return new ArrayList<>();
+        return scenarios;
     }
 
     @Override

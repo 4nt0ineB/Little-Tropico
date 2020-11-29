@@ -1,5 +1,6 @@
-package dut.info.console;
+package dutinfo.game.society;
 
+import dutinfo.game.GameUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
