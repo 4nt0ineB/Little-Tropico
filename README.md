@@ -30,3 +30,5 @@ Tropico
 
 ### Format
 If you want to make your own scenarios and events make sure to respect the correct format of the .json. To do so, you can check out the example files (explenation in it), or either look by yourself in those already maked.
+
+Make sure that all events / event packages / scenarios / have unique names
