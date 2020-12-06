@@ -9,11 +9,14 @@ import dutinfo.game.society.Field;
 import dutinfo.game.society.President;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.security.CodeSource;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class Game {
 
@@ -110,22 +113,35 @@ public class Game {
 
 	public static Game initGame(){
 
-		URL res = Game.class.getClassLoader().getResource("factions.json");
-		String resPath = "";
+		/*   When making jar    */
+		/*
+		String pathToData = "";
 		try{
-			File file = Paths.get(res.toURI()).toFile();
-			resPath = file.getParentFile().getAbsolutePath();
-			System.out.println(new File("D:\\Dev\\Java\\Tropico\\target\\ok.json").getPath());
-		}catch(Exception e){
+			String jarPath = Game.class
+					.getProtectionDomain()
+					.getCodeSource()
+					.getLocation()
+					.toURI()
+					.getPath();
+			File file = new File(jarPath);
+			pathToData = file.getParentFile().getPath();
 
+			System.out.println();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
 
+		String pathToFactionsFile = pathToData+"factions.json";
+		String pathToFieldsFile = pathToData+"fields.json";
+		String pathToScenariosDir = pathToData+"scenarios";
+		String pathToEventsDir = pathToData+"events";
+		*/
+
 		/* Paths */
-		System.out.println("D:\\Dev\\Java\\Tropico\\target\\ok.json");
-		String pathToFactionsFile = resPath+ "\\factions.json";
-		String pathToFieldsFile = resPath+ "\\fields.json";
-		String pathToScenariosDir = resPath+ "\\scenarios\\";
-		String pathToEventsDir = resPath+ "\\events\\";
+		String pathToFactionsFile = ".\\src\\main\\resources\\factions.json";
+		String pathToFieldsFile = ".\\src\\main\\resources\\fields.json";
+		String pathToScenariosDir = ".\\src\\main\\resources\\scenarios";
+		String pathToEventsDir = ".\\src\\main\\resources\\events\\";
 
 
 

@@ -44,7 +44,7 @@ public class App
     public static void main( String[] args )
     {
         Game game = Game.initGame();
-        //startGameConsole(game);
+        startGameConsole(game);
     }
 
 

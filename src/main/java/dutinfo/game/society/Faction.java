@@ -69,6 +69,9 @@ public class Faction {
      * @param pathToFactionsFile Path to faction json file
      * @return*/
 	public static List<Faction> initFaction(String pathToFactionsFile){
+
+
+
 		List<Faction> factions = new ArrayList<>();
 		Object jsonFactions = GameUtils.jsonToObject(pathToFactionsFile);
 		JSONArray factionsAr = (JSONArray) jsonFactions;
