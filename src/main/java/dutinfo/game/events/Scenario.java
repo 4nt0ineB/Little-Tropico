@@ -4,8 +4,12 @@ import dutinfo.game.GameUtils;
 import dutinfo.game.society.Faction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.File;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -39,8 +43,9 @@ public class Scenario {
      * */
     public static List<Scenario> initScenarios(String pathToScenarioDir){
 
+
         // All scenarios json
-        List<File> scenariosJson = GameUtils.allJsonFromDir(Paths.get(pathToScenarioDir).toFile());
+        List<File> scenariosJson = GameUtils.allJsonFromDir(new File(pathToScenarioDir));
         // All scenarios
         List<Scenario> scenarios = new ArrayList<>();
 

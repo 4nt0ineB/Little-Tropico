@@ -8,6 +8,9 @@ import dutinfo.game.society.Faction;
 import dutinfo.game.society.Field;
 import dutinfo.game.society.President;
 
+import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -102,5 +105,45 @@ public class Game {
 			return sb.toString();
 		}
 
+	}
+
+
+	public static Game initGame(){
+
+		URL res = Game.class.getClassLoader().getResource("factions.json");
+		String resPath = "";
+		try{
+			File file = Paths.get(res.toURI()).toFile();
+			resPath = file.getParentFile().getAbsolutePath();
+			System.out.println(new File("D:\\Dev\\Java\\Tropico\\target\\ok.json").getPath());
+		}catch(Exception e){
+
+		}
+
+		/* Paths */
+		System.out.println("D:\\Dev\\Java\\Tropico\\target\\ok.json");
+		String pathToFactionsFile = resPath+ "\\factions.json";
+		String pathToFieldsFile = resPath+ "\\fields.json";
+		String pathToScenariosDir = resPath+ "\\scenarios\\";
+		String pathToEventsDir = resPath+ "\\events\\";
+
+
+
+		/* Init factions */
+		List<Faction> factions = Faction.initFaction(pathToFactionsFile);
+
+		/* Init fields */
+		List<Field> fields = Field.initField(pathToFieldsFile);
+
+		/* Init scenarios */
+		List<Scenario> scenarios = Scenario.initScenarios(pathToScenariosDir);
+
+		/* Init events from packages*/
+		// <package id, event list>
+		HashMap<Integer, List<Event>> events = Event.initEvents(pathToEventsDir);
+
+		//System.out.println(events);
+
+		return new Game(factions, fields, scenarios, events);
 	}
 }

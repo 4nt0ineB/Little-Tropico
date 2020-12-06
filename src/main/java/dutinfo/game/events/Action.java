@@ -45,11 +45,14 @@ public class Action {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public String toString(){
-		String str = ""+factionsEffects;
-		return str;
+
+	public String dataToString() {
+		return "Action{" +
+				"\n\tid=" + id +
+				"\n\t, title='" + title + '\'' +
+				"\n\t, factionsEffects=" + factionsEffects +
+				"\n\t, fieldsEffects=" + fieldsEffects +
+				"\n\t, repercussions=" + repercussions +
+				'}';
 	}
-
-
 }

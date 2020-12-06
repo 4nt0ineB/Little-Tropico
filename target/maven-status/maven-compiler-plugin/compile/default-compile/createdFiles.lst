@@ -1,0 +1,15 @@
+dutinfo\game\society\Field.class
+dutinfo\game\environment\Season.class
+dutinfo\game\events\Event.class
+dutinfo\game\society\Faction.class
+dutinfo\game\Game.class
+dutinfo\game\environment\Island.class
+dutinfo\game\Game$MCP.class
+dutinfo\javafx\SystemInfo.class
+dutinfo\game\Game$Difficulty.class
+dutinfo\javafx\App.class
+dutinfo\game\events\Scenario.class
+dutinfo\game\events\Action.class
+dutinfo\console\App.class
+dutinfo\game\GameUtils.class
+dutinfo\game\society\President.class

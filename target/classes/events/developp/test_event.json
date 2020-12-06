@@ -1,4 +1,4 @@
-[
+
 {
   "season" : 2,
   "title" : "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région.",
@@ -27,7 +27,7 @@
         }
       ],
       "repercussions": [
-        "developp"
+        "test_event2"
       ]
     },
     {
@@ -48,7 +48,7 @@
   ]
 }
   
-]
+
 
 
 
