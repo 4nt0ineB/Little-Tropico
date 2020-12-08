@@ -18,6 +18,7 @@ public class Scenario {
 
     private final int id;
     private final String title;
+    private final String description;
     private final int generalSatisfaction;
     private final HashMap<Integer, Integer> facPercentage;
     private final int followers;
@@ -26,7 +27,8 @@ public class Scenario {
     private final Set<Integer> eventPackIds;
 
 
-    private Scenario(String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure, Set<Integer> packageIds) {
+    private Scenario(String description, String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure, Set<Integer> packageIds) {
+        this.description = description;
         this.title = Objects.requireNonNull(title);
         assert title.isEmpty() != true;
         id = GameUtils.idByHashString(title);
@@ -59,6 +61,8 @@ public class Scenario {
             //Title
             String title = f.getName().substring(0, f.getName().lastIndexOf("."));
 
+            //Description
+            String description = (String) ((Object) ar.get("description"));
 
             //Satisfaction and exploitation
             JSONObject satisfaction = (JSONObject) ((Object) ar.get("satisfaction"));
@@ -98,13 +102,17 @@ public class Scenario {
             JSONArray pNames = (JSONArray) ar.get("event_packages");
             pNames.forEach(x->packageIds.add(GameUtils.idByHashString((String) x)));
 
-            scenarios.add(new Scenario(title, generalSatisfaction, facPercentage, followers, filPercentage, treasure, packageIds));
+            scenarios.add(new Scenario(description, title, generalSatisfaction, facPercentage, followers, filPercentage, treasure, packageIds));
         } );
         return scenarios;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
+        return "__________________\n|"+title+"|"+description+"\n";
+    }
+
+    public String datatoString(){
         String str = "\nScenario " + title + "\n";
         str += "General satisfaction : "+generalSatisfaction+ "\n";
         str += "Followers by factions : "+followers+"\n";

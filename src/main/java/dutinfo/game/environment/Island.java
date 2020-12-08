@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Island {
 
+	private String name;
 	private Season currentSeason;
 	private President president;
 	private List<Faction> factions;
@@ -15,7 +16,7 @@ public class Island {
 	private Double treasury;
 
 
-	public Island(President president, List<Faction> factions, List<Field> fields, double treasury){
+	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury){
 		this.president = president;
 		this.factions = factions;
 		this.fields = fields;

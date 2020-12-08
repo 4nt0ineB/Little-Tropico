@@ -1,5 +1,7 @@
 
 {
+
+  "description": "The Sandbox scenario",
   "satisfaction":{
     "general": 50,
     "exceptions": [

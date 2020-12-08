@@ -33,9 +33,9 @@ public class Game {
 	private HashMap<Integer, List<Event>> events;
 	private Event event;
 	private Event nextEvents;
-	List<Faction> factions;
-	List<Field> fields;
-	List<Scenario> scenarios;
+	private static List<Faction> factions;
+	private static List<Field> fields;
+	private static List<Scenario> scenarios;
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios, HashMap<Integer, List<Event>> events){
 		this.factions = factions;
@@ -55,6 +55,14 @@ public class Game {
 
 	public Island getIsland() {
 		return this.island;
+	}
+
+	private void setIsland(Island island){
+		this.island = island;
+	}
+
+	public List<Scenario> getScenarios(){
+		return scenarios;
 	}
 
 	public Event getEvents() {
@@ -114,7 +122,7 @@ public class Game {
 	public static Game initGame(){
 
 		/*   When making jar    */
-		/*
+/*
 		String pathToData = "";
 		try{
 			String jarPath = Game.class
@@ -124,20 +132,21 @@ public class Game {
 					.toURI()
 					.getPath();
 			File file = new File(jarPath);
-			pathToData = file.getParentFile().getPath();
+			pathToData = file.getParentFile().getPath()+"\\ress\\";
 
-			System.out.println();
+
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 
 		String pathToFactionsFile = pathToData+"factions.json";
 		String pathToFieldsFile = pathToData+"fields.json";
-		String pathToScenariosDir = pathToData+"scenarios";
-		String pathToEventsDir = pathToData+"events";
+		String pathToScenariosDir = pathToData+"scenarios\\";
+		String pathToEventsDir = pathToData+"events\\";
 		*/
 
 		/* Paths */
+
 		String pathToFactionsFile = ".\\src\\main\\resources\\factions.json";
 		String pathToFieldsFile = ".\\src\\main\\resources\\fields.json";
 		String pathToScenariosDir = ".\\src\\main\\resources\\scenarios";
@@ -159,7 +168,8 @@ public class Game {
 		HashMap<Integer, List<Event>> events = Event.initEvents(pathToEventsDir);
 
 		//System.out.println(events);
+		Game game = new Game(factions, fields, scenarios, events);
 
-		return new Game(factions, fields, scenarios, events);
+		return game;
 	}
 }
