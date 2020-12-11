@@ -81,13 +81,13 @@ public class App
 
         while (menu == 1){
             System.out.println(Color.ANSI_RESET+""+ Color.ANSI_CYAN+""+
-                    "╔══-----------MENU-------------╗\n" +
+                    "╔═════════════MENU═════════════╗\n" +
                     "(1)         New Game           |\n" +
                     "|-|----------------------------|\n" +
                     "(2)          Scores            |\n" +
                     "|-|----------------------------|\n" +
                     "(3)           Quit             |\n"+
-                    "╚══----------------------------╝\n"
+                    "╚══════════════════════════════╝\n"
             );
             int a = 0;
             do {
@@ -139,7 +139,7 @@ public class App
                     System.out.print(sb);
                     sb.setLength(0);
                     System.out.print("\n");
-                    System.out.print(Color.ANSI_CYAN+ "Pic a scenario: ");
+                    System.out.print(Color.ANSI_CYAN+ "Pick a scenario: ");
                     numScenar = scanner.nextInt();
                     System.out.print("\n");
                 }catch (InputMismatchException e) {
@@ -156,11 +156,11 @@ public class App
                 try {
 
                     System.out.print("══----------- What's the name of your island? -----------══\n");
-                    System.out.print(Color.ANSI_CYAN+ "Pic a name: ");
+                    System.out.print(Color.ANSI_CYAN+ "Pick a name: ");
                     islandName = scanner.nextLine();
                     System.out.print("\n");
                     System.out.print("══----------- What's your name ? -----------══\n");
-                    System.out.print(Color.ANSI_CYAN+ "Pic a name: ");
+                    System.out.print(Color.ANSI_CYAN+ "Pick a name: ");
                     presidentName = scanner.nextLine();
 
                 }catch (InputMismatchException e) {
