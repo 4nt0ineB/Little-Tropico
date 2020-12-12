@@ -25,13 +25,14 @@ public class Scenario {
     private final HashMap<Integer, Integer> filPercentage;
     private final double treasure;
     private final Set<Integer> eventPackIds;
+    private List<Event> events;
 
 
     private Scenario(String description, String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure, Set<Integer> packageIds) {
         this.description = description;
         this.title = Objects.requireNonNull(title);
         assert title.isEmpty() != true;
-        id = GameUtils.idByHashString(title);
+        this.id = GameUtils.idByHashString(title);
         this.generalSatisfaction = generalSatisfaction;
         this.facPercentage = facPercentage;
         this.filPercentage = filPercentage;
@@ -41,6 +42,10 @@ public class Scenario {
     }
 
     public double getTreasure(){ return treasure; }
+
+    public void setEvents(List<Event> events) { this.events = events; }
+
+    public Set<Integer> getPackageIds(){ return eventPackIds; }
 
     /** Return the list of all scenarios objects
      * @param pathToScenarioDir Path to the scenarios directory

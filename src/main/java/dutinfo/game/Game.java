@@ -23,7 +23,7 @@ public class Game {
 	private HashMap<Integer, List<Event>> events;
 	private List<Event> nextEvents;
 	private Event event;
-
+	private Scenario scenario;
 
 	private static List<Faction> FACTIONS;
 	private static List<Field> FIELDS;
@@ -31,6 +31,7 @@ public class Game {
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios, HashMap<Integer, List<Event>> events){
 		this.FACTIONS = factions;
+		this.events = events;
 		this.FIELDS = fields;
 		this.SCENARIOS = scenarios;
 		this.difficulty = Difficulty.NORMAL;
@@ -49,9 +50,13 @@ public class Game {
 		return this.island;
 	}
 
-	private void setIsland(Island island){
+	public void setIsland(Island island){
 		this.island = island;
 	}
+
+	public void setScenario(Scenario scenario) { this.scenario = scenario; }
+
+	public Scenario getScenario() { return this.scenario; }
 
 	public List<Scenario> getScenarios(){
 		return SCENARIOS;
@@ -72,8 +77,19 @@ public class Game {
 		return selectedScenario.getTreasure();
 	}
 
-	public void getEvents() {
-		System.out.println(events);
+	/**
+	 * get all the events by the current scenario and the common ones
+	 * @param scenario we use the current scenario to use this function
+	 */
+	public List<Event> getEvents(Scenario scenario) {
+		List<Event> eventsList = new ArrayList<>();
+		events.keySet().forEach(
+				x -> {
+					if(scenario.getPackageIds().contains(x)){
+						eventsList.addAll(events.get(x));
+					} });
+
+		return eventsList;
 	}
 
 	public Event getNextEvents() {

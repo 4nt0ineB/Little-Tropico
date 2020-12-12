@@ -26,7 +26,7 @@ public class Event {
 
 		this.title = Objects.requireNonNull(title, "Event's title can't be null");
 		this.eventName = Objects.requireNonNull(eventName, "file name can't by null or empty.");
-		id = GameUtils.idByHashString(eventName);
+		this.id = GameUtils.idByHashString(eventName);
 		this.packageTitle = Objects.requireNonNull(packageTitle);
 		this.season = season;
 		this.actions = actions;
@@ -191,7 +191,7 @@ public class Event {
 		return eventsList;
 	}
 
-	public String dataToString() {
+	public String toString() {
 		return "Event{" +
 				"\nid=" + id +
 				"\n, eventName='" + eventName + '\'' +

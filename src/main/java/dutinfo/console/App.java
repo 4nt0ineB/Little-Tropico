@@ -3,6 +3,7 @@ package dutinfo.console;
 
 import dutinfo.game.*;
 import dutinfo.game.environment.Island;
+import dutinfo.game.events.Event;
 import dutinfo.game.events.Scenario;
 import dutinfo.game.society.President;
 import org.fusesource.jansi.*;
@@ -177,25 +178,27 @@ public class App
             Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar));
             partyParameters = 0;
 
+            game.setIsland(island);
+            game.setScenario(game.getScenarios().get(numScenar));
+            game.getScenario().setEvents(game.getEvents(game.getScenario()));
 
-
-            game.getEvents();
-
-            launchGame(island);
+            launchGame(game);
             break;
         }
     }
 
-    private static void launchGame(Island island){
-        System.out.println("\n"+island.getPresident().getName()+", the factions on "+island.getName()+" are :");
-        island.getFactions().stream().forEach(x -> {
+    private static void launchGame(Game game){
+        System.out.println("\n"+game.getIsland().getPresident().getName()+", the factions on "+game.getIsland().getName()+" are :");
+        game.getIsland().getFactions().stream().forEach(x -> {
             System.out.println(Color.ANSI_BOLD+x.getName());
         });
 
-        System.out.println(Color.ANSI_CYAN+""+Color.ANSI_RESET+"\nHere are the industries and their exploitation percentage on "+island.getName()+" :");
-        island.getFields().stream().forEach(x -> {
+        System.out.println(Color.ANSI_CYAN+""+Color.ANSI_RESET+"\nHere are the industries and their exploitation percentage on "+game.getIsland().getName()+" :");
+        game.getIsland().getFields().stream().forEach(x -> {
             System.out.println(Color.ANSI_CYAN+""+Color.ANSI_BOLD+x.getName()+" "+Color.ANSI_YELLOW+"("+x.getExploitationPercentage()+"%)");
         });
+
+        /* boucle de jeu */
 
 
     }
