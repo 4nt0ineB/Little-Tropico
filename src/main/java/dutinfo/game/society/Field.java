@@ -20,6 +20,10 @@ public class Field {
         addField(this);
     }
 
+    public String getName(){ return name; }
+
+    public double getExploitationPercentage(){ return exploitationPercentage; }
+
     public static List<Field> initField(String pathToFieldsFile){
         List<Field> fields = new ArrayList<>();
         Object jsonFields = GameUtils.jsonToObject(pathToFieldsFile);

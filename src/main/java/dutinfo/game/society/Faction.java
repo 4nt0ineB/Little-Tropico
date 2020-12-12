@@ -49,6 +49,10 @@ public class Faction {
 		return id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	/**
 	 * Set the approbation percentage rate
 	 * @param approbationPercentage Approbation percentage

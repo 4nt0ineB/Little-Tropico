@@ -102,6 +102,7 @@ public class App
             switch (a){
                 case 1:
                     startGameConsole();
+                    menu = 0;
                     break;
                 case 2:
                     System.out.print(Color.ANSI_RED +"Not implemented. \n");
@@ -129,10 +130,11 @@ public class App
             int numScenar = 0;
             do {
                 try {
-                    sb.append("╔══-----------Scenarios--("+scenarios.size()+")-----------╗\n");
+                    sb.append("╔═════════════Scenarios══("+scenarios.size()+")═══════════╗\n");
                     for(int i = 0; i < scenarios.size(); i++){
                         sb.append(i).append(")").append(scenarios.get(i));
                     }
+                    sb.append("╚══════════════════════════════════════╝\n");
                     System.out.print(sb);
                     sb.setLength(0);
                     System.out.print("\n");
@@ -165,19 +167,31 @@ public class App
                     islandName = "";
                     presidentName = "";
                 }
-                scanner.nextLine();
             } while(islandName.isEmpty() || presidentName.isEmpty());
 
-            System.out.print("══----------- Your island has been created -----------══\n");
-            System.out.print("You are "+presidentName+", the president of the "+islandName+" island.\n");
-            System.out.print("Your goal is to make "+Color.ANSI_BOLD+islandName+Color.ANSI_RESET+" great again.\n");
+            System.out.print("\n══----------- Your island has been created -----------══\n");
+            System.out.print("You are "+Color.ANSI_YELLOW+presidentName+Color.ANSI_CYAN+", the president of the "+islandName+" island.\n");
+            System.out.print("Your goal is to make "+Color.ANSI_BOLD+Color.ANSI_ORANGE+islandName+Color.ANSI_RESET+Color.ANSI_CYAN+" great again.\n");
 
             President president = new President(presidentName);
             Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar));
+            partyParameters = 0;
 
+            launchGame(island);
+            break;
         }
+    }
 
+    private static void launchGame(Island island){
+        System.out.println("\n"+island.getPresident().getName()+", the factions on "+island.getName()+" are :");
+        island.getFactions().stream().forEach(x -> {
+            System.out.println(Color.ANSI_BOLD+x.getName());
+        });
 
+        System.out.println(Color.ANSI_CYAN+""+Color.ANSI_RESET+"\nHere are the industries and their exploitation percentage on "+island.getName());
+        island.getFields().stream().forEach(x -> {
+            System.out.println(Color.ANSI_CYAN+""+Color.ANSI_BOLD+x.getName()+" "+Color.ANSI_YELLOW+"("+x.getExploitationPercentage()+"%)");
+        });
     }
 
     private enum Color{

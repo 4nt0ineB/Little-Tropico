@@ -17,17 +17,33 @@ public class Island {
 
 
 	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury){
+		this.name = name;
+		this.currentSeason = Season.Spring;
 		this.president = president;
 		this.factions = factions;
 		this.fields = fields;
 		this.treasury = treasury;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public List<Faction> getFactions() {
+		return factions;
+	}
+
+	public List<Field> getFields() {
+		return fields;
+	}
+
 	public Double getTreasury() {
 		return treasury;
 	}
 
-
+	public President getPresident() {
+		return president;
+	}
 
 	/**
 	 * 
