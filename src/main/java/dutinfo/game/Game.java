@@ -65,6 +65,21 @@ public class Game {
 		return scenarios;
 	}
 
+	public List<Faction> getFactions(){
+		return factions;
+	}
+
+	public List<Field> getFields(){
+		return fields;
+	}
+
+	public double getTreasure(int scenario){
+		List<Scenario> scenarios = getScenarios();
+		Scenario selectedScenario = scenarios.get(scenario);
+
+		return selectedScenario.getTreasure();
+	}
+
 	public Event getEvents() {
 		// TODO - implement Game.getEvents
 		throw new UnsupportedOperationException();

@@ -2,8 +2,8 @@ package dutinfo.game.environment;
 
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.President;
+import dutinfo.game.society.Field;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class Island {
@@ -43,4 +43,15 @@ public class Island {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String toString() {
+		return "Island{" +
+				"name='" + name + '\'' +
+				", currentSeason=" + currentSeason +
+				", president=" + president +
+				", factions=" + factions +
+				", fields=" + fields +
+				", treasury=" + treasury +
+				'}';
+	}
 }

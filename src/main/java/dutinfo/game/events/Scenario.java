@@ -23,7 +23,7 @@ public class Scenario {
     private final HashMap<Integer, Integer> facPercentage;
     private final int followers;
     private final HashMap<Integer, Integer> filPercentage;
-    private final int treasure;
+    private final double treasure;
     private final Set<Integer> eventPackIds;
 
 
@@ -39,6 +39,8 @@ public class Scenario {
         this.treasure = treasure;
         this.eventPackIds = packageIds;
     }
+
+    public double getTreasure(){ return treasure; }
 
     /** Return the list of all scenarios objects
      * @param pathToScenarioDir Path to the scenarios directory

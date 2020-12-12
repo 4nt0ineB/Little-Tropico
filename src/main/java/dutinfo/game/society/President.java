@@ -1,19 +1,15 @@
 package dutinfo.game.society;
 
-import dutinfo.game.society.Faction;
-
 public class President {
 
-	private int name;
+	private String name;
 
-	public void getName() {
-		// TODO - implement President.getName
-		throw new UnsupportedOperationException();
+	public President(String name) {
+		this.name = name;
 	}
 
-	public President() {
-		// TODO - implement President.President
-		throw new UnsupportedOperationException();
+	public String getName() {
+		return name;
 	}
 
 }

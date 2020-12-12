@@ -2,12 +2,9 @@ package dutinfo.console;
 
 
 import dutinfo.game.*;
-import dutinfo.game.events.Event;
+import dutinfo.game.environment.Island;
 import dutinfo.game.events.Scenario;
-import dutinfo.game.society.Faction;
-import dutinfo.game.society.Field;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import dutinfo.game.society.President;
 import org.fusesource.jansi.*;
 import java.util.*;
 
@@ -169,15 +166,17 @@ public class App
                     presidentName = "";
                 }
                 scanner.nextLine();
-            }while(islandName.isEmpty() || presidentName.isEmpty());
+            } while(islandName.isEmpty() || presidentName.isEmpty());
 
+            System.out.print("══----------- Your island has been created -----------══\n");
+            System.out.print("You are "+presidentName+", the president of the "+islandName+" island.\n");
+            System.out.print("Your goal is to make "+Color.ANSI_BOLD+islandName+Color.ANSI_RESET+" great again.\n");
 
-
-
-            break;
-
+            President president = new President(presidentName);
+            Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar));
 
         }
+
 
     }
 
