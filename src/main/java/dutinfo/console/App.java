@@ -177,6 +177,10 @@ public class App
             Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar));
             partyParameters = 0;
 
+
+
+            game.getEvents();
+
             launchGame(island);
             break;
         }
@@ -188,10 +192,12 @@ public class App
             System.out.println(Color.ANSI_BOLD+x.getName());
         });
 
-        System.out.println(Color.ANSI_CYAN+""+Color.ANSI_RESET+"\nHere are the industries and their exploitation percentage on "+island.getName());
+        System.out.println(Color.ANSI_CYAN+""+Color.ANSI_RESET+"\nHere are the industries and their exploitation percentage on "+island.getName()+" :");
         island.getFields().stream().forEach(x -> {
             System.out.println(Color.ANSI_CYAN+""+Color.ANSI_BOLD+x.getName()+" "+Color.ANSI_YELLOW+"("+x.getExploitationPercentage()+"%)");
         });
+
+
     }
 
     private enum Color{

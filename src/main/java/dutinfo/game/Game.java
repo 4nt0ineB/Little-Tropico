@@ -1,22 +1,12 @@
 package dutinfo.game;
 
 import dutinfo.game.environment.Island;
-import dutinfo.game.environment.Season;
 import dutinfo.game.events.Event;
 import dutinfo.game.events.Scenario;
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.Field;
-import dutinfo.game.society.President;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.security.CodeSource;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class Game {
 
@@ -31,16 +21,18 @@ public class Game {
 	private Island island;
 	private Difficulty difficulty;
 	private HashMap<Integer, List<Event>> events;
+	private List<Event> nextEvents;
 	private Event event;
-	private Event nextEvents;
-	private static List<Faction> factions;
-	private static List<Field> fields;
-	private static List<Scenario> scenarios;
+
+
+	private static List<Faction> FACTIONS;
+	private static List<Field> FIELDS;
+	private static List<Scenario> SCENARIOS;
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios, HashMap<Integer, List<Event>> events){
-		this.factions = factions;
-		this.fields = fields;
-		this.scenarios = scenarios;
+		this.FACTIONS = factions;
+		this.FIELDS = fields;
+		this.SCENARIOS = scenarios;
 		this.difficulty = Difficulty.NORMAL;
 	}
 
@@ -62,15 +54,15 @@ public class Game {
 	}
 
 	public List<Scenario> getScenarios(){
-		return scenarios;
+		return SCENARIOS;
 	}
 
 	public List<Faction> getFactions(){
-		return factions;
+		return FACTIONS;
 	}
 
 	public List<Field> getFields(){
-		return fields;
+		return FIELDS;
 	}
 
 	public double getTreasure(int scenario){
@@ -80,9 +72,8 @@ public class Game {
 		return selectedScenario.getTreasure();
 	}
 
-	public Event getEvents() {
-		// TODO - implement Game.getEvents
-		throw new UnsupportedOperationException();
+	public void getEvents() {
+		System.out.println(events);
 	}
 
 	public Event getNextEvents() {
@@ -96,11 +87,11 @@ public class Game {
 	}
 
     public void setFactions(List<Faction> factions) {
-		this.factions = factions;
+		this.FACTIONS = factions;
     }
 
     public Faction getFactionById(int id){
-		return (Faction) factions.stream().filter(f -> f.getId() == id);
+		return (Faction) FACTIONS.stream().filter(f -> f.getId() == id);
 	}
 
 	/**
