@@ -7,6 +7,7 @@ import dutinfo.game.events.Scenario;
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.Field;
 import dutinfo.console.App.Color;
+import dutinfo.game.society.President;
 
 
 import java.util.*;
@@ -55,8 +56,17 @@ public class Game {
 		return this.island;
 	}
 
-	public void setIsland(Island island){
-		this.island = island;
+	public void setIsland(String islandName, President president){
+
+		Objects.requireNonNull(scenario, "Can't process new island without scenario");
+
+		List<Faction> facs = FACTIONS;
+		facs.stream().forEach(x -> x.setApprobationPercentage(scenario.getSatisFaction(x.getId())));
+
+		List<Field> fields = FIELDS;
+		fields.stream().forEach(x -> x.setExploitationPercentage(scenario.getExploitField(x.getId())));
+
+		this.island = new Island(islandName, president,facs, fields, scenario.getTreasure());
 	}
 
 	public void setScenario(Scenario scenario) { this.scenario = scenario; }
@@ -84,13 +94,6 @@ public class Game {
 		return FIELDS;
 	}
 
-
-	public double getTreasure(int scenario){
-		List<Scenario> scenarios = getScenarios();
-		Scenario selectedScenario = scenarios.get(scenario);
-		return selectedScenario.getTreasure();
-	}
-
 	/**
 	 * get all the events by the current scenario and the common ones
 	 * @param scenario we use the current scenario to use this function
@@ -106,19 +109,23 @@ public class Game {
 		return eventsList;
 	}
 
+	/**
+	 * Extract next events from the events stack
+	 */
 	public Event getNextEvents() {
 		// TODO - implement Game.getNextEvents
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Append repercussion (incoming events) to the events stack
+	 */
 	public void addNextEvents() {
 		// TODO - implement Game.addNextEvents
 		throw new UnsupportedOperationException();
 	}
 
-    public void setFactions(List<Faction> factions) {
-		this.FACTIONS = factions;
-    }
+
 
     public Faction getFactionById(int id){
 		return (Faction) FACTIONS.stream().filter(f -> f.getId() == id);

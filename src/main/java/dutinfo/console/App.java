@@ -215,12 +215,11 @@ public class App
             System.out.print("Your goal is to make "+Color.ANSI_BOLD+Color.ANSI_ORANGE+islandName+Color.ANSI_RESET+Color.ANSI_CYAN+" great again.\n");
 
             President president = new President(presidentName);
-            Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar)); // <--- à modif ça n'a pas vraiment à faire là : à placer dans le game
             partyParameters = 0;
 
             // set the island and set the events of the scenarios on the game
-            game.setIsland(island);
             game.setScenario(game.getScenarios().get(numScenar));
+            game.setIsland(islandName, president);
             game.getScenario().setEvents(game.getEvents(game.getScenario()));
             game.setDifficulty(gDiff);
 

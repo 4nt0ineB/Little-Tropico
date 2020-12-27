@@ -57,7 +57,7 @@ public class Faction {
 	 * Set the approbation percentage rate
 	 * @param approbationPercentage Approbation percentage
 	 */
-	public void setApprobationPercentage(Double approbationPercentage) {
+	public void setApprobationPercentage(double approbationPercentage) {
 		this.approbationPercentage = approbationPercentage;
 	}
 
@@ -73,8 +73,6 @@ public class Faction {
      * @param pathToFactionsFile Path to faction json file
      * @return*/
 	public static List<Faction> initFaction(String pathToFactionsFile){
-
-
 
 		List<Faction> factions = new ArrayList<>();
 		Object jsonFactions = GameUtils.jsonToObject(pathToFactionsFile);

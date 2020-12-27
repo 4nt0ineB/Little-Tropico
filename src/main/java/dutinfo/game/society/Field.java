@@ -11,7 +11,7 @@ public class Field {
     private static Set<Field> listFields = new HashSet<>();
     private final int id;
     private final String name;
-    private final double exploitationPercentage;
+    private double exploitationPercentage;
 
     private Field(String name){
         this.name = Objects.requireNonNull(name, "The field muste have a name");
@@ -23,6 +23,14 @@ public class Field {
     public String getName(){ return name; }
 
     public double getExploitationPercentage(){ return exploitationPercentage; }
+
+    /**
+     * Set the exploitationPercentage percentage rate
+     * @param exploitationPercentage Approbation percentage
+     */
+    public void setExploitationPercentage(double exploitationPercentage) {
+        this.exploitationPercentage = exploitationPercentage;
+    }
 
     public static List<Field> initField(String pathToFieldsFile){
         List<Field> fields = new ArrayList<>();

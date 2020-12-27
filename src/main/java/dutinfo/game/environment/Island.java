@@ -49,18 +49,13 @@ public class Island {
 	}
 
 	/**
-	 * 
+	 * Set the treasury
 	 * @param treasury
 	 */
-	public void setTreasury(int treasury) {
-		// TODO - implement Island.setTreasury
-		throw new UnsupportedOperationException();
+	public void setTreasury(double treasury) {
+		this.treasury = treasury;
 	}
 
-	public Island() {
-		// TODO - implement Island.Island
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public String toString() {

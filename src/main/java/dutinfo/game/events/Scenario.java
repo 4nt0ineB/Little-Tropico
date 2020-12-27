@@ -19,16 +19,16 @@ public class Scenario {
     private final int id;
     private final String title;
     private final String description;
-    private final int generalSatisfaction;
-    private final HashMap<Integer, Integer> facPercentage;
+    private final double generalSatisfaction;
+    private final HashMap<Integer, Double> facPercentage; //those indicated in "exceptions"
     private final int followers;
-    private final HashMap<Integer, Integer> filPercentage;
+    private final HashMap<Integer, Double> filPercentage;
     private final double treasure;
     private final Set<Integer> eventPackIds;
     private List<Event> events;
 
 
-    private Scenario(String description, String title, int generalSatisfaction, HashMap<Integer, Integer> facPercentage, int followers, HashMap<Integer, Integer> filPercentage, int treasure, Set<Integer> packageIds) {
+    private Scenario(String description, String title, double generalSatisfaction, HashMap<Integer, Double> facPercentage, int followers, HashMap<Integer, Double> filPercentage, int treasure, Set<Integer> packageIds) {
         this.description = description;
         this.title = Objects.requireNonNull(title);
         assert title.isEmpty() != true;
@@ -40,6 +40,35 @@ public class Scenario {
         this.treasure = treasure;
         this.eventPackIds = packageIds;
     }
+
+    /**
+     * Get the init satisfaction of a faction from the scenario
+     * If found in satisfaction exceptions return it, else return the general satisfaction value
+     * @param facId id of the faction
+     * @return
+     */
+    public double getSatisFaction(int facId){
+        Double p = facPercentage.get(facId);
+        if(p != null){
+            return p;
+        }
+        return generalSatisfaction;
+    }
+
+    /**
+     * Get the init exploitation percentage of a field from the scenario
+     * Throw an error if the id is not found (meaning that its not set in the json of the scenario)
+     * @param  fieldId id of the field
+     * @return the percentage rate of exploitation
+     */
+    public double getExploitField(int fieldId){
+        Double p = filPercentage.get(fieldId);
+        if(p != null){
+            return p;
+        }
+        throw new IllegalArgumentException();
+    }
+
 
     public double getTreasure(){ return treasure; }
 
@@ -74,8 +103,9 @@ public class Scenario {
             //Satisfaction and exploitation
             JSONObject satisfaction = (JSONObject) ((Object) ar.get("satisfaction"));
             int generalSatisfaction = (int) (long) satisfaction.get("general");
+
             JSONArray factionException = (JSONArray) satisfaction.get("exceptions");
-            HashMap<Integer, Integer> facPercentage = new HashMap<>();
+            HashMap<Integer, Double> facPercentage = new HashMap<>();
 
             factionException.forEach(fac -> {
                 JSONObject exc = (JSONObject) fac;
@@ -83,23 +113,23 @@ public class Scenario {
                 assert (Faction.exist(name));
                 facPercentage.put(
                         GameUtils.idByHashString(name),
-                        (int) (long) exc.get("percentage")
+                        (double) (long) exc.get("percentage")
+                );
+            });
+
+            //Fields
+            JSONArray fields = (JSONArray) ar.get("fields");
+            HashMap<Integer, Double> filPercentage = new HashMap<>();
+            fields.forEach(fi -> {
+                JSONObject exc = (JSONObject) fi;
+                filPercentage.put(
+                        GameUtils.idByHashString((String) exc.get("name")),
+                        (double) (long) exc.get("percentage")
                 );
             });
 
             //Followers
             int followers = (int) (long) ar.get("followers");
-
-            //Fields
-            JSONArray fields = (JSONArray) ar.get("fields");
-            HashMap<Integer, Integer> filPercentage = new HashMap<>();
-            fields.forEach(fi -> {
-                JSONObject exc = (JSONObject) fi;
-                filPercentage.put(
-                        GameUtils.idByHashString((String) exc.get("name")),
-                        (int) (long) exc.get("percentage")
-                );
-            });
             //Treasure
             int treasure = (int) (long) ar.get("treasure");
 
