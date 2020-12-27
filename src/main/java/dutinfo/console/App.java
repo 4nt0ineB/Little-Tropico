@@ -211,7 +211,8 @@ public class App
 
         /* boucle de jeu */
 
-
+        System.out.println("boucle de jeu");
+        System.out.println(game.printStats());
 
 
     }
@@ -219,7 +220,7 @@ public class App
     /**
      * Callable Ansi colors
      */
-    private enum Color{
+    public enum Color{
         ANSI_ITALIC("\u001B[3m"),
         ANSI_BOLD ("\u001B[1m"),
         ANSI_RESET ("\u001B[0m"),
