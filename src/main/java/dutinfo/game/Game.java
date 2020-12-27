@@ -140,7 +140,10 @@ public class Game {
 
 	}
 
-
+	/**
+	 * Parse all json files needed for the game
+	 * @return a Game object
+	 */
 	public static Game initGame(){
 
 		/*   When making jar    */

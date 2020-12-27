@@ -26,6 +26,9 @@ public class App
         startConsole();
     }
 
+    /**
+     * Start the console (Name logo of the game, the menu)
+     */
     private static void startConsole(){
         //AnsiConsole.systemInstall(); -- décommenter avant de faire le jar
         System.out.println( Color.ANSI_BBLUE +
@@ -117,6 +120,10 @@ public class App
         AnsiConsole.systemUninstall();
     }
 
+    /**
+     * Loop to chose the options of the game(Scenario, president's name, island's name)
+     *
+     */
     private static void startGameConsole(){
         Game game = Game.initGame();
         StringBuilder sb = new StringBuilder();
@@ -178,6 +185,7 @@ public class App
             Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar));
             partyParameters = 0;
 
+            // set the island and set the events of the scenarios on the game
             game.setIsland(island);
             game.setScenario(game.getScenarios().get(numScenar));
             game.getScenario().setEvents(game.getEvents(game.getScenario()));
@@ -187,6 +195,9 @@ public class App
         }
     }
 
+    /**
+     * @param game The game created with options defined in {@link #startGameConsole() startGameConsole()}
+     */
     private static void launchGame(Game game){
         System.out.println("\n"+game.getIsland().getPresident().getName()+", the factions on "+game.getIsland().getName()+" are :");
         game.getIsland().getFactions().stream().forEach(x -> {
@@ -201,8 +212,13 @@ public class App
         /* boucle de jeu */
 
 
+
+
     }
 
+    /**
+     * Callable Ansi colors
+     */
     private enum Color{
         ANSI_ITALIC("\u001B[3m"),
         ANSI_BOLD ("\u001B[1m"),
