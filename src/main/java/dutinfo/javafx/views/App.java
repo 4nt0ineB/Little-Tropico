@@ -18,15 +18,9 @@ public class App extends Application {
         var javaVersion = SystemInfo.javaVersion();
         var javafxVersion = SystemInfo.javafxVersion();
 
-        Game game = Game.initGame();
-        President president = new President("el president");
-        game.setScenario(game.getScenarios().get(0));
-        game.setIsland("tropicoIsland", president);
-        game.getScenario().setEvents(game.getEvents(game.getScenario()));
-        game.setDifficulty(Game.Difficulty.EASY);
 
         try {
-            AnchorPane root = FXMLLoader.load(getClass().getResource("view\\view.fxml"));
+            AnchorPane root = FXMLLoader.load(getClass().getResource("/view/menu.fxml"));
             Scene scene = new Scene(root, 1920, 1080);
             stage.setScene(scene);
             stage.show();
