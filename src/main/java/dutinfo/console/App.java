@@ -101,7 +101,7 @@ public class App
                     a = 0;
                 }
                 scanner.nextLine();
-            }while(a ==0 || a > 3);
+            }while(a <= 0 || a > 3);
 
             switch (a){
                 case 1:
@@ -177,18 +177,52 @@ public class App
                 }
             } while(islandName.isEmpty() || presidentName.isEmpty());
 
+
+            //Chose difficulty
+            int difficulty;
+            Game.Difficulty gDiff = null;
+
+            do {
+                try {
+
+                    System.out.print("══----------- Choose the difficulty -----------══\n");
+                    System.out.println("1. Easy");
+                    System.out.println("2. Normal");
+                    System.out.println("3. Hard");
+                    System.out.print(Color.ANSI_CYAN+ "Choice: ");
+                    difficulty = scanner.nextInt();
+                    System.out.print("\n");
+
+                }catch (InputMismatchException e) {
+                    System.out.print(Color.ANSI_RED +"Invalid. \n");
+                    difficulty = -1;
+                }
+            } while(difficulty <=0 ||  difficulty > 3);
+
+            switch (difficulty){
+                case 1:
+                    gDiff = Game.Difficulty.EASY;
+                    break;
+                case 2:
+                    gDiff = Game.Difficulty.NORMAL;
+                    break;
+                case 3:
+                    gDiff = Game.Difficulty.HARD;
+            }
+
             System.out.print("\n══----------- Your island has been created -----------══\n");
             System.out.print("You are "+Color.ANSI_YELLOW+presidentName+Color.ANSI_CYAN+", the president of the "+islandName+" island.\n");
             System.out.print("Your goal is to make "+Color.ANSI_BOLD+Color.ANSI_ORANGE+islandName+Color.ANSI_RESET+Color.ANSI_CYAN+" great again.\n");
 
             President president = new President(presidentName);
-            Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar));
+            Island island = new Island(islandName, president, game.getFactions(), game.getFields(), game.getTreasure(numScenar)); // <--- à modif ça n'a pas vraiment à faire là : à placer dans le game
             partyParameters = 0;
 
             // set the island and set the events of the scenarios on the game
             game.setIsland(island);
             game.setScenario(game.getScenarios().get(numScenar));
             game.getScenario().setEvents(game.getEvents(game.getScenario()));
+            game.setDifficulty(gDiff);
 
             launchGame(game);
             break;
@@ -211,15 +245,12 @@ public class App
 
         /* boucle de jeu */
 
-
-
-
     }
 
     /**
      * Callable Ansi colors
      */
-    private enum Color{
+    public enum Color{
         ANSI_ITALIC("\u001B[3m"),
         ANSI_BOLD ("\u001B[1m"),
         ANSI_RESET ("\u001B[0m"),

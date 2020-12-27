@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Game {
 
-	private enum Difficulty{
+	public enum Difficulty{
 		EASY(0.5), NORMAL(1), HARD(2);
 		private double multiplier;
 		Difficulty(double multiplier){
@@ -21,13 +21,13 @@ public class Game {
 	private Island island;
 	private Difficulty difficulty;
 	private HashMap<Integer, List<Event>> events;
-	private List<Event> nextEvents;
-	private Event event;
-	private Scenario scenario;
+	private List<Event> nextEvents; // repercussions
+	private Event event; // Current / last event
+	private Scenario scenario; // Current scenario
 
-	private static List<Faction> FACTIONS;
-	private static List<Field> FIELDS;
-	private static List<Scenario> SCENARIOS;
+	private static List<Faction> FACTIONS; // All factions in init file
+	private static List<Field> FIELDS; // All field in init file
+	private static List<Scenario> SCENARIOS; // All Scenarios in folders
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios, HashMap<Integer, List<Event>> events){
 		this.FACTIONS = factions;
@@ -35,9 +35,11 @@ public class Game {
 		this.FIELDS = fields;
 		this.SCENARIOS = scenarios;
 		this.difficulty = Difficulty.NORMAL;
+
 	}
 
 	public void setDifficulty(Difficulty difficulty){
+		Objects.requireNonNull(difficulty, "diffuculty can't be null");
 		this.difficulty = difficulty;
 	}
 
@@ -58,22 +60,31 @@ public class Game {
 
 	public Scenario getScenario() { return this.scenario; }
 
+	/**
+	 * @return all the scenarios found in game folders
+	 */
 	public List<Scenario> getScenarios(){
 		return SCENARIOS;
 	}
 
+	/**
+	 * @return all the factions set in init file
+	 */
 	public List<Faction> getFactions(){
 		return FACTIONS;
 	}
 
+	/**
+	 * @return all the fields setted in game folders
+	 */
 	public List<Field> getFields(){
 		return FIELDS;
 	}
 
+
 	public double getTreasure(int scenario){
 		List<Scenario> scenarios = getScenarios();
 		Scenario selectedScenario = scenarios.get(scenario);
-
 		return selectedScenario.getTreasure();
 	}
 

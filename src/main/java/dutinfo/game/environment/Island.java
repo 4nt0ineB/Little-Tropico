@@ -15,7 +15,6 @@ public class Island {
 	private List<Field> fields;
 	private Double treasury;
 
-
 	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury){
 		this.name = name;
 		this.currentSeason = Season.Spring;
