@@ -4,5 +4,6 @@ module dutinfo {
     requires json.simple;
     requires com.google.gson;
     requires org.fusesource.jansi;
-    exports dutinfo.javafx;
+    requires javafx.fxml;
+    exports dutinfo.javafx.views;
 }
