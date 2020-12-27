@@ -245,6 +245,10 @@ public class App
 
         /* boucle de jeu */
 
+        System.out.println("boucle de jeu");
+        System.out.println(game.printStats());
+
+
     }
 
     /**

@@ -40,6 +40,10 @@ public class Island {
 		return treasury;
 	}
 
+	public Season getSeason() {
+		return currentSeason;
+	}
+
 	public President getPresident() {
 		return president;
 	}

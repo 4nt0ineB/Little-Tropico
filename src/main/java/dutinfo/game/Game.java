@@ -1,10 +1,13 @@
 package dutinfo.game;
 
+import dutinfo.console.App;
 import dutinfo.game.environment.Island;
 import dutinfo.game.events.Event;
 import dutinfo.game.events.Scenario;
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.Field;
+import dutinfo.console.App.Color;
+
 
 import java.util.*;
 
@@ -119,6 +122,20 @@ public class Game {
 
     public Faction getFactionById(int id){
 		return (Faction) FACTIONS.stream().filter(f -> f.getId() == id);
+	}
+
+	public String printStats(){
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n\n"+Color.ANSI_WHITE_BACKGROUND+""+Color.ANSI_BLACK+"---- End of the day : Stats ----\n");
+		sb.append(Color.ANSI_RESET+""+Color.ANSI_ITALIC+"Treasury : "+Color.ANSI_RESET+Color.ANSI_GREEN+"$"+getIsland().getTreasury());
+		sb.append(Color.ANSI_RESET+""+Color.ANSI_ITALIC+"\nCurrent season : "+Color.ANSI_RESET+getIsland().getSeason());
+		sb.append(Color.ANSI_ITALIC+"\nFactions satisfaction : ");
+		getIsland().getFactions().stream().forEach(x -> {
+			sb.append("\n"+Color.ANSI_RESET+ Color.ANSI_RED+x.getName()+": "+Color.ANSI_BOLD+Color.ANSI_WHITE+x.getApprobationPercentage()+"%");
+		});
+
+		return sb.toString();
 	}
 
 	/**
