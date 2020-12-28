@@ -24,7 +24,7 @@ public class App extends Application {
             Scene scene = new Scene(root, 1920, 1080);
             stage.setScene(scene);
             stage.show();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

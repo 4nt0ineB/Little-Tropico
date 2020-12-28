@@ -30,6 +30,9 @@ public enum Season {
 		return id;
 	}
 
+	public Season getNext(Season season){
+		return null;
+	}
 
 	@Override
 	public String toString() {

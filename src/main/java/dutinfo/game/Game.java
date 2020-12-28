@@ -10,9 +10,12 @@ import dutinfo.console.App.Color;
 import dutinfo.game.society.President;
 
 
+import java.io.InputStream;
 import java.util.*;
 
 public class Game {
+
+
 
 	public enum Difficulty{
 		EASY(0.5), NORMAL(1), HARD(2);
@@ -71,6 +74,8 @@ public class Game {
 
 	public void setScenario(Scenario scenario) { this.scenario = scenario; }
 
+
+
 	public Scenario getScenario() { return this.scenario; }
 
 	public Field getFieldByName(String name){
@@ -118,23 +123,40 @@ public class Game {
 	}
 
 	/**
-	 * Extract next events from the events stack
+	 * Check if the player lose the game
+	 * @return
 	 */
-	public Event getNextEvents() {
-		// TODO - implement Game.getNextEvents
-		throw new UnsupportedOperationException();
+	public boolean checkLose(){
+		/// TODO: 27/12/2020
+		return true;
+	}
+
+	public boolean passTurn() {
+
+
+
+		return !checkLose();
+	}
+
+	/**
+	 * Get the current event - Can be null ! in this case the player can just pass a turn
+	 */
+	public Event getEvent() {
+		return event;
 	}
 
 	/**
 	 * Append repercussion (incoming events) to the events stack
 	 */
 	public void addNextEvents() {
-		// TODO - implement Game.addNextEvents
-		throw new UnsupportedOperationException();
+		Event ev = scenario.getEventOnSeason(island.getSeason());
 	}
 
-
-
+	/**
+	 * Get the correspondent faction from the id on its empty form
+	 * @param id Id of the faction
+	 * @return
+	 */
     public Faction getFactionById(int id){
 		return (Faction) FACTIONS.stream().filter(f -> f.getId() == id);
 	}
@@ -188,6 +210,11 @@ public class Game {
 	 * @return a Game object
 	 */
 	public static Game initGame(){
+
+		// https://howtodoinjava.com/gson/gson-jsonparser/
+		// https://stackoverflow.com/questions/3133006/jsonparser-getresourceasstream
+		// https://stackoverflow.com/questions/53542142/returning-json-file-as-jsonarray-in-spring-boot
+
 
 		/*   When making jar    */
 /*
