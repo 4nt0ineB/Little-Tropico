@@ -11,6 +11,8 @@ import dutinfo.javafx.models.Model;
 
 public class mainController implements EventHandler<MouseEvent> {
 
+    private static Game game = Game.initGame();
+
     private Model appModel = new Model();
 
     @FXML
@@ -23,15 +25,16 @@ public class mainController implements EventHandler<MouseEvent> {
     public void handle(MouseEvent e) {
     }
 
+    public static void initParameters(String difficulty, String islandName, String presidentName){
+        President president = new President(presidentName);
+        game.setScenario(game.getScenarios().get(0));
+        game.setIsland(islandName, president);
+        game.getScenario().setEvents(game.getEvents(game.getScenario()));
+        game.setDifficulty(Game.Difficulty.valueOf(difficulty));
+    }
+
     public void initialize() {
         appModel.startAnimations(sun); // sun rolling
-
-        Game game = Game.initGame();
-        President president = new President("el president");
-        game.setScenario(game.getScenarios().get(0));
-        game.setIsland("tropicoIsland", president);
-        game.getScenario().setEvents(game.getEvents(game.getScenario()));
-        game.setDifficulty(Game.Difficulty.EASY);
 
         islandName.setText(game.getIsland().getName());
         moneyAmount.setText("$"+game.getIsland().getTreasury().toString()); // Treasury
