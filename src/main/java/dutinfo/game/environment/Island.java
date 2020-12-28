@@ -44,6 +44,10 @@ public class Island {
 		return currentSeason;
 	}
 
+	public void incrementSeason(){
+
+	}
+
 	public President getPresident() {
 		return president;
 	}

@@ -97,7 +97,7 @@ public class Event {
 					case 4:
 						yield Season.Winter;
 					default:
-						throw new NullPointerException("Bad or no id season indicated");
+						yield null; // This event don't have a season so he can happen at any time.
 				};
 
 				//Event name (name of the file)

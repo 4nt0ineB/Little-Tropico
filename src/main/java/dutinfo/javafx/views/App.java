@@ -26,7 +26,7 @@ public class App extends Application {
         game.setDifficulty(Game.Difficulty.EASY);
 
         try {
-            AnchorPane root = FXMLLoader.load(getClass().getResource("view\\view.fxml"));
+            AnchorPane root = FXMLLoader.load(getClass().getResource("/view/view.fxml"));
             Scene scene = new Scene(root, 1920, 1080);
             stage.setScene(scene);
             stage.show();

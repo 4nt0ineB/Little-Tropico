@@ -1,6 +1,7 @@
 package dutinfo.game.events;
 
 import dutinfo.game.GameUtils;
+import dutinfo.game.environment.Season;
 import dutinfo.game.society.Faction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -40,6 +41,30 @@ public class Scenario {
         this.treasure = treasure;
         this.eventPackIds = packageIds;
     }
+
+
+    /**
+     * Get a random event from the wanted season
+     * @param season
+     * @return
+     */
+    public Event getEventOnSeason(Season season){
+        Objects.requireNonNull(season, "Must give a proper season to get an event depending on season.");
+        return events.parallelStream().filter(x -> x.getSeason() == season || x.getSeason() == null).findFirst().get();
+
+        /* VS
+        Collections.shuffle(events);
+        Event ev = null;
+        for (Event e: events
+        ) {
+            if(e.getSeason() == season){
+                ev = e;
+            }
+        }
+        return ev;
+        */
+    }
+
 
     /**
      * Get the init satisfaction of a faction from the scenario

@@ -243,11 +243,14 @@ public class App
         });
 
         /* boucle de jeu */
+        boolean running = true;
+        while(running){
+            System.out.println(game.printStats());
 
-        System.out.println("boucle de jeu");
-        System.out.println(game.printStats());
-
-
+            if(!game.passTurn()){
+                break;
+            }
+        }
     }
 
     /**
