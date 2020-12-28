@@ -1,9 +1,11 @@
 package dutinfo.javafx.models;
 
+import dutinfo.game.Game;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
@@ -21,5 +23,6 @@ public class Model {
         rt.play();
 
     }
+
 
 }

@@ -78,6 +78,14 @@ public class Game {
 
 	public Scenario getScenario() { return this.scenario; }
 
+	public Field getFieldByName(String name){
+		return FIELDS.stream().filter(x -> x.getName().equals(name)).findFirst().get();
+	}
+
+	public Faction getFactionByName(String name){
+		return FACTIONS.stream().filter(x -> x.getName().equals(name)).findFirst().get();
+	}
+
 	/**
 	 * @return all the scenarios found in game folders
 	 */
