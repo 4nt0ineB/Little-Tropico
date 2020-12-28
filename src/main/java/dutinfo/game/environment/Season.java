@@ -1,10 +1,7 @@
 package dutinfo.game.environment;
 
 public enum Season {
-	Spring(0),
-	Summer(1),
-	Autumn(2),
-	Winter(3);
+	Spring(0), Summer(1), Autumn(2), Winter(3);
 
 	private int id;
 	private String label;
@@ -30,8 +27,19 @@ public enum Season {
 		return id;
 	}
 
-	public Season getNext(Season season){
-		return null;
+	public Season getNext(Season season) {
+		Season s = null;
+		switch (season.id) {
+			case 0:
+				s = Summer;
+			case 1:
+				s = Autumn;
+			case 2:
+				s = Winter;
+			default:
+				s = Spring;
+		}
+		return s;
 	}
 
 	@Override

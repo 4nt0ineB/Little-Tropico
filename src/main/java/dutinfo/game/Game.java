@@ -9,18 +9,17 @@ import dutinfo.game.society.Field;
 import dutinfo.console.App.Color;
 import dutinfo.game.society.President;
 
-
 import java.io.InputStream;
 import java.util.*;
 
 public class Game {
 
-
-
-	public enum Difficulty{
+	public enum Difficulty {
 		EASY(0.5), NORMAL(1), HARD(2);
+
 		private double multiplier;
-		Difficulty(double multiplier){
+
+		Difficulty(double multiplier) {
 			this.multiplier = multiplier;
 		}
 	}
@@ -28,6 +27,10 @@ public class Game {
 	private Island island;
 	private Difficulty difficulty;
 	private HashMap<Integer, List<Event>> events;
+	/*
+	 * The events stack (next ev to pick if correspond to season) <------< (last ev
+	 * append to stack)
+	 */
 	private List<Event> nextEvents; // repercussions
 	private Event event; // Current / last event
 	private Scenario scenario; // Current scenario
@@ -36,16 +39,18 @@ public class Game {
 	private static List<Field> FIELDS; // All field in init file
 	private static List<Scenario> SCENARIOS; // All Scenarios in folders
 
-	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios, HashMap<Integer, List<Event>> events){
+	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios,
+				HashMap<Integer, List<Event>> events) {
 		this.FACTIONS = factions;
 		this.events = events;
 		this.FIELDS = fields;
 		this.SCENARIOS = scenarios;
 		this.difficulty = Difficulty.NORMAL;
+		nextEvents = new ArrayList<>();
 
 	}
 
-	public void setDifficulty(Difficulty difficulty){
+	public void setDifficulty(Difficulty difficulty) {
 		Objects.requireNonNull(difficulty, "diffuculty can't be null");
 		this.difficulty = difficulty;
 	}
@@ -59,7 +64,7 @@ public class Game {
 		return this.island;
 	}
 
-	public void setIsland(String islandName, President president){
+	public void setIsland(String islandName, President president) {
 
 		Objects.requireNonNull(scenario, "Can't process new island without scenario");
 
@@ -69,131 +74,166 @@ public class Game {
 		List<Field> fields = FIELDS;
 		fields.stream().forEach(x -> x.setExploitationPercentage(scenario.getExploitField(x.getId())));
 
-		this.island = new Island(islandName, president,facs, fields, scenario.getTreasure());
+		this.island = new Island(islandName, president, facs, fields, scenario.getTreasure());
 	}
 
-	public void setScenario(Scenario scenario) { this.scenario = scenario; }
+	public void setScenario(Scenario scenario) {
+		this.scenario = scenario;
+	}
 
+	public Scenario getScenario() {
+		return this.scenario;
+	}
 
-
-	public Scenario getScenario() { return this.scenario; }
-
-	public Field getFieldByName(String name){
+	public Field getFieldByName(String name) {
 		return FIELDS.stream().filter(x -> x.getName().equals(name)).findFirst().get();
 	}
 
-	public Faction getFactionByName(String name){
+	public Faction getFactionByName(String name) {
 		return FACTIONS.stream().filter(x -> x.getName().equals(name)).findFirst().get();
 	}
 
 	/**
 	 * @return all the scenarios found in game folders
 	 */
-	public List<Scenario> getScenarios(){
+	public List<Scenario> getScenarios() {
 		return SCENARIOS;
 	}
 
 	/**
 	 * @return all the factions set in init file
 	 */
-	public List<Faction> getFactions(){
+	public List<Faction> getFactions() {
 		return FACTIONS;
 	}
 
 	/**
 	 * @return all the fields setted in game folders
 	 */
-	public List<Field> getFields(){
+	public List<Field> getFields() {
 		return FIELDS;
 	}
 
 	/**
 	 * get all the events by the current scenario and the common ones
+	 *
 	 * @param scenario we use the current scenario to use this function
 	 */
 	public List<Event> getEvents(Scenario scenario) {
 		List<Event> eventsList = new ArrayList<>();
-		events.keySet().forEach(
-				x -> {
-					if(scenario.getPackageIds().contains(x)){
-						eventsList.addAll(events.get(x));
-					} });
+		events.keySet().forEach(x -> {
+			if (scenario.getPackageIds().contains(x)) {
+				eventsList.addAll(events.get(x));
+			}
+		});
 
 		return eventsList;
 	}
 
 	/**
 	 * Check if the player lose the game
+	 *
 	 * @return
 	 */
-	public boolean checkLose(){
+	public boolean checkLose() {
 		/// TODO: 27/12/2020
 		return true;
 	}
 
-	public boolean passTurn() {
-
-
-
+	public boolean nexTurn() {
+		event = null;
+		// add total random new event to stack
+		addNextEvents(); //
+		// get the next valid event and set it has the new current event
+		setCurrentEvent(pickNextEvents());
 		return !checkLose();
 	}
 
 	/**
-	 * Get the current event - Can be null ! in this case the player can just pass a turn
+	 * Get the current event - Can be null ! in this case the player can just pass a
+	 * turn
 	 */
 	public Event getEvent() {
 		return event;
 	}
 
 	/**
-	 * Append repercussion (incoming events) to the events stack
+	 * add an event from the scenario to the event stack
 	 */
 	public void addNextEvents() {
-		Event ev = scenario.getEventOnSeason(island.getSeason());
+		var ev = scenario.getRandomEvent();
+		if (ev == null) {
+			return;
+		}
+		nextEvents.add(ev);
+	}
+
+	/**
+	 * Get the next event from the stack corresponding to the current season or with
+	 * no bound season. Can return null.
+	 *
+	 * @return
+	 */
+	public Event pickNextEvents() {
+		try {
+			return nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.getSeason() == null)
+					.findFirst().get();
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public void setCurrentEvent(Event event) {
+		this.event = event;
 	}
 
 	/**
 	 * Get the correspondent faction from the id on its empty form
+	 *
 	 * @param id Id of the faction
 	 * @return
 	 */
-    public Faction getFactionById(int id){
+	public Faction getFactionById(int id) {
 		return (Faction) FACTIONS.stream().filter(f -> f.getId() == id);
 	}
 
-	public String printStats(){
+	public String printStats() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n\n"+Color.ANSI_WHITE_BACKGROUND+""+Color.ANSI_BLACK+"---- End of the day : Stats ----\n");
-		sb.append(Color.ANSI_RESET+""+Color.ANSI_ITALIC+"Treasury : "+Color.ANSI_RESET+Color.ANSI_GREEN+"$"+getIsland().getTreasury());
-		sb.append(Color.ANSI_RESET+""+Color.ANSI_ITALIC+"\nCurrent season : "+Color.ANSI_RESET+getIsland().getSeason());
-		sb.append(Color.ANSI_ITALIC+"\nFactions satisfaction : ");
+		sb.append("\n\n" + Color.ANSI_WHITE_BACKGROUND + "" + Color.ANSI_BLACK + "---- End of the day : Stats ----\n");
+		sb.append(Color.ANSI_RESET + "" + Color.ANSI_ITALIC + "Treasury : " + Color.ANSI_RESET + Color.ANSI_GREEN + "$"
+				+ getIsland().getTreasury());
+		sb.append(Color.ANSI_RESET + "" + Color.ANSI_ITALIC + "\nCurrent season : " + Color.ANSI_RESET
+				+ getIsland().getSeason());
+		sb.append(Color.ANSI_ITALIC + "\nFactions satisfaction : ");
 		getIsland().getFactions().stream().forEach(x -> {
-			sb.append("\n"+Color.ANSI_RESET+ Color.ANSI_RED+x.getName()+": "+Color.ANSI_BOLD+Color.ANSI_WHITE+x.getApprobationPercentage()+"%");
+			sb.append("\n" + Color.ANSI_RESET + Color.ANSI_RED + x.getName() + ": " + Color.ANSI_BOLD + Color.ANSI_WHITE
+					+ x.getApprobationPercentage() + "%");
 		});
 
 		return sb.toString();
 	}
 
 	/**
-	 * Master Control Program
-	 * This nested class store all errors of the game from the init of the files to the end of the party.
-	 * */
-	public static class MCP{
+	 * Master Control Program This nested class store all errors of the game from
+	 * the init of the files to the end of the party.
+	 */
+	public static class MCP {
 		private static HashMap<String, Set<String>> failedEventsFiles;
 
 		/**
 		 * add all the data from parsing error in the field assigned for it in the class
+		 *
 		 * @param files all the files name by their Scenario name if the parsing failed
 		 */
-		public static void addFailedEventFile(HashMap<String, Set<String>> files){
+		public static void addFailedEventFile(HashMap<String, Set<String>> files) {
 			failedEventsFiles.putAll(files);
 		}
 
-		@Override
-		public String toString(){
+		public static String print() {
 			StringBuilder sb = new StringBuilder();
-			if(failedEventsFiles != null){
+			if (failedEventsFiles != null) {
 				sb.append("[Failed scenarios files to read]");
 				failedEventsFiles.forEach((x, y) -> {
 					sb.append("| Scenario\n");
@@ -207,38 +247,29 @@ public class Game {
 
 	/**
 	 * Parse all json files needed for the game
+	 *
 	 * @return a Game object
 	 */
-	public static Game initGame(){
+	public static Game initGame() {
 
 		// https://howtodoinjava.com/gson/gson-jsonparser/
 		// https://stackoverflow.com/questions/3133006/jsonparser-getresourceasstream
 		// https://stackoverflow.com/questions/53542142/returning-json-file-as-jsonarray-in-spring-boot
 
-
-		/*   When making jar    */
-/*
-		String pathToData = "";
-		try{
-			String jarPath = Game.class
-					.getProtectionDomain()
-					.getCodeSource()
-					.getLocation()
-					.toURI()
-					.getPath();
-			File file = new File(jarPath);
-			pathToData = file.getParentFile().getPath()+"\\ress\\";
-
-
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-
-		String pathToFactionsFile = pathToData+"factions.json";
-		String pathToFieldsFile = pathToData+"fields.json";
-		String pathToScenariosDir = pathToData+"scenarios\\";
-		String pathToEventsDir = pathToData+"events\\";
-		*/
+		/* When making jar */
+		/*
+		 * String pathToData = ""; try{ String jarPath = Game.class
+		 * .getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
+		 * File file = new File(jarPath); pathToData =
+		 * file.getParentFile().getPath()+"\\ress\\";
+		 *
+		 *
+		 * } catch (URISyntaxException e) { e.printStackTrace(); }
+		 *
+		 * String pathToFactionsFile = pathToData+"factions.json"; String
+		 * pathToFieldsFile = pathToData+"fields.json"; String pathToScenariosDir =
+		 * pathToData+"scenarios\\"; String pathToEventsDir = pathToData+"events\\";
+		 */
 
 		/* Paths */
 
@@ -246,8 +277,6 @@ public class Game {
 		String pathToFieldsFile = ".\\src\\main\\resources\\fields.json";
 		String pathToScenariosDir = ".\\src\\main\\resources\\scenarios";
 		String pathToEventsDir = ".\\src\\main\\resources\\events\\";
-
-
 
 		/* Init factions */
 		List<Faction> factions = Faction.initFaction(pathToFactionsFile);
@@ -258,11 +287,13 @@ public class Game {
 		/* Init scenarios */
 		List<Scenario> scenarios = Scenario.initScenarios(pathToScenariosDir);
 
-		/* Init events from packages*/
+		/* Init events from packages */
 		// <package id, event list>
 		HashMap<Integer, List<Event>> events = Event.initEvents(pathToEventsDir);
+		// à décommenter pour voir les evnmts/ events.values().forEach(x ->
+		// x.forEach(System.out::println));
 
-		//System.out.println(events);
+		// System.out.println(events);
 		Game game = new Game(factions, fields, scenarios, events);
 
 		return game;

@@ -1,0 +1,26 @@
+--class-path
+'C:/Users/Windows/.m2/repository/org/openjfx/javafx-controls/12/javafx-controls-12.jar;C:/Users/Windows/.m2/repository/org/openjfx/javafx-graphics/12/javafx-graphics-12.jar;C:/Users/Windows/.m2/repository/org/openjfx/javafx-base/12/javafx-base-12.jar;C:/Users/Windows/.m2/repository/org/openjfx/javafx-fxml/11.0.1/javafx-fxml-11.0.1.jar'
+--module-path
+'C:/Users/Windows/.m2/repository/org/openjfx/javafx-base/12/javafx-base-12-win.jar;C:/Users/Windows/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar;C:/Users/Windows/.m2/repository/org/openjfx/javafx-fxml/11.0.1/javafx-fxml-11.0.1-win.jar;C:/Users/Windows/.m2/repository/org/openjfx/javafx-controls/12/javafx-controls-12-win.jar;C:/Users/Windows/.m2/repository/org/fusesource/jansi/jansi/2.1.0/jansi-2.1.0.jar;C:/Users/Windows/.m2/repository/org/openjfx/javafx-graphics/12/javafx-graphics-12-win.jar;C:/Users/Windows/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar'
+--patch-module
+dutinfo='D:/Dev/Java/Tropico/src/main/java'
+-encoding
+'UTF-8'
+-protected
+--module-source-path
+'D:/Dev/Java/Tropico/target/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2020. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'D:/Dev/Java/Tropico/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Tropico 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'Tropico 1.0-SNAPSHOT API'

@@ -121,40 +121,41 @@ public class App
     }
 
     /**
-     * Loop to chose the options of the game(Scenario, president's name, island's name)
+     * Loop to chose the options of the game(Scenario, president's name, island's
+     * name)
      *
      */
-    private static void startGameConsole(){
+    private static void startGameConsole() {
         Game game = Game.initGame();
+        System.out.println(Game.MCP.print());
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(System.in);
 
         int partyParameters = 1;
-        while(partyParameters == 1){
-
+        while (partyParameters == 1) {
 
             // Chose a scenario
             List<Scenario> scenarios = game.getScenarios();
             int numScenar = 0;
             do {
                 try {
-                    sb.append("╔═════════════Scenarios══("+scenarios.size()+")═══════════╗\n");
-                    for(int i = 0; i < scenarios.size(); i++){
+                    sb.append("╔═════════════Scenarios══(" + scenarios.size() + ")═══════════╗\n");
+                    for (int i = 0; i < scenarios.size(); i++) {
                         sb.append(i).append(")").append(scenarios.get(i));
                     }
                     sb.append("╚══════════════════════════════════════╝\n");
                     System.out.print(sb);
                     sb.setLength(0);
                     System.out.print("\n");
-                    System.out.print(Color.ANSI_CYAN+ "Pick a scenario: ");
+                    System.out.print(Color.ANSI_CYAN + "Pick a scenario: ");
                     numScenar = scanner.nextInt();
                     System.out.print("\n");
-                }catch (InputMismatchException e) {
-                    System.out.print(Color.ANSI_RED +"Invalid. \n");
+                } catch (InputMismatchException e) {
+                    System.out.print(Color.ANSI_RED + "Invalid. \n");
                     numScenar = 0;
                 }
                 scanner.nextLine();
-            }while(numScenar < 0 || numScenar > scenarios.size()-1);
+            } while (numScenar < 0 || numScenar > scenarios.size() - 1);
 
             // Island's name and President name
             String islandName = "";
@@ -163,43 +164,41 @@ public class App
                 try {
 
                     System.out.print("══----------- What's the name of your island? -----------══\n");
-                    System.out.print(Color.ANSI_CYAN+ "Pick a name: ");
+                    System.out.print(Color.ANSI_CYAN + "Pick a name: ");
                     islandName = scanner.nextLine();
                     System.out.print("\n");
                     System.out.print("══----------- What's your name ? -----------══\n");
-                    System.out.print(Color.ANSI_CYAN+ "Pick a name: ");
+                    System.out.print(Color.ANSI_CYAN + "Pick a name: ");
                     presidentName = scanner.nextLine();
 
-                }catch (InputMismatchException e) {
-                    System.out.print(Color.ANSI_RED +"Invalid. \n");
+                } catch (InputMismatchException e) {
+                    System.out.print(Color.ANSI_RED + "Invalid. \n");
                     islandName = "";
                     presidentName = "";
                 }
-            } while(islandName.isEmpty() || presidentName.isEmpty());
+            } while (islandName.isEmpty() || presidentName.isEmpty());
 
-
-            //Chose difficulty
+            // Chose difficulty
             int difficulty;
             Game.Difficulty gDiff = null;
 
             do {
                 try {
-
                     System.out.print("══----------- Choose the difficulty -----------══\n");
                     System.out.println("1. Easy");
                     System.out.println("2. Normal");
                     System.out.println("3. Hard");
-                    System.out.print(Color.ANSI_CYAN+ "Choice: ");
+                    System.out.print(Color.ANSI_CYAN + "Choice: ");
                     difficulty = scanner.nextInt();
                     System.out.print("\n");
 
-                }catch (InputMismatchException e) {
-                    System.out.print(Color.ANSI_RED +"Invalid. \n");
+                } catch (InputMismatchException e) {
+                    System.out.print(Color.ANSI_RED + "Invalid. \n");
                     difficulty = -1;
                 }
-            } while(difficulty <=0 ||  difficulty > 3);
+            } while (difficulty <= 0 || difficulty > 3);
 
-            switch (difficulty){
+            switch (difficulty) {
                 case 1:
                     gDiff = Game.Difficulty.EASY;
                     break;
@@ -211,8 +210,10 @@ public class App
             }
 
             System.out.print("\n══----------- Your island has been created -----------══\n");
-            System.out.print("You are "+Color.ANSI_YELLOW+presidentName+Color.ANSI_CYAN+", the president of the "+islandName+" island.\n");
-            System.out.print("Your goal is to make "+Color.ANSI_BOLD+Color.ANSI_ORANGE+islandName+Color.ANSI_RESET+Color.ANSI_CYAN+" great again.\n");
+            System.out.print("You are " + Color.ANSI_YELLOW + presidentName + Color.ANSI_CYAN
+                    + ", the president of the " + islandName + " island.\n");
+            System.out.print("Your goal is to make " + Color.ANSI_BOLD + Color.ANSI_ORANGE + islandName
+                    + Color.ANSI_RESET + Color.ANSI_CYAN + " great again.\n");
 
             President president = new President(presidentName);
             partyParameters = 0;
@@ -229,25 +230,41 @@ public class App
     }
 
     /**
-     * @param game The game created with options defined in {@link #startGameConsole() startGameConsole()}
+     * @param game The game created with options defined in
+     *             {@link #startGameConsole() startGameConsole()}
      */
-    private static void launchGame(Game game){
-        System.out.println("\n"+game.getIsland().getPresident().getName()+", the factions on "+game.getIsland().getName()+" are :");
+    private static void launchGame(Game game) {
+        System.out.println("\n" + game.getIsland().getPresident().getName() + ", the factions on "
+                + game.getIsland().getName() + " are :");
         game.getIsland().getFactions().stream().forEach(x -> {
-            System.out.println(Color.ANSI_BOLD+x.getName());
+            System.out.println(Color.ANSI_BOLD + x.getName());
         });
 
-        System.out.println(Color.ANSI_CYAN+""+Color.ANSI_RESET+"\nHere are the industries and their exploitation percentage on "+game.getIsland().getName()+" :");
+        System.out.println(Color.ANSI_CYAN + "" + Color.ANSI_RESET
+                + "\nHere are the industries and their exploitation percentage on " + game.getIsland().getName()
+                + " :");
         game.getIsland().getFields().stream().forEach(x -> {
-            System.out.println(Color.ANSI_CYAN+""+Color.ANSI_BOLD+x.getName()+" "+Color.ANSI_YELLOW+"("+x.getExploitationPercentage()+"%)");
+            System.out.println(Color.ANSI_CYAN + "" + Color.ANSI_BOLD + x.getName() + " " + Color.ANSI_YELLOW + "("
+                    + x.getExploitationPercentage() + "%)");
         });
 
         /* boucle de jeu */
+        Event currentEvent;
+        int i;
         boolean running = true;
-        while(running){
+        game.nexTurn();
+        while (running) {
+            i = 0;
             System.out.println(game.printStats());
+            currentEvent = game.getEvent();
+            System.out.println(
+                    "\n" + Color.ANSI_GREEN + "________ Your action is required  _________\n" + currentEvent + "\n");
+            var actions = currentEvent.getActions();
+            for (; i < actions.size(); i++) {
+                System.out.println(i + ". " + actions.get(i));
+            }
 
-            if(!game.passTurn()){
+            if (!game.nexTurn()) {
                 break;
             }
         }
@@ -256,35 +273,20 @@ public class App
     /**
      * Callable Ansi colors
      */
-    public enum Color{
-        ANSI_ITALIC("\u001B[3m"),
-        ANSI_BOLD ("\u001B[1m"),
-        ANSI_RESET ("\u001B[0m"),
-        ANSI_GREY ("\033[38;5;59m"),
-        ANSI_BLACK ("\u001B[30m"),
-        ANSI_RED ("\u001B[31m"),
-        ANSI_GREEN ("\u001B[32m"),
-        ANSI_YELLOW ("\u001B[33m"),
-        ANSI_BLUE ("\u001B[34m"),
-        ANSI_PURPLE ("\u001B[35m"),
-        ANSI_CYAN ("\u001B[36m"),
-        ANSI_WHITE ("\u001B[37m"),
-        ANSI_ORANGE ("\033[38;5;202m"),
-        ANSI_BBLUE ("\033[38;5;33m"),
-        ANSI_BLACK_BACKGROUND ("\u001B[40m"),
-        ANSI_RED_BACKGROUND("\u001B[41m"),
-        ANSI_GREEN_BACKGROUND ("\u001B[42m"),
-        ANSI_YELLOW_BACKGROUND ("\u001B[43m"),
-        ANSI_BLUE_BACKGROUND ("\u001B[44m"),
-        ANSI_PURPLE_BACKGROUND("\u001B[45m"),
-        ANSI_CYAN_BACKGROUND("\u001B[46m"),
+    public enum Color {
+        ANSI_ITALIC("\u001B[3m"), ANSI_BOLD("\u001B[1m"), ANSI_RESET("\u001B[0m"), ANSI_GREY("\033[38;5;59m"),
+        ANSI_BLACK("\u001B[30m"), ANSI_RED("\u001B[31m"), ANSI_GREEN("\u001B[32m"), ANSI_YELLOW("\u001B[33m"),
+        ANSI_BLUE("\u001B[34m"), ANSI_PURPLE("\u001B[35m"), ANSI_CYAN("\u001B[36m"), ANSI_WHITE("\u001B[37m"),
+        ANSI_ORANGE("\033[38;5;202m"), ANSI_BBLUE("\033[38;5;33m"), ANSI_BLACK_BACKGROUND("\u001B[40m"),
+        ANSI_RED_BACKGROUND("\u001B[41m"), ANSI_GREEN_BACKGROUND("\u001B[42m"), ANSI_YELLOW_BACKGROUND("\u001B[43m"),
+        ANSI_BLUE_BACKGROUND("\u001B[44m"), ANSI_PURPLE_BACKGROUND("\u001B[45m"), ANSI_CYAN_BACKGROUND("\u001B[46m"),
         ANSI_WHITE_BACKGROUND("\u001B[47m");
 
         private final String str;
-        Color(String str){
+
+        Color(String str) {
             this.str = str;
         }
-
 
         @Override
         public java.lang.String toString() {

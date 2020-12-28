@@ -1,3 +1,4 @@
+
 module dutinfo {
 
     opens dutinfo.javafx.controllers;

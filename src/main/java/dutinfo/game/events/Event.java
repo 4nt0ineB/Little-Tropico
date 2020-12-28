@@ -21,8 +21,10 @@ public class Event {
 	private final String packageTitle;
 	private final String title;
 	private List<Action> actions;
+	private final boolean isOnlyARepercussion;
 
-	private Event(Season season, String packageTitle, String eventName, String title, List<Action> actions) {
+	private Event(Season season, String packageTitle, String eventName, String title, List<Action> actions,
+				  Boolean isOnlyARepercussion) {
 
 		this.title = Objects.requireNonNull(title, "Event's title can't be null");
 		this.eventName = Objects.requireNonNull(eventName, "file name can't by null or empty.");
@@ -30,10 +32,13 @@ public class Event {
 		this.packageTitle = Objects.requireNonNull(packageTitle);
 		this.season = season;
 		this.actions = actions;
+		this.isOnlyARepercussion = isOnlyARepercussion;
 	}
-	private Event(){
-		this(Season.Autumn,"package test", "bop", "test event", new ArrayList<>());
+
+	private Event() {
+		this(Season.Autumn, "package test", "bop", "test event", new ArrayList<>(), false);
 	}
+
 	public int getId() {
 		return this.id;
 	}
@@ -52,6 +57,10 @@ public class Event {
 
 	public String getPackageTitle() {
 		return packageTitle;
+	}
+
+	public boolean isOnlyARepercussion() {
+		return isOnlyARepercussion;
 	}
 
 	/**
@@ -87,22 +96,26 @@ public class Event {
 				String title;
 				List<Action> actions = new ArrayList<>();
 
-				season = switch ((int) (long) ev.get("season")){
-					case 0:
-						yield Season.Spring;
-					case 1:
-						yield Season.Summer;
-					case 2:
-						yield Season.Autumn;
-					case 4:
-						yield Season.Winter;
-					default:
-						yield null; // This event don't have a season so he can happen at any time.
-				};
+				try{
+					season = switch ((int) (long) ev.get("season")){
+						case 0:
+							yield Season.Spring;
+						case 1:
+							yield Season.Summer;
+						case 2:
+							yield Season.Autumn;
+						case 4:
+							yield Season.Winter;
+						default:
+							yield null; // This event don't have a season so he can happen at any time.
+					};
+				}catch (Exception e){
+					season = null;
+				}
 
 				//Event name (name of the file)
 				String eventName = f.getName().substring(0,  f.getName().lastIndexOf('.'));
-				if( eventName.isEmpty()) throw new IllegalArgumentException("the name of the file can't be empty.");
+				if(eventName.isEmpty()) throw new IllegalArgumentException("the name of the file can't be empty.");
 
 				// Title : the string of the question/problem itself
 				title = (String) ev.get("title");
@@ -111,12 +124,19 @@ public class Event {
 				//Package title
 				String packageTitle = f.getParentFile().getName();
 
-
+				// Check if the event is only a repercussion to an other event
+				boolean currEventOnlyRepercussion;
+				var x = ev.get("repercussion");
+				if(x == null){
+					currEventOnlyRepercussion = false;
+				}else{
+					currEventOnlyRepercussion = (boolean) x;
+				}
 
 
 				//actions
-				HashMap<Integer, Integer> factionsEffects = new HashMap<>();
-				HashMap<Integer, Integer> fieldsEffects = new HashMap<>();
+				HashMap<Integer, Double> factionsEffects = new HashMap<>();
+				HashMap<Integer, Double> fieldsEffects = new HashMap<>();
 				JSONArray actionsData = (JSONArray) ev.get("actions");
 				actionsData.forEach(a -> {
 					JSONObject action = (JSONObject)  a;
@@ -124,7 +144,7 @@ public class Event {
 
 					String[] properties = {"factions", "fields"};
 					for (String prop: properties
-						 ) {
+					) {
 						JSONArray propArray = (JSONArray) action.get(prop);
 						if(propArray != null){
 							propArray.forEach(obj ->{
@@ -140,7 +160,7 @@ public class Event {
 									}
 								}
 
-								int effect = (int) (long) property.get("effect");
+								double effect = ((Number) property.get("effect")).doubleValue();
 								switch (prop) {
 									// Factions effects
 									case "factions" -> factionsEffects.put(GameUtils.idByHashString(name), effect);
@@ -167,15 +187,14 @@ public class Event {
 				});
 
 
-
-					// Add event to his correspondent package name in hashmap
-					Integer packId = GameUtils.idByHashString(packageTitle);
-					if(!eventsList.containsKey(packId)){
-						eventsList.put(packId, new ArrayList<>());
-					}
-					eventsList.get(packId).add(new Event(season, packageTitle, eventName ,title, actions));
+				// Add event to his correspondent package name in hashmap
+				Integer packId = GameUtils.idByHashString(packageTitle);
+				if(!eventsList.containsKey(packId)){
+					eventsList.put(packId, new ArrayList<>());
+				}
+				eventsList.get(packId).add(new Event(season, packageTitle, eventName ,title, actions, currEventOnlyRepercussion));
 			}catch(Exception e){
-			    //System.out.println(e);
+				System.out.println(e);
 				String scenarioName = f.getParentFile().getName();
 				Set<String> filesName = failedFiles.get(scenarioName);
 				if(null == filesName){
@@ -192,13 +211,13 @@ public class Event {
 	}
 
 	public String toString() {
-		return "Event{" +
-				"\nid=" + id +
-				"\n, eventName='" + eventName + '\'' +
-				"\n, season=" + season +
-				"\n, packageTitle='" + packageTitle + '\'' +
-				"\n, title='" + title + '\'' +
-				"\n, actions=" + actions +
-				'}';
+		return title;
+
+	}
+
+	public String datatoString() {
+		return "Event{" + "\nid=" + id + "\nis repercussion " + isOnlyARepercussion + "\n, eventName='" + eventName
+				+ '\'' + "\n, season=" + season + "\n, packageTitle='" + packageTitle + '\'' + "\n, title='" + title
+				+ '\'' + "\n, actions=" + actions + '}';
 	}
 }

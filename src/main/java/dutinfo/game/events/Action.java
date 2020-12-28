@@ -15,7 +15,8 @@ public class Action {
 	private HashMap<Integer, Integer> fieldsEffects;
 	private Set<Integer> repercussions;
 
-	public Action(String title, HashMap<Integer, Integer> factionsEffects, HashMap<Integer, Integer> fieldsEffects, Set<Integer> repercussions) {
+	public Action(String title, HashMap<Integer, Integer> factionsEffects, HashMap<Integer, Integer> fieldsEffects,
+				  Set<Integer> repercussions) {
 		this.title = Objects.requireNonNull(title, "Action must have a title");
 		int id = GameUtils.idByHashString(title) + 1;
 		incCouterAction();
@@ -24,7 +25,7 @@ public class Action {
 		this.repercussions = repercussions;
 	}
 
-	private void incCouterAction(){
+	private void incCouterAction() {
 		counterAction++;
 	}
 
@@ -45,14 +46,13 @@ public class Action {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String toString() {
+		return title;
+	}
 
 	public String dataToString() {
-		return "Action{" +
-				"\n\tid=" + id +
-				"\n\t, title='" + title + '\'' +
-				"\n\t, factionsEffects=" + factionsEffects +
-				"\n\t, fieldsEffects=" + fieldsEffects +
-				"\n\t, repercussions=" + repercussions +
-				'}';
+		return "Action{" + "\n\tid=" + id + "\n\t, title='" + title + '\'' + "\n\t, factionsEffects=" + factionsEffects
+				+ "\n\t, fieldsEffects=" + fieldsEffects + "\n\t, repercussions=" + repercussions + '}';
 	}
 }

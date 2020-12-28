@@ -1,39 +1,25 @@
 
 {
-  "season" : 2,
-  "title" : "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région.",
+
+  "season" : 0,
+  "repercussion" : false,
+  "title" : "Cuba would like to send you a delegation to bring to you cigars and rum.",
   "actions": [
     {
-      "title": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux.",
+      "title": "Decline politely",
       "factions": [
         {
           "name" : "Communists",
-          "effect": -40
+          "effect": -0.3
         },
         {
           "name" : "Capitalists",
-          "effect": 10
+          "effect": 0.3
         },
         {
           "name" : "Loyalists",
-          "effect": 10
+          "effect": 0.3
         },
-        {
-          "name" : "Militarists",
-          "effect": 10
-        },
-        {
-          "name" : "Ecologists",
-          "effect": 10
-        },
-        {
-          "name" : "Nationalists",
-          "effect": 10
-        },
-        {
-          "name" : "Religious",
-          "effect": 10
-        }
       ],
       "fields" : [
         {
@@ -47,17 +33,9 @@
       ]
     },
     {
-      "season": 2,
-      "title": "Décliner au motif qu’ils ne sont pas de même culte que vous."
-    },
-    {
-      "season": 2,
-      "title": "Accepter sans condition.",
-    },
-    {
-      "season": 2,
-      "title": "Accepter sous conditions d’aide financière de la part de l’OCU."
+      "title": "Accept"
     }
+
   ]
 }
   

@@ -16,16 +16,17 @@ public class GameUtils {
 
     /**
      * Return Object from parsing json file
+     *
      * @param path Path to json file
-     * */
-    public static Object jsonToObject(String path){
+     */
+    public static Object jsonToObject(String path) {
 
-        try(FileReader filereader = new FileReader(new File(path).getAbsolutePath())) {
+        try (FileReader filereader = new FileReader(new File(path).getAbsolutePath())) {
             JSONParser jsonTest = new JSONParser();
             Object jsonObject = jsonTest.parse(filereader);
             return jsonObject;
-        }catch (IOException | ParseException e){
-            //e.printStackTrace();
+        } catch (IOException | ParseException e) {
+            // e.printStackTrace();
         }
         return null;
 
@@ -33,28 +34,30 @@ public class GameUtils {
 
     /**
      * Gives an id from a string input
+     *
      * @param string the string to hash
-     * */
-    public static int idByHashString(String string){
+     */
+    public static int idByHashString(String string) {
         char[] ascii = string.toCharArray();
         int i = 0;
-        for(char c: ascii){ i+=c; }
+        for (char c : ascii) {
+            i += c;
+        }
         return i;
     }
 
-    /** Return the list of json from a directory (File object)
+    /**
+     * Return the list of json from a directory (File object)
+     *
      * @param dir directory where to get the jsons
-     * */
-    public static List<File> allJsonFromDir(File dir){
+     */
+    public static List<File> allJsonFromDir(File dir) {
         assert null != dir;
         return Arrays.stream(Objects.requireNonNull(dir.listFiles())).filter(x -> {
-                String name = x.getName();
-                int i = name.lastIndexOf('.');
-                return (i > 0) && name.substring(i + 1).equals("json");
-            }).collect(Collectors.toList());
+            String name = x.getName();
+            int i = name.lastIndexOf('.');
+            return (i > 0) && name.substring(i + 1).equals("json");
+        }).collect(Collectors.toList());
     }
-
-
-
 
 }

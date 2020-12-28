@@ -14,22 +14,22 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 public class Scenario {
 
     private final int id;
     private final String title;
     private final String description;
     private final double generalSatisfaction;
-    private final HashMap<Integer, Double> facPercentage; //those indicated in "exceptions"
+    private final HashMap<Integer, Double> facPercentage; // those indicated in "exceptions"
     private final int followers;
     private final HashMap<Integer, Double> filPercentage;
     private final double treasure;
     private final Set<Integer> eventPackIds;
     private List<Event> events;
 
-
-    private Scenario(String description, String title, double generalSatisfaction, HashMap<Integer, Double> facPercentage, int followers, HashMap<Integer, Double> filPercentage, int treasure, Set<Integer> packageIds) {
+    private Scenario(String description, String title, double generalSatisfaction,
+                     HashMap<Integer, Double> facPercentage, int followers, HashMap<Integer, Double> filPercentage, int treasure,
+                     Set<Integer> packageIds) {
         this.description = description;
         this.title = Objects.requireNonNull(title);
         assert title.isEmpty() != true;
@@ -42,70 +42,84 @@ public class Scenario {
         this.eventPackIds = packageIds;
     }
 
-
     /**
      * Get a random event from the wanted season
+     *
      * @param season
      * @return
      */
-    public Event getEventOnSeason(Season season){
+    public Event getRandomEventOnSeason(Season season) {
         Objects.requireNonNull(season, "Must give a proper season to get an event depending on season.");
-        return events.parallelStream().filter(x -> x.getSeason() == season || x.getSeason() == null).findFirst().get();
+        return events.parallelStream()
+                .filter(x -> x.getSeason() == season || x.getSeason() == null && !x.isOnlyARepercussion()).findFirst()
+                .get();
 
-        /* VS
-        Collections.shuffle(events);
-        Event ev = null;
-        for (Event e: events
-        ) {
-            if(e.getSeason() == season){
-                ev = e;
-            }
-        }
-        return ev;
-        */
+        /*
+         * VS Collections.shuffle(events); Event ev = null; for (Event e: events ) {
+         * if(e.getSeason() == season){ ev = e; } } return ev;
+         */
     }
 
+    /**
+     * Get a random event
+     *
+     * @return
+     */
+    public Event getRandomEvent() {
+        Collections.shuffle(events);
+        return events.parallelStream().filter(x -> !x.isOnlyARepercussion()).findFirst().get();
+    }
 
     /**
-     * Get the init satisfaction of a faction from the scenario
-     * If found in satisfaction exceptions return it, else return the general satisfaction value
+     * Get the init satisfaction of a faction from the scenario If found in the
+     * exceptions value of satisfaction return it, else return the general
+     * satisfaction value
+     *
      * @param facId id of the faction
      * @return
      */
-    public double getSatisFaction(int facId){
+    public double getSatisFaction(int facId) {
         Double p = facPercentage.get(facId);
-        if(p != null){
+        if (p != null) {
             return p;
         }
         return generalSatisfaction;
     }
 
     /**
-     * Get the init exploitation percentage of a field from the scenario
-     * Throw an error if the id is not found (meaning that its not set in the json of the scenario)
-     * @param  fieldId id of the field
+     * Get the init exploitation percentage of a field from the scenario Throw an
+     * error if the id is not found (meaning that its not set in the json of the
+     * scenario)
+     *
+     * @param fieldId id of the field
      * @return the percentage rate of exploitation
      */
-    public double getExploitField(int fieldId){
+    public double getExploitField(int fieldId) {
         Double p = filPercentage.get(fieldId);
-        if(p != null){
+        if (p != null) {
             return p;
         }
         throw new IllegalArgumentException();
     }
 
+    public double getTreasure() {
+        return treasure;
+    }
 
-    public double getTreasure(){ return treasure; }
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
-    public void setEvents(List<Event> events) { this.events = events; }
+    public Set<Integer> getPackageIds() {
+        return eventPackIds;
+    }
 
-    public Set<Integer> getPackageIds(){ return eventPackIds; }
-
-    /** Return the list of all scenarios objects
+    /**
+     * Return the list of all scenarios objects
+     *
      * @param pathToScenarioDir Path to the scenarios directory
-     * */
-    public static List<Scenario> initScenarios(String pathToScenarioDir){
-
+     */
+    public static List<Scenario> initScenarios(String pathToScenarioDir) {
 
         // All scenarios json
         List<File> scenariosJson = GameUtils.allJsonFromDir(new File(pathToScenarioDir));
@@ -119,13 +133,13 @@ public class Scenario {
             // Global array of the file
             JSONObject ar = (JSONObject) ((Object) GameUtils.jsonToObject(f.getPath()));
 
-            //Title
+            // Title
             String title = f.getName().substring(0, f.getName().lastIndexOf("."));
 
-            //Description
+            // Description
             String description = (String) ((Object) ar.get("description"));
 
-            //Satisfaction and exploitation
+            // Satisfaction and exploitation
             JSONObject satisfaction = (JSONObject) ((Object) ar.get("satisfaction"));
             int generalSatisfaction = (int) (long) satisfaction.get("general");
 
@@ -136,49 +150,46 @@ public class Scenario {
                 JSONObject exc = (JSONObject) fac;
                 String name = (String) exc.get("name");
                 assert (Faction.exist(name));
-                facPercentage.put(
-                        GameUtils.idByHashString(name),
-                        (double) (long) exc.get("percentage")
-                );
+                facPercentage.put(GameUtils.idByHashString(name), (double) (long) exc.get("percentage"));
             });
 
-            //Fields
+            // Fields
             JSONArray fields = (JSONArray) ar.get("fields");
             HashMap<Integer, Double> filPercentage = new HashMap<>();
             fields.forEach(fi -> {
                 JSONObject exc = (JSONObject) fi;
-                filPercentage.put(
-                        GameUtils.idByHashString((String) exc.get("name")),
-                        (double) (long) exc.get("percentage")
-                );
+                filPercentage.put(GameUtils.idByHashString((String) exc.get("name")),
+                        (double) (long) exc.get("percentage"));
             });
 
-            //Followers
+            // Followers
             int followers = (int) (long) ar.get("followers");
-            //Treasure
+            // Treasure
             int treasure = (int) (long) ar.get("treasure");
 
-            //Event packages
+            // Event packages
             Set<Integer> packageIds = new HashSet<>();
-            packageIds.add(GameUtils.idByHashString("Commons")); // <---- Very important : add the common event package (present in each scenario)
+            packageIds.add(GameUtils.idByHashString("Commons")); // <---- Very important : add the common event package
+            // (present in each scenario)
             JSONArray pNames = (JSONArray) ar.get("event_packages");
-            pNames.forEach(x->packageIds.add(GameUtils.idByHashString((String) x)));
+            pNames.forEach(x -> packageIds.add(GameUtils.idByHashString((String) x)));
 
-            scenarios.add(new Scenario(description, title, generalSatisfaction, facPercentage, followers, filPercentage, treasure, packageIds));
-        } );
+            scenarios.add(new Scenario(description, title, generalSatisfaction, facPercentage, followers, filPercentage,
+                    treasure, packageIds));
+        });
         return scenarios;
     }
 
     @Override
     public String toString() {
-        return title+"|"+description+"\n";
+        return title + "|" + description + "\n";
     }
 
-    public String datatoString(){
+    public String datatoString() {
         String str = "\nScenario " + title + "\n";
-        str += "General satisfaction : "+generalSatisfaction+ "\n";
-        str += "Followers by factions : "+followers+"\n";
-        str += "Starting treasure : "+treasure+"\n";
+        str += "General satisfaction : " + generalSatisfaction + "\n";
+        str += "Followers by factions : " + followers + "\n";
+        str += "Starting treasure : " + treasure + "\n";
         return str;
     }
 }

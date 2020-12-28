@@ -15,7 +15,7 @@ public class Island {
 	private List<Field> fields;
 	private Double treasury;
 
-	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury){
+	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury) {
 		this.name = name;
 		this.currentSeason = Season.Spring;
 		this.president = president;
@@ -44,7 +44,7 @@ public class Island {
 		return currentSeason;
 	}
 
-	public void incrementSeason(){
+	public void incrementSeason() {
 
 	}
 
@@ -54,22 +54,16 @@ public class Island {
 
 	/**
 	 * Set the treasury
+	 *
 	 * @param treasury
 	 */
 	public void setTreasury(double treasury) {
 		this.treasury = treasury;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Island{" +
-				"name='" + name + '\'' +
-				", currentSeason=" + currentSeason +
-				", president=" + president +
-				", factions=" + factions +
-				", fields=" + fields +
-				", treasury=" + treasury +
-				'}';
+		return "Island{" + "name='" + name + '\'' + ", currentSeason=" + currentSeason + ", president=" + president
+				+ ", factions=" + factions + ", fields=" + fields + ", treasury=" + treasury + '}';
 	}
 }
