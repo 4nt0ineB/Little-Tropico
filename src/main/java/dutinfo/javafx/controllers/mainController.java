@@ -1,13 +1,20 @@
 package dutinfo.javafx.controllers;
 
 import dutinfo.game.Game;
+import dutinfo.game.environment.Season;
+import dutinfo.game.events.Action;
+import dutinfo.game.events.Event;
 import dutinfo.game.society.President;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import dutinfo.javafx.models.Model;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class mainController implements EventHandler<MouseEvent> {
 
@@ -19,7 +26,20 @@ public class mainController implements EventHandler<MouseEvent> {
     private ImageView sun;
 
     @FXML
-    private Label moneyAmount, season, day, presidente, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label moneyAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+
+    @FXML
+    private Rectangle eventAlert;
+
+    @FXML
+    private ComboBox eventChoice;
+
+    @FXML
+    private Button selectEvent;
+
+    @FXML
+    private Text eventDescription;
+
 
     @Override
     public void handle(MouseEvent e) {
@@ -87,7 +107,42 @@ public class mainController implements EventHandler<MouseEvent> {
         colorPercentages(nationalistsPercentage, game.getFactionByName("Nationalists").getApprobationPercentage());
         colorPercentages(loyalistsPercentage, game.getFactionByName("Loyalists").getApprobationPercentage());
 
+        openEventWindow(game.getEvents(game.getScenario()).get(0));
+    }
 
+    public void submitEventChoice(){
+
+        // TODO: Event choice handler to make
+
+        /* Close event window by setting it to false */
+        closeEventWindow();
+    }
+
+    public void closeEventWindow(){
+        eventAlert.setVisible(false);
+        selectEvent.setVisible(false);
+        eventChoice.setVisible(false);
+        eventDescription.setVisible(false);
+        eventLabel.setVisible(false);
+    }
+
+    public void openEventWindow(Event event){
+        // TODO: Handle Event fields
+
+        eventDescription.setText(event.getTitle());
+
+        for (Action a:
+             event.getActions()) {
+            eventChoice.getItems().add(a.getTitle());
+        }
+        eventChoice.getSelectionModel().select(event.getActions().get(0).getTitle()); // Picking the first option by default
+
+
+        eventAlert.setVisible(true);
+        selectEvent.setVisible(true);
+        eventChoice.setVisible(true);
+        eventDescription.setVisible(true);
+        eventLabel.setVisible(true);
     }
 
 
