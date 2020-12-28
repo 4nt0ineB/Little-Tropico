@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
@@ -7,6 +8,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -228,6 +231,51 @@
          <effect>
             <MotionBlur angle="312.86" />
          </effect>
+      </Label>
+      <Label fx:id="day" alignment="CENTER_RIGHT" layoutX="1163.0" layoutY="1029.0" prefHeight="50.0" prefWidth="753.0" text="Day 0">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#00ccff" />
+                  <Stop color="#00ff60" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <ImageView fitHeight="583.0" fitWidth="547.0" layoutX="24.0" layoutY="504.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@presidente.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="season" layoutX="9.0" layoutY="1030.0" prefHeight="50.0" prefWidth="753.0" text="Current season: ">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <effect>
+            <Glow level="1.0" />
+         </effect>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#00ccff" />
+                  <Stop color="#ffb500" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label fx:id="presidente" alignment="CENTER" layoutX="154.0" layoutY="528.0" prefHeight="24.0" prefWidth="138.0" rotate="-7.6" scaleY="1.65" text="El Presidente">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+         <rotationAxis>
+            <Point3D y="1.0" z="1.0" />
+         </rotationAxis>
       </Label>
    </children>
 </AnchorPane>

@@ -21,6 +21,7 @@ public class App extends Application {
             GridPane root = FXMLLoader.load(getClass().getResource("/view/menu.fxml"));
             Scene scene = new Scene(root, 1920, 1080);
             stage.setScene(scene);
+            stage.setFullScreen(true);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
