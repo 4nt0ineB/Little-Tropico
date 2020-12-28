@@ -11,7 +11,7 @@ import dutinfo.javafx.models.Model;
 
 public class mainController implements EventHandler<MouseEvent> {
 
-    private static Game game = Game.initGame();
+    private static Game game;
 
     private Model appModel = new Model();
 
@@ -25,9 +25,10 @@ public class mainController implements EventHandler<MouseEvent> {
     public void handle(MouseEvent e) {
     }
 
-    public static void initParameters(String difficulty, String islandName, String presidentName){
+    public static void initParameters(Game gameObject, String difficulty, String islandName, String presidentName, String scenario){
+        game = gameObject;
         President president = new President(presidentName);
-        game.setScenario(game.getScenarios().get(0));
+        game.setScenario(game.getScenarios().get(Integer.parseInt(scenario.split(" -")[0]))); // get the scenario number to initialize it
         game.setIsland(islandName, president);
         game.getScenario().setEvents(game.getEvents(game.getScenario()));
         game.setDifficulty(Game.Difficulty.valueOf(difficulty));

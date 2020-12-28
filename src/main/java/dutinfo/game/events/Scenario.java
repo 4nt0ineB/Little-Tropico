@@ -171,7 +171,7 @@ public class Scenario {
 
     @Override
     public String toString() {
-        return "__________________\n|"+title+"|"+description+"\n";
+        return title+"|"+description+"\n";
     }
 
     public String datatoString(){

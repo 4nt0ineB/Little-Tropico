@@ -1,11 +1,9 @@
 package dutinfo.javafx.views;
 
-import dutinfo.game.Game;
-import dutinfo.game.society.President;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
