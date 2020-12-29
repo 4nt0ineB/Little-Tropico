@@ -23,7 +23,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private Model appModel = new Model();
 
     @FXML
-    private ImageView sun;
+    private ImageView sun, vein, sweat;
 
     @FXML
     private Label moneyAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
@@ -85,6 +85,11 @@ public class mainController implements EventHandler<MouseEvent> {
      */
     public void initialize() {
         appModel.startAnimations(sun); // sun rolling
+        selectEvent.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
+
+        // Hide president anger
+        vein.setVisible(false);
+        sweat.setVisible(false);
 
         islandName.setText(game.getIsland().getName());
         presidente.setText(game.getIsland().getPresident().getName());
@@ -118,6 +123,9 @@ public class mainController implements EventHandler<MouseEvent> {
         // TODO: Event choice handler to make
         System.out.println(eventChoice.getSelectionModel().getSelectedItem().toString()); // action chosen by president
 
+        // test: show president anger if he lose pts
+        vein.setVisible(true);
+        sweat.setVisible(true);
 
 
         /* Close event window by setting it to false */

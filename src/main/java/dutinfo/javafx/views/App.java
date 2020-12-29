@@ -14,11 +14,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
 
         try {
             GridPane root = FXMLLoader.load(getClass().getResource("/view/menu.fxml"));
+            root.setStyle("-fx-background-image: url('https://i.imgur.com/Y1uRiCV.jpg')");
             Scene scene = new Scene(root, 1920, 1080);
             stage.setScene(scene);
             stage.setFullScreen(true);
