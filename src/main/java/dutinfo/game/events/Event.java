@@ -179,7 +179,7 @@ public class Event {
 						repO.forEach(p -> { repercussions.add(GameUtils.idByHashString((String) p)); });
 					}
 
-					actions.add(new Action(actionTitle, (HashMap<Integer, Integer>) factionsEffects.clone(), (HashMap<Integer, Integer>) fieldsEffects.clone(), repercussions));
+					actions.add(new Action(actionTitle, (HashMap<Integer, Double>) factionsEffects.clone(), (HashMap<Integer, Double>) fieldsEffects.clone(), repercussions));
 
 					factionsEffects.clear();
 					fieldsEffects.clear();

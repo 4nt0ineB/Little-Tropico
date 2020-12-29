@@ -27,7 +27,7 @@ public enum Season {
 		return id;
 	}
 
-	public Season getNext(Season season) {
+	public static Season getNext(Season season) {
 		Season s = null;
 		switch (season.id) {
 			case 0:

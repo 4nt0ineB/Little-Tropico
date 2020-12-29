@@ -4,6 +4,7 @@ import dutinfo.game.society.Faction;
 import dutinfo.game.society.President;
 import dutinfo.game.society.Field;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Island {
@@ -45,11 +46,30 @@ public class Island {
 	}
 
 	public void incrementSeason() {
-
+		currentSeason = Season.getNext(currentSeason);
 	}
 
 	public President getPresident() {
 		return president;
+	}
+
+
+	public void updateFactionValues(HashMap<Integer, Double> factionsValues){
+		fields.stream().forEach(x -> {
+			var w = factionsValues.get(x.getId());
+			if(w != null){
+				x.setExploitationPercentage(x.getExploitationPercentage()+w);
+			}
+		});
+	}
+
+	public void updateFieldValues(HashMap<Integer, Double> fieldsValues){
+		factions.stream().forEach(x -> {
+			var w = fieldsValues.get(x.getId());
+			if(w != null){
+				x.setApprobationPercentage(x.getApprobationPercentage()+w);
+			}
+		});
 	}
 
 	/**

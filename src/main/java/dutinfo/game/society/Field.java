@@ -24,6 +24,8 @@ public class Field {
         return name;
     }
 
+
+
     public double getExploitationPercentage() {
         return exploitationPercentage;
     }

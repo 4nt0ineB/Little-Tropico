@@ -234,6 +234,7 @@ public class App
      *             {@link #startGameConsole() startGameConsole()}
      */
     private static void launchGame(Game game) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("\n" + game.getIsland().getPresident().getName() + ", the factions on "
                 + game.getIsland().getName() + " are :");
         game.getIsland().getFactions().stream().forEach(x -> {
@@ -263,6 +264,23 @@ public class App
             for (; i < actions.size(); i++) {
                 System.out.println(i + ". " + actions.get(i));
             }
+
+            // Chose difficulty
+            int actionIndex = 0;
+            Game.Difficulty gDiff = null;
+
+            do {
+                try {
+                    System.out.print(Color.ANSI_CYAN + "Choice: ");
+                    actionIndex = scanner.nextInt();
+                    System.out.print("\n");
+                } catch (InputMismatchException e) {
+                    System.out.print(Color.ANSI_RED + "Invalid. \n");
+                    actionIndex = -1;
+                }
+            } while (actionIndex <= 0 || actions.size() > 3);
+
+            game.playAction(actions.get(actionIndex));
 
             if (!game.nexTurn()) {
                 break;

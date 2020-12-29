@@ -2,6 +2,7 @@ package dutinfo.game;
 
 import dutinfo.console.App;
 import dutinfo.game.environment.Island;
+import dutinfo.game.events.Action;
 import dutinfo.game.events.Event;
 import dutinfo.game.events.Scenario;
 import dutinfo.game.society.Faction;
@@ -143,9 +144,11 @@ public class Game {
 	public boolean nexTurn() {
 		event = null;
 		// add total random new event to stack
-		addNextEvents(); //
+		addNextEvents();
 		// get the next valid event and set it has the new current event
 		setCurrentEvent(pickNextEvents());
+		//update the season of the island
+		island.incrementSeason();
 		return !checkLose();
 	}
 
@@ -178,7 +181,6 @@ public class Game {
 		try {
 			return nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.getSeason() == null)
 					.findFirst().get();
-
 		} catch (Exception e) {
 			return null;
 		}
@@ -186,6 +188,11 @@ public class Game {
 
 	public void setCurrentEvent(Event event) {
 		this.event = event;
+	}
+
+	public void playAction(Action action){
+		island.updateFactionValues(action.getFactionsEffects());
+		island.updateFieldValues(action.getFieldsEffects());
 	}
 
 	/**
