@@ -7,19 +7,24 @@
   "actions": [
     {
       "title": "Decline politely",
+      "treasure": 2.0,
+      "food": -1,
       "factions": [
         {
           "name" : "Communists",
-          "effect": -0.3
+          "effect": -0.3,
+          "followers": -1
+
         },
         {
           "name" : "Capitalists",
-          "effect": 0.3
+          "effect": 0.3,
+          "followers": 1
         },
         {
           "name" : "Loyalists",
           "effect": 0.3
-        },
+        }
       ],
       "fields" : [
         {

@@ -16,12 +16,18 @@ import java.util.*;
 public class Game {
 
 	public enum Difficulty {
-		EASY(0.5), NORMAL(1), HARD(2);
+		EASY(0.5, 10), NORMAL(1, 20), HARD(2, 50);
 
 		private double multiplier;
+		private double minGlobalSatisfaction;
 
-		Difficulty(double multiplier) {
+		Difficulty(double multiplier, double minGlobalSatisfaction) {
 			this.multiplier = multiplier;
+			this.minGlobalSatisfaction = minGlobalSatisfaction;
+		}
+
+		public double getMinGlobalSatisfaction(){
+			return minGlobalSatisfaction;
 		}
 	}
 
@@ -56,11 +62,6 @@ public class Game {
 		this.difficulty = difficulty;
 	}
 
-	public void checkDefeat() {
-		// TODO - implement Game.checkDefeat
-		throw new UnsupportedOperationException();
-	}
-
 	public Island getIsland() {
 		return this.island;
 	}
@@ -73,7 +74,10 @@ public class Game {
 		facs.stream().forEach(x -> x.setApprobationPercentage(scenario.getSatisFaction(x.getId())));
 
 		List<Field> fields = FIELDS;
-		fields.stream().forEach(x -> x.setExploitationPercentage(scenario.getExploitField(x.getId())));
+		fields.stream().forEach(x -> {
+			x.setExploitationPercentage(scenario.getExploitField(x.getId()));
+			x.setYieldPercentage(scenario.getFieldYieldPercentage(x.getId()));
+		});
 
 		this.island = new Island(islandName, president, facs, fields, scenario.getTreasure());
 	}
@@ -137,7 +141,7 @@ public class Game {
 	 * @return
 	 */
 	public boolean checkLose() {
-		/// TODO: 27/12/2020
+		// return island.globalSatisfaction > difficulty.getMinGlobalSatisfaction();
 		return true;
 	}
 
@@ -191,8 +195,9 @@ public class Game {
 	}
 
 	public void playAction(Action action){
-		island.updateFactionValues(action.getFactionsEffects());
-		island.updateFieldValues(action.getFieldsEffects());
+		island.updateFactions(action.getFactionsEffects());
+		island.updateFields(action.getFieldsEffects());
+		island.updateFoodUnits(action.getFood());
 	}
 
 	/**

@@ -11,27 +11,39 @@ public class Action {
 	private static int counterAction = 0;
 	private int id;
 	private final String title;
-	private HashMap<Integer, Double> factionsEffects;
+	private final double treasure;
+	private final int food;
+	private HashMap<Integer, Double[]> factionsEffects;
 	private HashMap<Integer, Double> fieldsEffects;
 	private Set<Integer> repercussions;
 
-	public Action(String title, HashMap<Integer, Double> factionsEffects, HashMap<Integer, Double> fieldsEffects,
+
+	public Action(String title, double treasure, int food, HashMap<Integer, Double[]> factionsEffects, HashMap<Integer, Double> fieldsEffects,
 				  Set<Integer> repercussions) {
 		this.title = Objects.requireNonNull(title, "Action must have a title");
 		int id = GameUtils.idByHashString(title) + 1;
 		incCouterAction();
+		this.treasure = treasure;
 		this.factionsEffects = factionsEffects;
 		this.fieldsEffects = fieldsEffects;
 		this.repercussions = repercussions;
+		this.food = food;
 	}
 
-
-	public HashMap<Integer, Double> getFactionsEffects(){
+	public HashMap<Integer, Double[]> getFactionsEffects(){
 		return factionsEffects;
 	}
 
 	public HashMap<Integer, Double> getFieldsEffects(){
 		return fieldsEffects;
+	}
+
+	public double getTreasure(){
+		return treasure;
+	}
+
+	public int getFood(){
+		return  food;
 	}
 
 	private void incCouterAction() {
@@ -46,21 +58,15 @@ public class Action {
 		return this.title;
 	}
 
-	public Double getFactions() {
+	/*public Double getFactions() {
 		return factionsEffects.get(GameUtils.idByHashString("Capitalists"));
-	}
+	}*/
 
-	public int getFields() {
-		// TODO - implement Action.getFields
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public String toString() {
 		return title;
 	}
-
-
 
 
 	public String dataToString() {

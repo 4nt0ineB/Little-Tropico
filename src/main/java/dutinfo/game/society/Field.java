@@ -12,18 +12,24 @@ public class Field {
     private final int id;
     private final String name;
     private double exploitationPercentage;
+    private double yieldPercentage;
 
     private Field(String name) {
         this.name = Objects.requireNonNull(name, "The field muste have a name");
         id = GameUtils.idByHashString(name);
         exploitationPercentage = 0.0d;
         addField(this);
+        yieldPercentage = 0;
     }
 
     public String getName() {
         return name;
+
     }
 
+    public void setYieldPercentage(double yieldPercentage){
+        this.yieldPercentage = yieldPercentage;
+    }
 
 
     public double getExploitationPercentage() {
@@ -64,6 +70,13 @@ public class Field {
     public static boolean exist(String n) {
         return listFields.stream().anyMatch(x -> x.getId() == GameUtils.idByHashString(n));
     }
+
+    public int generateProfit(Double capital){
+        Integer profit = (int) (capital*yieldPercentage);
+        return profit;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

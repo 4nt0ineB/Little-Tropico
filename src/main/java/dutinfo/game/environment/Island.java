@@ -15,6 +15,7 @@ public class Island {
 	private List<Faction> factions;
 	private List<Field> fields;
 	private Double treasury;
+	private int foodUnits;
 
 	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury) {
 		this.name = name;
@@ -23,6 +24,7 @@ public class Island {
 		this.factions = factions;
 		this.fields = fields;
 		this.treasury = treasury;
+		foodUnits = 0;
 	}
 
 	public String getName() {
@@ -41,6 +43,14 @@ public class Island {
 		return treasury;
 	}
 
+	public void updateTreasure(double amount){
+		treasury+=amount;
+	}
+
+	public void updateFoodUnits(int amount){
+		foodUnits+=amount;
+	}
+
 	public Season getSeason() {
 		return currentSeason;
 	}
@@ -54,23 +64,27 @@ public class Island {
 	}
 
 
-	public void updateFactionValues(HashMap<Integer, Double> factionsValues){
-		fields.stream().forEach(x -> {
+
+	public void updateFactions(HashMap<Integer, Double[]> factionsValues){
+		factions.stream().forEach(x -> {
 			var w = factionsValues.get(x.getId());
+			if(w != null){
+				x.setApprobationPercentage(x.getApprobationPercentage()+w[0]);
+				x.setNbrSupporters(x.getNbrSupporters()+w[1].intValue());
+			}
+		});
+	}
+
+	public void updateFields(HashMap<Integer, Double> fieldsValues){
+		fields.stream().forEach(x -> {
+			var w = fieldsValues.get(x.getId());
+
 			if(w != null){
 				x.setExploitationPercentage(x.getExploitationPercentage()+w);
 			}
 		});
 	}
 
-	public void updateFieldValues(HashMap<Integer, Double> fieldsValues){
-		factions.stream().forEach(x -> {
-			var w = fieldsValues.get(x.getId());
-			if(w != null){
-				x.setApprobationPercentage(x.getApprobationPercentage()+w);
-			}
-		});
-	}
 
 	/**
 	 * Set the treasury

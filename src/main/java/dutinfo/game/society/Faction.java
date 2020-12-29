@@ -16,16 +16,24 @@ public class Faction {
 	private int nbrSupporters;
 
 
+
 	public Faction(String name) {
 		this.name = Objects.requireNonNull(name, "Faction must have a name");
 		id = GameUtils.idByHashString(name);
 		approbationPercentage = 0.0d;
 		nbrSupporters = 0;
 		addFaction(this);
+
 	}
+
+
 
 	public int getNbrSupporters(){
 		return nbrSupporters;
+	}
+
+	public void setNbrSupporters(int nbrSupporters) {
+		this.nbrSupporters = nbrSupporters;
 	}
 
 	private static void addFaction(Faction faction){

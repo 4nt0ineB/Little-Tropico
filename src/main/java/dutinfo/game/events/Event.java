@@ -135,7 +135,7 @@ public class Event {
 
 
 				//actions
-				HashMap<Integer, Double> factionsEffects = new HashMap<>();
+				HashMap<Integer, Double[]> factionsEffects = new HashMap<>();
 				HashMap<Integer, Double> fieldsEffects = new HashMap<>();
 				JSONArray actionsData = (JSONArray) ev.get("actions");
 				actionsData.forEach(a -> {
@@ -160,17 +160,58 @@ public class Event {
 									}
 								}
 
-								double effect = ((Number) property.get("effect")).doubleValue();
+								double effect = 0;
+								int followers = 0;
+
+
+								try{
+									effect = ((Number) property.get("effect")).doubleValue();
+								}catch(Exception e){
+								}
+
+								try{
+									followers = (int) (long) property.get("followers");
+								}catch (Exception e){
+								}
+
+
+
+
+								Double[] vals = new Double[3];
 								switch (prop) {
 									// Factions effects
-									case "factions" -> factionsEffects.put(GameUtils.idByHashString(name), effect);
+									case "factions":
+										vals[0]= effect;
+										vals[1]= (double) followers;
+										factionsEffects.put(GameUtils.idByHashString(name), vals);
+
+										break;
 									// Fields effects
-									case "fields" -> fieldsEffects.put(GameUtils.idByHashString(name), effect);
-									default -> throw new IllegalStateException("The property " + prop + " shouldn't exist.");
+									case "fields":
+										fieldsEffects.put(GameUtils.idByHashString(name), effect);
+										break;
+									default:
+										throw new IllegalStateException("The property " + prop + " shouldn't exist.");
 								}
 							});
 						}
 					}
+
+					//Treasure
+					double treasure = 0.0;
+					try{
+						treasure = ((Number) action.get("treasure")).doubleValue();
+					}catch (Exception e){
+
+					}
+
+					//Food
+					int food = 0;
+					try{
+						food = (int) (long) action.get("food");
+					}catch (Exception e){
+					}
+
 
 					// Repercussions
 					Set<Integer> repercussions = new HashSet<>();
@@ -179,7 +220,7 @@ public class Event {
 						repO.forEach(p -> { repercussions.add(GameUtils.idByHashString((String) p)); });
 					}
 
-					actions.add(new Action(actionTitle, (HashMap<Integer, Double>) factionsEffects.clone(), (HashMap<Integer, Double>) fieldsEffects.clone(), repercussions));
+					actions.add(new Action(actionTitle, treasure, food,(HashMap<Integer, Double[]>) factionsEffects.clone(), (HashMap<Integer, Double>) fieldsEffects.clone(), repercussions));
 
 					factionsEffects.clear();
 					fieldsEffects.clear();
