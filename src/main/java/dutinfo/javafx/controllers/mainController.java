@@ -107,17 +107,26 @@ public class mainController implements EventHandler<MouseEvent> {
         colorPercentages(nationalistsPercentage, game.getFactionByName("Nationalists").getApprobationPercentage());
         colorPercentages(loyalistsPercentage, game.getFactionByName("Loyalists").getApprobationPercentage());
 
-        openEventWindow(game.getEvents(game.getScenario()).get(0));
+        openEventWindow(game.getScenario().getRandomEventOnSeason(game.getIsland().getSeason())); // get random event by season
     }
 
+    /**
+     * Function that permits choice to be submitted to the MCP and launched when click on "Select" button during an event choice
+     */
     public void submitEventChoice(){
 
         // TODO: Event choice handler to make
+        System.out.println(eventChoice.getSelectionModel().getSelectedItem().toString()); // action chosen by president
+
+
 
         /* Close event window by setting it to false */
         closeEventWindow();
     }
 
+    /**
+     * Function that sets windows to invisible but it stills here
+     */
     public void closeEventWindow(){
         eventAlert.setVisible(false);
         selectEvent.setVisible(false);
@@ -126,6 +135,10 @@ public class mainController implements EventHandler<MouseEvent> {
         eventLabel.setVisible(false);
     }
 
+    /**
+     * Function that sets window to visible and that autocomplete labels and selection by event
+     * @param event
+     */
     public void openEventWindow(Event event){
         // TODO: Handle Event fields
 
