@@ -324,5 +324,28 @@
             <Image url="@sweat_drop.gif" />
          </image>
       </ImageView>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="69.0" layoutY="316.0" stroke="#0000004a" strokeType="INSIDE" width="224.0" />
+      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="343.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="citizensCount" layoutX="117.0" layoutY="320.0" prefHeight="45.0" prefWidth="177.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <ImageView fitHeight="44.0" fitWidth="44.0" layoutX="29.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@citizens.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <Text fx:id="eventEffects" fill="WHITE" layoutX="366.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event effects" textAlignment="CENTER" wrappingWidth="1206.0">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -1,10 +1,13 @@
 package dutinfo.javafx.controllers;
 
 import dutinfo.game.Game;
+import dutinfo.game.GameUtils;
 import dutinfo.game.environment.Season;
 import dutinfo.game.events.Action;
 import dutinfo.game.events.Event;
 import dutinfo.game.society.President;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,7 +29,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private ImageView sun, vein, sweat;
 
     @FXML
-    private Label moneyAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label moneyAmount, citizensCount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
 
     @FXML
     private Rectangle eventAlert;
@@ -38,7 +41,10 @@ public class mainController implements EventHandler<MouseEvent> {
     private Button selectEvent;
 
     @FXML
-    private Text eventDescription;
+    private Text eventDescription, eventEffects;
+
+    private Event currentEvent;
+    private int currentActionId;
 
 
     @Override
@@ -98,19 +104,14 @@ public class mainController implements EventHandler<MouseEvent> {
         colorPercentages(industryPercentage, game.getFieldByName("Industry").getExploitationPercentage()); // industry
         colorPercentages(farmingPercentage, game.getFieldByName("Agriculture").getExploitationPercentage()); // farming
 
+        citizensCount.setText(game.getScenario().getFollowers()+"");
+
 
         season.setText("Current season: "+game.getIsland().getSeason()); // season
         day.setText("Day 1");
 
         /* FACTIONS */
-        colorPercentages(capitalistsPercentage, game.getFactionByName("Capitalists").getApprobationPercentage());
-        colorPercentages(communistsPercentage, game.getFactionByName("Communists").getApprobationPercentage());
-        colorPercentages(liberalistsPercentage, game.getFactionByName("Liberals").getApprobationPercentage());
-        colorPercentages(religiousPercentage, game.getFactionByName("Religious").getApprobationPercentage());
-        colorPercentages(militaristsPercentage, game.getFactionByName("Militarists").getApprobationPercentage());
-        colorPercentages(ecologistsPercentage, game.getFactionByName("Ecologists").getApprobationPercentage());
-        colorPercentages(nationalistsPercentage, game.getFactionByName("Nationalists").getApprobationPercentage());
-        colorPercentages(loyalistsPercentage, game.getFactionByName("Loyalists").getApprobationPercentage());
+        refreshFactionsPercentages();
 
         openEventWindow(game.getScenario().getRandomEventOnSeason(game.getIsland().getSeason())); // get random event by season
     }
@@ -121,7 +122,10 @@ public class mainController implements EventHandler<MouseEvent> {
     public void submitEventChoice(){
 
         // TODO: Event choice handler to make
-        System.out.println(eventChoice.getSelectionModel().getSelectedItem().toString()); // action chosen by president
+
+        currentActionId = GameUtils.idByHashString(eventChoice.getSelectionModel().getSelectedItem().toString());
+
+        game.playAction(currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == currentActionId).findFirst().get());
 
         // test: show president anger if he lose pts
         vein.setVisible(true);
@@ -130,6 +134,8 @@ public class mainController implements EventHandler<MouseEvent> {
 
         /* Close event window by setting it to false */
         closeEventWindow();
+
+        refreshFactionsPercentages(); // refresh to show new percentages
     }
 
     /**
@@ -141,6 +147,18 @@ public class mainController implements EventHandler<MouseEvent> {
         eventChoice.setVisible(false);
         eventDescription.setVisible(false);
         eventLabel.setVisible(false);
+        eventEffects.setVisible(false);
+    }
+
+    public void refreshFactionsPercentages(){
+        colorPercentages(capitalistsPercentage, game.getFactionByName("Capitalists").getApprobationPercentage());
+        colorPercentages(communistsPercentage, game.getFactionByName("Communists").getApprobationPercentage());
+        colorPercentages(liberalistsPercentage, game.getFactionByName("Liberals").getApprobationPercentage());
+        colorPercentages(religiousPercentage, game.getFactionByName("Religious").getApprobationPercentage());
+        colorPercentages(militaristsPercentage, game.getFactionByName("Militarists").getApprobationPercentage());
+        colorPercentages(ecologistsPercentage, game.getFactionByName("Ecologists").getApprobationPercentage());
+        colorPercentages(nationalistsPercentage, game.getFactionByName("Nationalists").getApprobationPercentage());
+        colorPercentages(loyalistsPercentage, game.getFactionByName("Loyalists").getApprobationPercentage());
     }
 
     /**
@@ -148,9 +166,12 @@ public class mainController implements EventHandler<MouseEvent> {
      * @param event
      */
     public void openEventWindow(Event event){
+
+        this.currentEvent = event;
         // TODO: Handle Event fields
 
         eventDescription.setText(event.getTitle());
+
 
         for (Action a:
              event.getActions()) {
@@ -158,12 +179,23 @@ public class mainController implements EventHandler<MouseEvent> {
         }
         eventChoice.getSelectionModel().select(event.getActions().get(0).getTitle()); // Picking the first option by default
 
+        // auto load auto selected effects
+        eventEffects.setText(currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == GameUtils.idByHashString(event.getActions().get(0).getTitle())).findFirst().get().getFactionsEffects().toString());
+
+        eventChoice.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
+            @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
+                Action temp = currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == GameUtils.idByHashString(newValue)).findFirst().get();
+                eventEffects.setText(temp.getFactionsEffects().toString()); // change label to factions effects TODO: Format data! (shows adress)
+            }
+        });
+
 
         eventAlert.setVisible(true);
         selectEvent.setVisible(true);
         eventChoice.setVisible(true);
         eventDescription.setVisible(true);
         eventLabel.setVisible(true);
+        eventEffects.setVisible(true);
     }
 
 

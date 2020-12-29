@@ -116,6 +116,8 @@ public class Scenario {
         return treasure;
     }
 
+    public int getFollowers(){ return followers; }
+
     public void setEvents(List<Event> events) {
         this.events = events;
     }
