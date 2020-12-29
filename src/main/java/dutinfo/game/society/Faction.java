@@ -24,6 +24,10 @@ public class Faction {
 		addFaction(this);
 	}
 
+	public int getNbrSupporters(){
+		return nbrSupporters;
+	}
+
 	private static void addFaction(Faction faction){
 		listFactions.add(faction);
 	}
