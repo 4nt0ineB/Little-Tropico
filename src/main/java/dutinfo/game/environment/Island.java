@@ -95,6 +95,18 @@ public class Island {
 		this.treasury = treasury;
 	}
 
+	public int totalSupporters(){
+
+		return factions.stream().mapToInt(x -> x.getNbrSupporters()).sum();
+	}
+
+	public double globalSatisfaction(){
+		System.out.println(totalSupporters());
+		int totalsupp = totalSupporters();
+		return (totalsupp != 0)? factions.stream().mapToDouble(x -> x.getNbrSupporters()*x.getApprobationPercentage()).sum()/totalsupp : 0;
+
+	}
+
 	@Override
 	public String toString() {
 		return "Island{" + "name='" + name + '\'' + ", currentSeason=" + currentSeason + ", president=" + president

@@ -159,8 +159,9 @@ public class Game {
 	 * @return
 	 */
 	public boolean checkLose() {
-		// return island.globalSatisfaction > difficulty.getMinGlobalSatisfaction();
-		return true;
+		System.out.println(island.globalSatisfaction());
+		return island.globalSatisfaction() > difficulty.getMinGlobalSatisfaction();
+		//return true;
 	}
 
 	public boolean nexTurn() {
