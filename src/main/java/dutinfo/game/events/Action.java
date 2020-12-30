@@ -73,4 +73,43 @@ public class Action {
 		return "Action{" + "\n\tid=" + id + "\n\t, title='" + title + '\'' + "\n\t, factionsEffects=" + factionsEffects
 				+ "\n\t, fieldsEffects=" + fieldsEffects + "\n\t, repercussions=" + repercussions + '}';
 	}
+
+	public String getEffectsPercentagesToString(){
+		StringBuilder sb = new StringBuilder();
+
+		for (Integer name: factionsEffects.keySet()){
+			String key = name.toString();
+			String value = factionsEffects.get(name)[0].toString();
+			if (value.startsWith("-")){
+				sb.append(key + " " + value+"%, "); // shows faction -XX%,
+			} else {
+				sb.append(key + " +" + value+"%, "); // shows faction +XX%,
+			}
+		}
+
+		sb.append("\n");
+
+		for (Integer name: fieldsEffects.keySet()){
+			String key = name.toString();
+			String value = fieldsEffects.get(name).toString();
+			if (value.startsWith("-")){
+				sb.append(key + " " + value+"%, "); // shows field -XX%,
+			} else {
+				sb.append(key + " +" + value+"%, "); // shows field +XX%,
+			}
+		}
+		return sb.toString();
+	}
+
+	public String getEffectsToString() {
+		StringBuilder sb = new StringBuilder();
+
+		if (food < 0 && food != 0){
+			sb.append("" + food+", "); // shows field -XX%,
+		} else if (food != 0) {
+			sb.append("+" + food+", "); // shows field +XX%,
+		}
+
+		return sb.toString();
+	}
 }
