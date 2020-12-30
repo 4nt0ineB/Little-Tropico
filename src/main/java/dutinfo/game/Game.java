@@ -86,6 +86,24 @@ public class Game {
 		this.scenario = scenario;
 	}
 
+	public static String getFactionNameById(int id){
+		try{
+			Faction f =  FACTIONS.stream().filter(x -> x.getId() == id).findFirst().get();
+			return f.getName();
+		}catch (Exception e){
+			return "";
+		}
+	}
+
+	public static String getFieldNameById(int id){
+		try{
+			Field f =  FIELDS.stream().filter(x -> x.getId() == id).findFirst().get();
+			return f.getName();
+		}catch (Exception e){
+			return "";
+		}
+	}
+
 	public Scenario getScenario() {
 		return this.scenario;
 	}

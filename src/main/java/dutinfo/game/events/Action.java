@@ -1,5 +1,6 @@
 package dutinfo.game.events;
 
+import dutinfo.game.Game;
 import dutinfo.game.GameUtils;
 
 import java.util.HashMap;
@@ -73,43 +74,31 @@ public class Action {
 		return "Action{" + "\n\tid=" + id + "\n\t, title='" + title + '\'' + "\n\t, factionsEffects=" + factionsEffects
 				+ "\n\t, fieldsEffects=" + fieldsEffects + "\n\t, repercussions=" + repercussions + '}';
 	}
-
+	//faction and field
 	public String getEffectsPercentagesToString(){
 		StringBuilder sb = new StringBuilder();
 
-		for (Integer name: factionsEffects.keySet()){
-			String key = name.toString();
-			String value = factionsEffects.get(name)[0].toString();
-			if (value.startsWith("-")){
-				sb.append(key + " " + value+"%, "); // shows faction -XX%,
-			} else {
-				sb.append(key + " +" + value+"%, "); // shows faction +XX%,
-			}
-		}
+		factionsEffects.entrySet().forEach((x -> {
+			String approb = (x.getValue()[0] != 0.0) ? ( (x.getValue()[0].toString().startsWith("-")) ?  "": "+") + x.getValue()[0] + ((x.getValue()[1] == 0)?"%, " :"% "): "";
+			String foll = (x.getValue()[1] != 0) ? ( (x.getValue()[0].toString().startsWith("-")) ?  "": "+") +x.getValue()[1].intValue()+" Supporters, ": "";
+			String cct = (!(approb.isEmpty() && foll.isEmpty())) ? Game.getFactionNameById(x.getKey())  + " " + approb  + " " + foll : "";
+			sb.append(cct);
+		}));
 
 		sb.append("\n");
 
-		for (Integer name: fieldsEffects.keySet()){
-			String key = name.toString();
-			String value = fieldsEffects.get(name).toString();
-			if (value.startsWith("-")){
-				sb.append(key + " " + value+"%, "); // shows field -XX%,
-			} else {
-				sb.append(key + " +" + value+"%, "); // shows field +XX%,
-			}
-		}
+		fieldsEffects.entrySet().forEach((x -> {
+			String cct = (x.getValue() != 0) ?Game.getFieldNameById(x.getKey())  + " " + ( (x.getValue().toString().startsWith("-")) ?  "": "+")+x.getValue()+"%, ": "";
+			sb.append(cct);
+		}));
+
 		return sb.toString();
 	}
 
+	// treasure and food
 	public String getEffectsToString() {
-		StringBuilder sb = new StringBuilder();
-
-		if (food < 0 && food != 0){
-			sb.append("" + food+", "); // shows field -XX%,
-		} else if (food != 0) {
-			sb.append("+" + food+", "); // shows field +XX%,
-		}
-
-		return sb.toString();
+		String fo = (food < 0 && food != 0) ? "" + food+", ": (food != 0) ? "+" + food+", " : "";
+		String tr = (treasure < 0 && treasure != 0) ? "" + treasure+", ": (treasure != 0) ? "" + food+", " : "";
+		return ((!tr.isEmpty()) ? "Treasure "+tr: "") + ((!fo.isEmpty()) ? "Food "+fo: "");
 	}
 }

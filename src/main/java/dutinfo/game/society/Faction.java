@@ -26,8 +26,6 @@ public class Faction {
 
 	}
 
-
-
 	public int getNbrSupporters(){
 		return nbrSupporters;
 	}

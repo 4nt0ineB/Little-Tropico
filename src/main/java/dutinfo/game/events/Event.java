@@ -246,6 +246,7 @@ public class Event {
 					failedFiles.get(scenarioName).add(f.getName());
 					Game.MCP.addFailedEventFile(failedFiles); // put in a error history
 				}
+
 			}
 		}
 		return eventsList;

@@ -7,8 +7,8 @@
   "actions": [
     {
       "title": "Decline politely",
-      "treasure": 2.0,
-      "food": -1,
+      "treasure": 2.65,
+      "food": -12,
       "factions": [
         {
           "name" : "Communists",
@@ -38,8 +38,38 @@
       ]
     },
     {
-      "title": "Accept"
+      "title": "Accept",
+      "treasure": -130.0,
+      "food": 100,
+      "factions": [
+        {
+          "name" : "Communists",
+          "effect": -0.3,
+          "followers": -1
+
+        },
+        {
+          "name" : "Capitalists",
+          "effect": -2,
+          "followers": 15
+        },
+        {
+          "name" : "Loyalists",
+          "effect": -0.12
+        }
+      ],
+      "fields" : [
+        {
+          "name" : "Industry",
+          "effect": 15
+        },
+        {
+          "name" : "Agriculture",
+          "effect": 10
+        }
+      ]
     }
+
 
   ]
 }
