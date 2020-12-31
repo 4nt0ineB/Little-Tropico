@@ -173,7 +173,7 @@ public class Game {
 		return !(island.globalSatisfaction() > difficulty.getMinGlobalSatisfaction());
 	}
 
-	public boolean nexTurn() {
+	public boolean nextTurn() {
 		event = null;
 		// add total random new event to stack
 		addNextEvents();
@@ -227,6 +227,7 @@ public class Game {
 		island.updateFactions(action.getFactionsEffects());
 		island.updateFields(action.getFieldsEffects());
 		island.updateFoodUnits(action.getFood());
+		island.updateTreasure(action.getTreasure());
 	}
 
 	/**

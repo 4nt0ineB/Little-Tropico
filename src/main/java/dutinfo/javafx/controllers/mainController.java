@@ -30,7 +30,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private ImageView sun, vein, sweat;
 
     @FXML
-    private Label moneyAmount, citizensCount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label moneyAmount, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
 
     @FXML
     private Rectangle eventAlert;
@@ -77,16 +77,19 @@ public class mainController implements EventHandler<MouseEvent> {
      * @param element
      * @param percentage
      */
-    public void colorPercentages(Label element, double percentage){
+    public void colorPercentages(Label element, double percentage, int supporters){
         if (percentage <= 50 && percentage > 20){
-            element.setText(percentage+"%");
             element.setStyle("-fx-text-fill: #d9a400;");
         } else if (percentage <= 20){
-            element.setText(percentage+"%");
             element.setStyle("-fx-text-fill: #ff0000;");
         } else if (percentage > 60){
-            element.setText(percentage+"%");
             element.setStyle("-fx-text-fill: #38ae38;");
+        }
+
+        if (supporters != -1){
+            element.setText(percentage+"% / "+ supporters);
+        } else {
+            element.setText(percentage+"%");
         }
     }
 
@@ -104,9 +107,8 @@ public class mainController implements EventHandler<MouseEvent> {
         islandName.setText(game.getIsland().getName());
         presidente.setText(game.getIsland().getPresident().getName());
         moneyAmount.setText("$"+game.getIsland().getTreasury()); // Treasury
-
-
-        citizensCount.setText(game.getScenario().getFollowers()+"");
+        foodAmount.setText(game.getIsland().getFoodUnits()+"");
+        citizensCount.setText(game.getIsland().totalSupporters()+"");
 
 
         season.setText("Current season: "+game.getIsland().getSeason()); // season
@@ -115,7 +117,8 @@ public class mainController implements EventHandler<MouseEvent> {
         /* PERCENTAGES */
         refreshPercentages();
 
-        openEventWindow(game.getScenario().getRandomEventOnSeason(game.getIsland().getSeason())); // get random event by season
+        game.nextTurn();
+        openEventWindow(game.getEvent()); // get random event by season
     }
 
     /**
@@ -156,18 +159,24 @@ public class mainController implements EventHandler<MouseEvent> {
     }
 
     public void refreshPercentages(){
-        colorPercentages(industryPercentage, game.getFieldByName("Industry").getExploitationPercentage()); // industry
-        colorPercentages(farmingPercentage, game.getFieldByName("Agriculture").getExploitationPercentage()); // farming
+        /* STATIC */
+        moneyAmount.setText("$"+game.getIsland().getTreasury()); // Treasury
+        foodAmount.setText(game.getIsland().getFoodUnits()+"");
+        citizensCount.setText(game.getIsland().totalSupporters()+"");
+
+
+        colorPercentages(industryPercentage, game.getFieldByName("Industry").getExploitationPercentage(), -1); // industry
+        colorPercentages(farmingPercentage, game.getFieldByName("Agriculture").getExploitationPercentage(), -1); // farming
 
         /* FACTIONS */
-        colorPercentages(capitalistsPercentage, game.getFactionByName("Capitalists").getApprobationPercentage());
-        colorPercentages(communistsPercentage, game.getFactionByName("Communists").getApprobationPercentage());
-        colorPercentages(liberalistsPercentage, game.getFactionByName("Liberals").getApprobationPercentage());
-        colorPercentages(religiousPercentage, game.getFactionByName("Religious").getApprobationPercentage());
-        colorPercentages(militaristsPercentage, game.getFactionByName("Militarists").getApprobationPercentage());
-        colorPercentages(ecologistsPercentage, game.getFactionByName("Ecologists").getApprobationPercentage());
-        colorPercentages(nationalistsPercentage, game.getFactionByName("Nationalists").getApprobationPercentage());
-        colorPercentages(loyalistsPercentage, game.getFactionByName("Loyalists").getApprobationPercentage());
+        colorPercentages(capitalistsPercentage, game.getFactionByName("Capitalists").getApprobationPercentage(), game.getFactionByName("Capitalists").getNbrSupporters());
+        colorPercentages(communistsPercentage, game.getFactionByName("Communists").getApprobationPercentage(), game.getFactionByName("Communists").getNbrSupporters());
+        colorPercentages(liberalistsPercentage, game.getFactionByName("Liberals").getApprobationPercentage(), game.getFactionByName("Liberals").getNbrSupporters());
+        colorPercentages(religiousPercentage, game.getFactionByName("Religious").getApprobationPercentage(), game.getFactionByName("Religious").getNbrSupporters());
+        colorPercentages(militaristsPercentage, game.getFactionByName("Militarists").getApprobationPercentage(), game.getFactionByName("Militarists").getNbrSupporters());
+        colorPercentages(ecologistsPercentage, game.getFactionByName("Ecologists").getApprobationPercentage(), game.getFactionByName("Ecologists").getNbrSupporters());
+        colorPercentages(nationalistsPercentage, game.getFactionByName("Nationalists").getApprobationPercentage(), game.getFactionByName("Nationalists").getNbrSupporters());
+        colorPercentages(loyalistsPercentage, game.getFactionByName("Loyalists").getApprobationPercentage(), game.getFactionByName("Loyalists").getNbrSupporters());
     }
 
     /**
