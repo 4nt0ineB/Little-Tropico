@@ -19,16 +19,17 @@ public class Scenario {
     private final int id;
     private final String title;
     private final String description;
-    private final double generalSatisfaction;
-    private final HashMap<Integer, Double> facPercentage; // those indicated in "exceptions"
+    private final float generalSatisfaction;
+    private final HashMap<Integer, Float> facPercentage; // those indicated in "exceptions"
     private final int followers;
-    private final HashMap<Integer, Double[]> filPercentage;
-    private final double treasure;
+    private final HashMap<Integer, Float[]> filPercentage;
+    private final float treasure;
+
     private final Set<Integer> eventPackIds;
     private List<Event> events;
 
-    private Scenario(String description, String title, double generalSatisfaction,
-                     HashMap<Integer, Double> facPercentage, int followers, HashMap<Integer, Double[]> filPercentage, int treasure,
+    private Scenario(String description, String title, float generalSatisfaction,
+                     HashMap<Integer, Float> facPercentage, int followers, HashMap<Integer, Float[]> filPercentage, int treasure,
                      Set<Integer> packageIds) {
         this.description = description;
         this.title = Objects.requireNonNull(title);
@@ -78,8 +79,8 @@ public class Scenario {
      * @param facId id of the faction
      * @return
      */
-    public double getSatisFaction(int facId) {
-        Double p = facPercentage.get(facId);
+    public float getSatisFaction(int facId) {
+        Float p = facPercentage.get(facId);
         if (p != null) {
             return p;
         }
@@ -94,16 +95,16 @@ public class Scenario {
      * @param fieldId id of the field
      * @return the percentage rate of exploitation
      */
-    public double getExploitField(int fieldId) {
-        Double p = filPercentage.get(fieldId)[0];
+    public float getExploitField(int fieldId) {
+        Float p = filPercentage.get(fieldId)[0];
         if (p != null) {
             return p;
         }
         throw new IllegalArgumentException("field doesn't exist");
     }
 
-    public double getFieldYieldPercentage(int fieldId) {
-        Double p = filPercentage.get(fieldId)[1];
+    public float getFieldYieldPercentage(int fieldId) {
+        Float p = filPercentage.get(fieldId)[1];
         if (p != null) {
             return p;
         }
@@ -112,7 +113,7 @@ public class Scenario {
 
 
 
-    public double getTreasure() {
+    public float getTreasure() {
         return treasure;
     }
 
@@ -156,35 +157,33 @@ public class Scenario {
             int generalSatisfaction = (int) (long) satisfaction.get("general");
 
             JSONArray factionException = (JSONArray) satisfaction.get("exceptions");
-            HashMap<Integer, Double> facPercentage = new HashMap<>();
+            HashMap<Integer, Float> facPercentage = new HashMap<>();
 
             factionException.forEach(fac -> {
                 JSONObject exc = (JSONObject) fac;
                 String name = (String) exc.get("name");
                 assert (Faction.exist(name));
-                facPercentage.put(GameUtils.idByHashString(name), (double) (long) exc.get("percentage"));
+                facPercentage.put(GameUtils.idByHashString(name), (float) (long) exc.get("percentage"));
             });
 
             // Fields
             JSONArray fields = (JSONArray) ar.get("fields");
-            HashMap<Integer, Double[]> filPercentage = new HashMap<>();
+            HashMap<Integer, Float[]> filPercentage = new HashMap<>();
             fields.forEach(fi -> {
                 JSONObject exc = (JSONObject) fi;
 
-                Double[] vals = new Double[2];
+                Float[] vals = new Float[2];
                 int yieldPercent;
                 try{
-                    vals[0] = (double) (long) exc.get("percentage");
+                    vals[0] = (float) (long) exc.get("percentage");
                 }catch (Exception e){
-                    vals[0] = (double) generalSatisfaction;
+                    vals[0] = (float) generalSatisfaction;
                 }
                 try{
-                    vals[1] = ((int) (long) exc.get("yield"))*1.0;
+                    vals[1] = ((float) (long) exc.get("yield"));
                 }catch (Exception e){
-                    vals[1] = 0.0;
+                    vals[1] = 0f;
                 }
-
-
                 filPercentage.put(GameUtils.idByHashString((String) exc.get("name")),vals);
             });
 

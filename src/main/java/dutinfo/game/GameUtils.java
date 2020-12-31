@@ -2,11 +2,13 @@ package dutinfo.game;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import com.google.gson.stream.JsonReader;
+
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +60,14 @@ public class GameUtils {
             int i = name.lastIndexOf('.');
             return (i > 0) && name.substring(i + 1).equals("json");
         }).collect(Collectors.toList());
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }

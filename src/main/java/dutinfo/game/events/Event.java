@@ -135,8 +135,8 @@ public class Event {
 
 
 				//actions
-				HashMap<Integer, Double[]> factionsEffects = new HashMap<>();
-				HashMap<Integer, Double> fieldsEffects = new HashMap<>();
+				HashMap<Integer, Float[]> factionsEffects = new HashMap<>();
+				HashMap<Integer, Float> fieldsEffects = new HashMap<>();
 				JSONArray actionsData = (JSONArray) ev.get("actions");
 				actionsData.forEach(a -> {
 					JSONObject action = (JSONObject)  a;
@@ -160,12 +160,12 @@ public class Event {
 									}
 								}
 
-								double effect = 0;
+								float effect = 0;
 								int followers = 0;
 
 
 								try{
-									effect = ((Number) property.get("effect")).doubleValue();
+									effect = (float) ((Number) property.get("effect")).doubleValue();
 								}catch(Exception e){
 								}
 
@@ -177,12 +177,12 @@ public class Event {
 
 
 
-								Double[] vals = new Double[3];
+								Float[] vals = new Float[3];
 								switch (prop) {
 									// Factions effects
 									case "factions":
 										vals[0]= effect;
-										vals[1]= (double) followers;
+										vals[1]= (float) followers;
 										factionsEffects.put(GameUtils.idByHashString(name), vals);
 
 										break;
@@ -198,9 +198,9 @@ public class Event {
 					}
 
 					//Treasure
-					double treasure = 0.0;
+					float treasure = 0.0f;
 					try{
-						treasure = ((Number) action.get("treasure")).doubleValue();
+						treasure = (float) ((Number) action.get("treasure")).doubleValue();
 					}catch (Exception e){
 
 					}
@@ -220,7 +220,7 @@ public class Event {
 						repO.forEach(p -> { repercussions.add(GameUtils.idByHashString((String) p)); });
 					}
 
-					actions.add(new Action(actionTitle, treasure, food,(HashMap<Integer, Double[]>) factionsEffects.clone(), (HashMap<Integer, Double>) fieldsEffects.clone(), repercussions));
+					actions.add(new Action(actionTitle, treasure, food,(HashMap<Integer, Float[]>) factionsEffects.clone(), (HashMap<Integer, Float>) fieldsEffects.clone(), repercussions));
 
 					factionsEffects.clear();
 					fieldsEffects.clear();

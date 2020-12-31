@@ -12,7 +12,7 @@ public class Faction {
 
 	private final int id;
 	private final String name;
-	private Double approbationPercentage;
+	private float approbationPercentage;
 	private int nbrSupporters;
 
 
@@ -20,7 +20,7 @@ public class Faction {
 	public Faction(String name) {
 		this.name = Objects.requireNonNull(name, "Faction must have a name");
 		id = GameUtils.idByHashString(name);
-		approbationPercentage = 0.0d;
+		approbationPercentage = 0;
 		nbrSupporters = 0;
 		addFaction(this);
 
@@ -31,7 +31,12 @@ public class Faction {
 	}
 
 	public void setNbrSupporters(int nbrSupporters) {
-		this.nbrSupporters = nbrSupporters;
+		if(nbrSupporters <= 0){
+			this.nbrSupporters = 0;
+		}else{
+			this.nbrSupporters = nbrSupporters;
+		}
+
 	}
 
 	private static void addFaction(Faction faction){
@@ -67,14 +72,22 @@ public class Faction {
 	 * Set the approbation percentage rate
 	 * @param approbationPercentage Approbation percentage
 	 */
-	public void setApprobationPercentage(double approbationPercentage) {
-		this.approbationPercentage = approbationPercentage;
+	public void setApprobationPercentage(float approbationPercentage) {
+		if (GameUtils.round(approbationPercentage, 1) == 0.0){
+			;
+		}else if(approbationPercentage >= 100){
+				this.approbationPercentage = 100;
+			}else if(approbationPercentage <= 0){
+				this.approbationPercentage = 0;
+			}else{
+				this.approbationPercentage = approbationPercentage;
+			}
 	}
 
 	/**
 	 * Get the approbation percentage rate
 	 */
-	public Double getApprobationPercentage() {
+	public float getApprobationPercentage() {
 		return this.approbationPercentage;
 	}
 

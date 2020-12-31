@@ -103,7 +103,7 @@ public class mainController implements EventHandler<MouseEvent> {
 
         islandName.setText(game.getIsland().getName());
         presidente.setText(game.getIsland().getPresident().getName());
-        moneyAmount.setText("$"+game.getIsland().getTreasury().toString()); // Treasury
+        moneyAmount.setText("$"+game.getIsland().getTreasury()); // Treasury
 
 
         citizensCount.setText(game.getScenario().getFollowers()+"");

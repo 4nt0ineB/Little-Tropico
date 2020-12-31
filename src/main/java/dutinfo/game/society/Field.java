@@ -11,13 +11,13 @@ public class Field {
     private static Set<Field> listFields = new HashSet<>();
     private final int id;
     private final String name;
-    private double exploitationPercentage;
-    private double yieldPercentage;
+    private float exploitationPercentage;
+    private float yieldPercentage;
 
     private Field(String name) {
         this.name = Objects.requireNonNull(name, "The field muste have a name");
         id = GameUtils.idByHashString(name);
-        exploitationPercentage = 0.0d;
+        exploitationPercentage = 0;
         addField(this);
         yieldPercentage = 0;
     }
@@ -27,12 +27,12 @@ public class Field {
 
     }
 
-    public void setYieldPercentage(double yieldPercentage){
+    public void setYieldPercentage(float yieldPercentage){
         this.yieldPercentage = yieldPercentage;
     }
 
 
-    public double getExploitationPercentage() {
+    public float getExploitationPercentage() {
         return exploitationPercentage;
     }
 
@@ -41,8 +41,14 @@ public class Field {
      *
      * @param exploitationPercentage Approbation percentage
      */
-    public void setExploitationPercentage(double exploitationPercentage) {
-        this.exploitationPercentage = exploitationPercentage;
+    public void setExploitationPercentage(float exploitationPercentage) {
+        if(exploitationPercentage >= 100){
+            this.exploitationPercentage = 100;
+        }else if(exploitationPercentage <= 0){
+            this.exploitationPercentage = 100;
+        }else{
+            this.exploitationPercentage = exploitationPercentage;
+        }
     }
 
     public static List<Field> initField(String pathToFieldsFile) {
@@ -71,7 +77,7 @@ public class Field {
         return listFields.stream().anyMatch(x -> x.getId() == GameUtils.idByHashString(n));
     }
 
-    public int generateProfit(Double capital){
+    public int generateProfit(float capital){
         Integer profit = (int) (capital*yieldPercentage);
         return profit;
     }

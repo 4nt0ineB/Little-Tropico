@@ -1,11 +1,14 @@
 package dutinfo.game.environment;
 
+import dutinfo.game.Game;
+import dutinfo.game.GameUtils;
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.President;
 import dutinfo.game.society.Field;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Island {
 
@@ -14,10 +17,10 @@ public class Island {
 	private President president;
 	private List<Faction> factions;
 	private List<Field> fields;
-	private Double treasury;
+	private float treasury;
 	private int foodUnits;
 
-	public Island(String name, President president, List<Faction> factions, List<Field> fields, double treasury) {
+	public Island(String name, President president, List<Faction> factions, List<Field> fields, float treasury) {
 		this.name = name;
 		this.currentSeason = Season.Spring;
 		this.president = president;
@@ -25,6 +28,10 @@ public class Island {
 		this.fields = fields;
 		this.treasury = treasury;
 		foodUnits = 0;
+	}
+
+	public int getFoodUnits(){
+		return foodUnits;
 	}
 
 	public String getName() {
@@ -39,7 +46,7 @@ public class Island {
 		return fields;
 	}
 
-	public Double getTreasury() {
+	public float getTreasury() {
 		return treasury;
 	}
 
@@ -63,10 +70,21 @@ public class Island {
 		return president;
 	}
 
+	private float getNewValueField(Field field, float inputV){
+		float t = 0;
+		t+= fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Industry")).findFirst().get().getExploitationPercentage();
+		t+= fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get().getExploitationPercentage();
+		if(t >= 100){
+			return 0;
+		}
+		if((inputV + t)>= 100){
+			return 100;
+		}
+		return inputV;
+	}
 
-
-	public void updateFactions(HashMap<Integer, Double[]> factionsValues){
-		factions.stream().forEach(x -> {
+	public void updateFactions(HashMap<Integer, Float[]> factionsValues){
+		factions.parallelStream().forEach(x -> {
 			var w = factionsValues.get(x.getId());
 			if(w != null){
 				x.setApprobationPercentage(x.getApprobationPercentage()+w[0]);
@@ -75,35 +93,71 @@ public class Island {
 		});
 	}
 
-	public void updateFields(HashMap<Integer, Double> fieldsValues){
+	public void updateFields(HashMap<Integer, Float> fieldsValues){
 		fields.stream().forEach(x -> {
 			var w = fieldsValues.get(x.getId());
-
+			float sum = x.getExploitationPercentage();
 			if(w != null){
-				x.setExploitationPercentage(x.getExploitationPercentage()+w);
+				if(x.getId() == GameUtils.idByHashString("Agriculture") || x.getId() == GameUtils.idByHashString("Industry")){
+					if(w > 0){
+						sum+=getNewValueField(x, w);
+					}
+				}else{
+					sum+=w;
+				}
+				x.setExploitationPercentage(sum);
 			}
 		});
 	}
 
+	public void generateYearlyResources(){ // Début d'année
+		treasury+=fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Industry")).findFirst().get().generateProfit(treasury);
+		foodUnits+=fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get().generateProfit((float)foodUnits);
+	}
+
+	public void updateSeasonResources(){ //début du tour
+		//treasure : the dept
+		if(treasury < 0){
+			treasury+=(treasury)*(-0.2);
+		}
+		if((totalSupporters()*4)/foodUnits < 1){ //kill
+			int s = totalSupporters();
+			while ((s*4)/foodUnits < 1){
+				 s--;
+			}
+			randomlyKillPeople(s);
+		}else{ //create
+
+		}
+		//food ~ //supporters : kill or create
+	}
+
+	private void randomlyKillPeople(int n){
+
+	}
 
 	/**
 	 * Set the treasury
 	 *
 	 * @param treasury
 	 */
-	public void setTreasury(double treasury) {
+	public void setTreasury(float treasury) {
 		this.treasury = treasury;
 	}
 
 	public int totalSupporters(){
-
-		return factions.stream().mapToInt(x -> x.getNbrSupporters()).sum();
+		int x = 0;
+		for (var f: factions
+			 ) {
+			x+=f.getNbrSupporters();
+		}
+		//return factions.stream().mapToInt(x -> x.getNbrSupporters()).sum();
+		return x;
 	}
 
-	public double globalSatisfaction(){
-		System.out.println(totalSupporters());
+	public float globalSatisfaction(){
 		int totalsupp = totalSupporters();
-		return (totalsupp != 0)? factions.stream().mapToDouble(x -> x.getNbrSupporters()*x.getApprobationPercentage()).sum()/totalsupp : 0;
+		return (totalsupp != 0)? (float) factions.stream().mapToDouble(x -> x.getNbrSupporters()*x.getApprobationPercentage()).sum()/totalsupp : 0f;
 
 	}
 

@@ -12,14 +12,14 @@ public class Action {
 	private static int counterAction = 0;
 	private int id;
 	private final String title;
-	private final double treasure;
+	private final float treasure;
 	private final int food;
-	private HashMap<Integer, Double[]> factionsEffects;
-	private HashMap<Integer, Double> fieldsEffects;
+	private HashMap<Integer, Float[]> factionsEffects;
+	private HashMap<Integer, Float> fieldsEffects;
 	private Set<Integer> repercussions;
 
 
-	public Action(String title, double treasure, int food, HashMap<Integer, Double[]> factionsEffects, HashMap<Integer, Double> fieldsEffects,
+	public Action(String title, float treasure, int food, HashMap<Integer, Float[]> factionsEffects, HashMap<Integer, Float> fieldsEffects,
 				  Set<Integer> repercussions) {
 		this.title = Objects.requireNonNull(title, "Action must have a title");
 		int id = GameUtils.idByHashString(title) + 1;
@@ -31,11 +31,11 @@ public class Action {
 		this.food = food;
 	}
 
-	public HashMap<Integer, Double[]> getFactionsEffects(){
+	public HashMap<Integer, Float[]> getFactionsEffects(){
 		return factionsEffects;
 	}
 
-	public HashMap<Integer, Double> getFieldsEffects(){
+	public HashMap<Integer, Float> getFieldsEffects(){
 		return fieldsEffects;
 	}
 

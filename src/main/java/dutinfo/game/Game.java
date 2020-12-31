@@ -2,6 +2,7 @@ package dutinfo.game;
 
 import dutinfo.console.App;
 import dutinfo.game.environment.Island;
+import dutinfo.game.environment.Season;
 import dutinfo.game.events.Action;
 import dutinfo.game.events.Event;
 import dutinfo.game.events.Scenario;
@@ -16,12 +17,12 @@ import java.util.*;
 public class Game {
 
 	public enum Difficulty {
-		EASY(0.5, 10), NORMAL(1, 20), HARD(2, 50);
+		EASY(0.5f, 10f), NORMAL(1f, 20f), HARD(2f, 50f);
 
-		private double multiplier;
-		private double minGlobalSatisfaction;
+		private float multiplier;
+		private float minGlobalSatisfaction;
 
-		Difficulty(double multiplier, double minGlobalSatisfaction) {
+		Difficulty(float multiplier, float minGlobalSatisfaction) {
 			this.multiplier = multiplier;
 			this.minGlobalSatisfaction = minGlobalSatisfaction;
 		}
@@ -45,6 +46,7 @@ public class Game {
 	private static List<Faction> FACTIONS; // All factions in init file
 	private static List<Field> FIELDS; // All field in init file
 	private static List<Scenario> SCENARIOS; // All Scenarios in folders
+	private static final float monthlyPriceForDept = 0.3f; // on total value
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios,
 				HashMap<Integer, List<Event>> events) {
@@ -70,14 +72,21 @@ public class Game {
 
 		Objects.requireNonNull(scenario, "Can't process new island without scenario");
 
+		//set the factions
 		List<Faction> facs = FACTIONS;
-		facs.stream().forEach(x -> x.setApprobationPercentage(scenario.getSatisFaction(x.getId())));
+		facs.stream().forEach(x -> {
+			x.setApprobationPercentage(scenario.getSatisFaction(x.getId()));
+			x.setNbrSupporters(scenario.getFollowers());
+		});
 
+		//set the fields
 		List<Field> fields = FIELDS;
 		fields.stream().forEach(x -> {
 			x.setExploitationPercentage(scenario.getExploitField(x.getId()));
 			x.setYieldPercentage(scenario.getFieldYieldPercentage(x.getId()));
 		});
+
+		//set
 
 		this.island = new Island(islandName, president, facs, fields, scenario.getTreasure());
 	}
@@ -159,9 +168,9 @@ public class Game {
 	 * @return
 	 */
 	public boolean checkLose() {
-		System.out.println(island.globalSatisfaction());
-		return island.globalSatisfaction() > difficulty.getMinGlobalSatisfaction();
-		//return true;
+		System.out.println(island.totalSupporters());
+		System.out.println(island.globalSatisfaction()+" < "+ difficulty.getMinGlobalSatisfaction());
+		return !(island.globalSatisfaction() > difficulty.getMinGlobalSatisfaction());
 	}
 
 	public boolean nexTurn() {
@@ -172,6 +181,7 @@ public class Game {
 		setCurrentEvent(pickNextEvents());
 		//update the season of the island
 		island.incrementSeason();
+		//new year mode
 		return !checkLose();
 	}
 
@@ -232,15 +242,18 @@ public class Game {
 	public String printStats() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\n\n" + Color.ANSI_WHITE_BACKGROUND + "" + Color.ANSI_BLACK + "---- End of the day : Stats ----\n");
+		sb.append("\n\n" + Color.ANSI_WHITE_BACKGROUND + "" + Color.ANSI_BLACK + "---- "+island.getName()+" : Infos ----\n");
 		sb.append(Color.ANSI_RESET + "" + Color.ANSI_ITALIC + "Treasury : " + Color.ANSI_RESET + Color.ANSI_GREEN + "$"
 				+ getIsland().getTreasury());
+		sb.append("\n Food: ").append(island.getFoodUnits());
+		sb.append("\nCitizens : ").append(island.totalSupporters());
 		sb.append(Color.ANSI_RESET + "" + Color.ANSI_ITALIC + "\nCurrent season : " + Color.ANSI_RESET
 				+ getIsland().getSeason());
 		sb.append(Color.ANSI_ITALIC + "\nFactions satisfaction : ");
 		getIsland().getFactions().stream().forEach(x -> {
 			sb.append("\n" + Color.ANSI_RESET + Color.ANSI_RED + x.getName() + ": " + Color.ANSI_BOLD + Color.ANSI_WHITE
-					+ x.getApprobationPercentage() + "%");
+					+ GameUtils.round(x.getApprobationPercentage(),2) + "%");
+			sb.append(" | Supporters : ").append(x.getNbrSupporters());
 		});
 
 		return sb.toString();
