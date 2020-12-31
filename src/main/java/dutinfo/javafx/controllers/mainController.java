@@ -87,9 +87,9 @@ public class mainController implements EventHandler<MouseEvent> {
         }
 
         if (supporters != -1){
-            element.setText(percentage+"% / "+ supporters);
+            element.setText(Math.round((percentage) * 10) / 10.0+"% / "+ supporters);
         } else {
-            element.setText(percentage+"%");
+            element.setText(Math.round((percentage) * 10) / 10.0 +"%");
         }
     }
 
