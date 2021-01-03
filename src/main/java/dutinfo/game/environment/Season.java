@@ -8,19 +8,20 @@ public enum Season {
 
 	Season(int id) {
 		this.id = id;
-		this.label = switch (id){
-			case 0:
-				yield "Spring";
-			case 1:
-				yield "Summer";
-			case 2:
-				yield "Autumn";
-			case 3:
-				yield "Winter";
-			default:
-				throw new IllegalStateException("There is only four seasons.");
-		};
+		if(id == 0){
+			this.label = "Spring";
 
+		}else if(id == 1){
+			this.label = "Summer";
+
+		}else if(id == 2){
+			this.label = "Autumn";
+
+		}else if(id == 3){
+			this.label = "Winter";
+		}else{
+			throw new IllegalStateException("There is only four seasons.");
+		}
 	}
 
 	public int getId() {
@@ -29,15 +30,15 @@ public enum Season {
 
 	public static Season getNext(Season season) {
 		Season s = null;
-		switch (season.id) {
-			case 0:
-				s = Summer;
-			case 1:
-				s = Autumn;
-			case 2:
-				s = Winter;
-			default:
-				s = Spring;
+		if(season.id == 0){
+			s = Summer;
+		}else if(season.id == 1){
+			s = Autumn;
+
+		}else if(season.id == 2){
+			s = Winter;
+		}else{
+			s = Spring;
 		}
 		return s;
 	}

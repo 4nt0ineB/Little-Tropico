@@ -97,18 +97,18 @@ public class Event {
 				List<Action> actions = new ArrayList<>();
 
 				try{
-					season = switch ((int) (long) ev.get("season")){
-						case 0:
-							yield Season.Spring;
-						case 1:
-							yield Season.Summer;
-						case 2:
-							yield Season.Autumn;
-						case 4:
-							yield Season.Winter;
-						default:
-							yield null; // This event don't have a season so he can happen at any time.
-					};
+					int rs = (int) (long) ev.get("season");
+					if(rs == 0){
+						season = Season.Spring;
+					}else if(rs == 1){
+						season = Season.Summer;
+					}else if(rs == 2){
+						season = Season.Autumn;
+					}else if(rs == 3){
+						season = Season.Winter;
+					}else {
+						season = null;
+					}
 				}catch (Exception e){
 					season = null;
 				}
@@ -178,20 +178,14 @@ public class Event {
 
 
 								Float[] vals = new Float[3];
-								switch (prop) {
-									// Factions effects
-									case "factions":
-										vals[0]= effect;
-										vals[1]= (float) followers;
-										factionsEffects.put(GameUtils.idByHashString(name), vals);
-
-										break;
-									// Fields effects
-									case "fields":
-										fieldsEffects.put(GameUtils.idByHashString(name), effect);
-										break;
-									default:
-										throw new IllegalStateException("The property " + prop + " shouldn't exist.");
+								if(prop.equals("factions")){
+									vals[0]= effect;
+									vals[1]= (float) followers;
+									factionsEffects.put(GameUtils.idByHashString(name), vals);
+								}else if(prop.equals("fields")){
+									fieldsEffects.put(GameUtils.idByHashString(name), effect);
+								}else{
+									throw new IllegalStateException("The property " + prop + " shouldn't exist.");
 								}
 							});
 						}

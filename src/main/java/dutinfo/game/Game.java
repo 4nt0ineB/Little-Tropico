@@ -168,8 +168,8 @@ public class Game {
 	 * @return
 	 */
 	public boolean checkLose() {
-		System.out.println(island.totalSupporters());
-		System.out.println(island.globalSatisfaction()+" < "+ difficulty.getMinGlobalSatisfaction());
+		//System.out.println(island.totalSupporters());
+		//System.out.println(island.globalSatisfaction()+" < "+ difficulty.getMinGlobalSatisfaction());
 		return !(island.globalSatisfaction() > difficulty.getMinGlobalSatisfaction());
 	}
 
@@ -182,6 +182,10 @@ public class Game {
 		//update the season of the island
 		island.incrementSeason();
 		//new year mode
+		/*
+			island.generateYearlyResources();
+			island.ger
+		 */
 		return !checkLose();
 	}
 
