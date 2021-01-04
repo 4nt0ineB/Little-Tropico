@@ -52,9 +52,9 @@ public class Game {
 	private static List<Faction> FACTIONS; // All factions in init file
 	private static List<Field> FIELDS; // All field in init file
 	private static List<Scenario> SCENARIOS; // All Scenarios in folders
-	private static final float monthlyPriceForDept = 0.3f; // on total value
-	private static final int bribingPrice = 15;
-	private static final int foodPrice = 8;
+	public static final float monthlyPriceForDept = 0.3f; // on total value
+	public static final int bribingPrice = 15;
+	public static final int foodPrice = 8;
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios,
 				HashMap<Integer, List<Event>> events) {
@@ -358,16 +358,10 @@ public class Game {
 		return game;
 	}
 
-	public boolean bribeFaction(int factionId, int amount){
-		Faction f = island.getFactions().stream().filter(x -> x.getId() == factionId).findFirst().get();
-		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
-		if(this.island.getTreasury() < price){
-			return false;
-		}
-		island.getFactions().stream().filter(x -> x.getId() == factionId).findFirst().get().setApprobationPercentage(f.getApprobationPercentage()+(2*amount));
-		island.updateTreasure(price*(-1));
-		return true;
-	}
+
+
+
+
 
 	public boolean buyFood(int amount){
 		int price = (Game.foodPrice * amount);

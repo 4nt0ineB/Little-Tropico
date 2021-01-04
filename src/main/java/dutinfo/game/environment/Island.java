@@ -116,6 +116,25 @@ public class Island {
 		foodUnits+=fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get().generateProfit((float)foodUnits);
 	}
 
+
+	public boolean canBeBribed(int factionId, int amount){
+		Faction f = factions.stream().filter(x -> x.getId() == factionId).findFirst().get();
+		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
+		if(treasury < price){
+			return false;
+		}
+		return true;
+	}
+
+
+	public void bribeFaction(int factionId, int amount){
+		Faction f = factions.stream().filter(x -> x.getId() == factionId).findFirst().get();
+		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
+		factions.stream().filter(x -> x.getId() == factionId).findFirst().get().setApprobationPercentage(f.getApprobationPercentage()+(2*amount));
+		treasury-=price;
+	}
+
+
 	public int updatePopulationAndTreasury(){ //début du tour
 		//treasure : the dept
 		if(treasury < 0){
