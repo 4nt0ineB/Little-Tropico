@@ -32,7 +32,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private ImageView sun, vein, sweat;
 
     @FXML
-    private Label moneyAmount, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label moneyAmount, EOYLabel, EOYChoiceLabel, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
 
     @FXML
     private Rectangle eventAlert, endYearAlert;
@@ -54,8 +54,8 @@ public class mainController implements EventHandler<MouseEvent> {
 
     private Event currentEvent;
     private int currentActionId;
-    int chosenOption = 1;
-
+    private int chosenOption = 1;
+    private int valueEOY;
 
     @Override
     public void handle(MouseEvent e) {
@@ -105,6 +105,7 @@ public class mainController implements EventHandler<MouseEvent> {
     public void initialize() {
         appModel.startAnimations(sun); // sun rolling
         selectEvent.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
+        submitEOY.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
 
         // Hide president anger
         vein.setVisible(false);
@@ -131,8 +132,6 @@ public class mainController implements EventHandler<MouseEvent> {
         while (running) {
 
             openEventWindow(game.getEvent()); // get random event by season
-
-            openEndYearWindow();
 
             // if end of year make the recap (bribe or buy food)
             if(game.getIsland().getSeason() == Season.Winter) {
@@ -247,6 +246,9 @@ public class mainController implements EventHandler<MouseEvent> {
         factionEOY.setVisible(false);
         errorMsgEOY.setVisible(false);
         submitEOY.setDisable(true);
+        submitEOY.setVisible(true);
+        EOYLabel.setVisible(true);
+        EOYChoiceLabel.setVisible(true);
 
         choiceEOY.getItems().add(" ");
         choiceEOY.getItems().add("1. Bribe a Faction (+10% satisfaction for $15 by supporters).");
@@ -261,6 +263,7 @@ public class mainController implements EventHandler<MouseEvent> {
                 System.out.println(newValue);
                 if (newValue.startsWith("1")){ // first option
                     chosenOption = 1;
+                    fieldEOY.clear();
                     fieldEOY.setVisible(true);
                     fieldEOY.setPromptText("Amount of 10% (5 -> 5 * 10%)");
                     factionEOY.setVisible(true);
@@ -275,7 +278,7 @@ public class mainController implements EventHandler<MouseEvent> {
 
                         if (fieldEOY.getLength() > 0) {
                             if (newv.matches("-?\\d+")) {
-                                if (!game.bribeFaction((GameUtils.idByHashString(factionEOY.getSelectionModel().getSelectedItem().toString())), Integer.parseInt(newv))) {
+                                if (!game.getIsland().canBeBribed(GameUtils.idByHashString(factionEOY.getSelectionModel().getSelectedItem().toString()), Integer.parseInt(newv))) {
                                     errorMsgEOY.setVisible(true);
                                     errorMsgEOY.setText("You don't have enough money");
                                     submitEOY.setDisable(true);
@@ -296,13 +299,14 @@ public class mainController implements EventHandler<MouseEvent> {
                 } else if (newValue.startsWith("2")){ // second option
                     chosenOption = 2;
                     fieldEOY.setVisible(true);
+                    fieldEOY.clear();
                     factionEOY.setVisible(false);
                     errorMsgEOY.setVisible(false);
                     fieldEOY.setPromptText("Amount of units");
                     fieldEOY.textProperty().addListener((observable, old, newv) -> {
                         if (fieldEOY.getLength() > 0) {
                             if (newv.matches("-?\\d+")) {
-                                if (!game.buyFood(Integer.parseInt(newv))) {
+                                if (!game.canBuyFood(Integer.parseInt(newv))) {
                                     errorMsgEOY.setVisible(true);
                                     errorMsgEOY.setText("You don't have enough money");
                                     submitEOY.setDisable(true);
@@ -318,7 +322,8 @@ public class mainController implements EventHandler<MouseEvent> {
                             }
                         }
                     });
-                }  else if (newValue.startsWith(" ")){ // second option
+                }  else if (newValue.startsWith(" ")){ // empty option
+                    chosenOption = 0;
                     errorMsgEOY.setText("Select an option");
                     submitEOY.setDisable(true);
                     errorMsgEOY.setVisible(true);
@@ -334,10 +339,20 @@ public class mainController implements EventHandler<MouseEvent> {
                 }
             }
         });
+    }
 
-        // Handle chosenOption for btn
+    public void submitEOYChoice(){
+        valueEOY = Integer.parseInt(fieldEOY.getText());
 
-
+        if (chosenOption == 1){ // faction bribe
+            game.getIsland().bribeFaction(GameUtils.idByHashString(factionEOY.getSelectionModel().getSelectedItem().toString()), valueEOY);
+        } else if (chosenOption == 2){ // food
+            game.buyFood(valueEOY);
+        } else if (chosenOption == 3){ // pass
+            // nothing lol
+        }
+        closeEndYearWindow();
+        refreshPercentages();
     }
 
     public void closeEndYearWindow(){
@@ -346,6 +361,9 @@ public class mainController implements EventHandler<MouseEvent> {
         fieldEOY.setVisible(false);
         factionEOY.setVisible(false);
         errorMsgEOY.setVisible(false);
+        submitEOY.setVisible(false);
+        EOYLabel.setVisible(false);
+        EOYChoiceLabel.setVisible(false);
     }
 
 
