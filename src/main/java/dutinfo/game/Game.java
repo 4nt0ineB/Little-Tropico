@@ -359,19 +359,18 @@ public class Game {
 	}
 
 
-
-
-
-
-	public boolean buyFood(int amount){
+	public boolean canBuyFood(int amount){
 		int price = (Game.foodPrice * amount);
 		if(price > island.getTreasury()){
 			return false;
 		}
-		System.out.println((Game.foodPrice * amount)+ " t :"+amount);
+		return true;
+	}
+
+	public void buyFood(int amount){
+		int price = (Game.foodPrice * amount);
 		island.updateFoodUnits(amount);
 		island.updateTreasure(price*(-1));
-		return true;
 	}
 
 	public String updateResourcesEndofYear(){

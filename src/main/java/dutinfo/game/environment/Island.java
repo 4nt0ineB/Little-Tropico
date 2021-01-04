@@ -127,6 +127,7 @@ public class Island {
 	}
 
 
+
 	public void bribeFaction(int factionId, int amount){
 		Faction f = factions.stream().filter(x -> x.getId() == factionId).findFirst().get();
 		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
