@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -18,269 +17,42 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dutinfo.javafx.controllers.mainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="788.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dutinfo.javafx.controllers.mainController">
    <children>
-      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="788.0" fitWidth="1400.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@background.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="islandName" alignment="CENTER" layoutX="-6.0" layoutY="697.0" opacity="0.5" prefHeight="100.0" prefWidth="1941.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="islandName" alignment="CENTER" layoutY="493.0" opacity="0.5" prefHeight="100.0" prefWidth="1400.0" text="Label" textAlignment="CENTER">
          <font>
-            <Font name="Tahoma Bold" size="68.0" />
+            <Font name="Tahoma Bold" size="59.0" />
          </font>
          <effect>
             <MotionBlur angle="312.86" />
          </effect>
       </Label>
-            <Rectangle fx:id="eventAlert" arcHeight="5.0" arcWidth="5.0" height="478.0" layoutX="353.0" layoutY="372.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="1232.0">
-         <fill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop color="#419a5a" />
-                  <Stop color="#5895a4" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </fill>
-      </Rectangle>
-      <Label fx:id="eventLabel" alignment="CENTER" layoutX="353.0" layoutY="396.0" prefHeight="66.0" prefWidth="1230.0" text="--- Your action is required ! ---" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="45.0" />
-         </font>
-         <effect>
-            <Glow level="0.41" />
-         </effect>
-      </Label>
-      <Button fx:id="selectEvent" layoutX="883.0" layoutY="753.0" mnemonicParsing="false" onAction="#submitEventChoice" prefHeight="47.0" prefWidth="177.0" text="Select">
-         <font>
-            <Font name="System Bold Italic" size="19.0" />
-         </font>
-      </Button>
-      <ImageView fx:id="sun" fitHeight="560.0" fitWidth="728.0" layoutX="616.0" layoutY="-116.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@pngegg.png" />
-         </image>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="69.0" layoutY="21.0" stroke="#0000004a" strokeType="INSIDE" width="314.0" />
-      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="48.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label layoutX="35.0" layoutY="13.0" text="\$">
-         <font>
-            <Font name="System Bold" size="50.0" />
-         </font>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </Label>
-      <Label fx:id="moneyAmount" layoutX="117.0" layoutY="25.0" prefHeight="41.0" prefWidth="236.0" text="\$0" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="67.0" layoutY="327.0" stroke="#0000004a" strokeType="INSIDE" width="170.0" />
-      <Circle fill="#e4e4e4" layoutX="48.0" layoutY="354.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label fx:id="industryPercentage" layoutX="115.0" layoutY="331.0" prefHeight="45.0" prefWidth="120.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="63.0" fitWidth="56.0" layoutX="19.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@factory.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="21.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="48.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="capitalistsPercentage" layoutX="1633.0" layoutY="26.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1841.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@capitalists.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1623.0" layoutY="110.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="137.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="communistsPercentage" layoutX="1633.0" layoutY="115.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1844.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@communists.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="199.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="226.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="liberalistsPercentage" layoutX="1633.0" layoutY="203.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1844.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@liberties.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="288.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="315.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="religiousPercentage" layoutX="1633.0" layoutY="292.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1852.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@religious.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="377.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="404.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="militaristsPercentage" layoutX="1633.0" layoutY="381.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1840.0" layoutY="379.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@militaries.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="466.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="493.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="ecologistsPercentage" layoutX="1633.0" layoutY="470.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1843.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@ecologists.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="555.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="582.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="nationalistsPercentage" layoutX="1633.0" layoutY="559.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1843.0" layoutY="557.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@nationalists.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="1621.0" layoutY="644.0" stroke="#0000004a" strokeType="INSIDE" width="225.0" />
-      <Circle fill="#e4e4e4" layoutX="1869.0" layoutY="671.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="loyalistsPercentage" layoutX="1633.0" layoutY="648.0" prefHeight="45.0" prefWidth="187.0" text="100%" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-      </Label>
-      <ImageView fitHeight="53.0" fitWidth="58.0" layoutX="1840.0" layoutY="646.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@loyalists.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Label fx:id="day" alignment="CENTER_RIGHT" layoutX="1163.0" layoutY="1029.0" prefHeight="50.0" prefWidth="753.0" text="Day 0">
-         <font>
-            <Font size="30.0" />
-         </font>
-         <effect>
-            <Glow />
-         </effect>
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop color="#00ccff" />
-                  <Stop color="#00ff60" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </textFill>
-      </Label>
-      <ImageView fx:id="stars" fitHeight="342.0" fitWidth="353.0" layoutX="32.0" layoutY="451.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="stars" fitHeight="342.0" fitWidth="353.0" layoutX="2.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@aura.gif" />
          </image>
       </ImageView>
-      <Text fx:id="eventDescription" fill="WHITE" layoutX="366.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event description" textAlignment="CENTER" wrappingWidth="1206.0">
-         <font>
-            <Font name="System Italic" size="28.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="583.0" fitWidth="547.0" layoutX="24.0" layoutY="504.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="426.0" fitWidth="317.0" layoutX="14.0" layoutY="402.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@presidente.png" />
          </image>
       </ImageView>
-      <Label fx:id="presidente" alignment="CENTER" layoutX="154.0" layoutY="528.0" prefHeight="24.0" prefWidth="138.0" rotate="-7.6" scaleY="1.65" text="El Presidente">
+      <ImageView fx:id="vein" fitHeight="58.0" fitWidth="64.0" layoutX="91.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@vein.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="presidente" alignment="CENTER" layoutX="73.0" layoutY="413.0" prefHeight="24.0" prefWidth="138.0" rotate="-7.6" scaleY="1.65" text="El Presidente">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
-         <rotationAxis>
-            <Point3D y="1.0" z="1.0" />
-         </rotationAxis>
       </Label>
-      <Label fx:id="season" layoutX="9.0" layoutY="1030.0" prefHeight="50.0" prefWidth="753.0" text="Current season: ">
+      <Label fx:id="season" layoutX="6.0" layoutY="738.0" prefHeight="50.0" prefWidth="753.0" text="Current season: ">
          <font>
             <Font size="30.0" />
          </font>
@@ -296,19 +68,17 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <ImageView fx:id="vein" fitHeight="125.0" fitWidth="84.0" layoutX="142.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@vein.gif" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="sweat" fitHeight="150.0" fitWidth="200.0" layoutX="235.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" rotate="-5.2">
-         <image>
-            <Image url="@sweat_drop.gif" />
-         </image>
-      </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="69.0" layoutY="123.0" stroke="#0000004a" strokeType="INSIDE" width="224.0" />
-      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="150.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="citizensCount" layoutX="117.0" layoutY="127.0" prefHeight="45.0" prefWidth="177.0" text="0" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="50.0" layoutY="26.0" stroke="#0000004a" strokeType="INSIDE" width="197.0" />
+      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="48.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label layoutX="38.0" layoutY="19.0" text="\$">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </Label>
+      <Label fx:id="moneyAmount" layoutX="95.0" layoutY="26.0" prefHeight="45.0" prefWidth="142.0" text="\$0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -316,7 +86,9 @@
             <Glow />
          </effect>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="44.0" layoutX="29.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="50.0" layoutY="102.0" stroke="#0000004a" strokeType="INSIDE" width="197.0" />
+      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="124.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="45.0" fitWidth="34.0" layoutX="33.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@citizens.png" />
          </image>
@@ -324,21 +96,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <Text fx:id="eventEffects" fill="WHITE" layoutX="400.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event percents" textAlignment="CENTER" wrappingWidth="560.0000000000001">
-         <font>
-            <Font name="System Italic" size="17.0" />
-         </font>
-      </Text>
-      <Line fx:id="eventLine" endX="100.0" layoutX="971.0" layoutY="565.0" startX="-100.0" stroke="WHITE" />
-      <Text fx:id="eventEffects2" fill="WHITE" layoutX="980.0" layoutY="588.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event effects (food, money)" textAlignment="CENTER" wrappingWidth="560.0">
-         <font>
-            <Font name="System Italic" size="17.0" />
-         </font>
-      </Text>
-      <Line fx:id="eventSeparator" endX="-100.0" endY="50.0" layoutX="1071.0" layoutY="566.0" startX="-100.0" stroke="WHITE" />
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="67.0" layoutY="225.0" stroke="#0000004a" strokeType="INSIDE" width="224.0" />
-      <Circle fill="#e4e4e4" layoutX="48.0" layoutY="252.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="foodAmount" layoutX="115.0" layoutY="229.0" prefHeight="45.0" prefWidth="177.0" text="0" textFill="WHITE">
+      <Label id="wheatPercentage" fx:id="citizensCount" layoutX="95.0" layoutY="102.0" prefHeight="45.0" prefWidth="142.0" text="0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -346,7 +104,14 @@
             <Glow />
          </effect>
       </Label>
-      <ImageView fitHeight="44.0" fitWidth="44.0" layoutX="27.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="sweat" fitHeight="113.0" fitWidth="106.0" layoutX="147.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true" rotate="-5.2">
+         <image>
+            <Image url="@sweat_drop.gif" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="50.0" layoutY="176.0" stroke="#0000004a" strokeType="INSIDE" width="197.0" />
+      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="198.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="33.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@food.png" />
          </image>
@@ -354,17 +119,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="54.0" layoutX="67.0" layoutY="431.0" stroke="#0000004a" strokeType="INSIDE" width="170.0" />
-      <Circle fill="#e4e4e4" layoutX="48.0" layoutY="458.0" radius="42.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <ImageView fitHeight="63.0" fitWidth="69.0" layoutX="17.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@wheat.png" />
-         </image>
-         <effect>
-            <DropShadow color="WHITE" />
-         </effect>
-      </ImageView>
-      <Label id="wheatPercentage" fx:id="farmingPercentage" layoutX="115.0" layoutY="435.0" prefHeight="45.0" prefWidth="120.0" text="100%" textFill="WHITE">
+      <Label id="wheatPercentage" fx:id="foodAmount" layoutX="95.0" layoutY="176.0" prefHeight="45.0" prefWidth="142.0" text="0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -372,6 +127,247 @@
             <Glow />
          </effect>
       </Label>
-      <ComboBox fx:id="eventChoice" layoutX="393.0" layoutY="647.0" prefHeight="42.0" prefWidth="1156.0" />
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="50.0" layoutY="251.0" stroke="#0000004a" strokeType="INSIDE" width="197.0" />
+      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="273.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="50.0" layoutY="325.0" stroke="#0000004a" strokeType="INSIDE" width="197.0" />
+      <Circle fill="#e4e4e4" layoutX="50.0" layoutY="347.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="45.0" fitWidth="34.0" layoutX="33.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@factory.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="50.0" layoutX="28.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@wheat.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <Label fx:id="industryPercentage" layoutX="95.0" layoutY="251.0" prefHeight="45.0" prefWidth="120.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Label id="wheatPercentage" fx:id="farmingPercentage" layoutX="95.0" layoutY="325.0" prefHeight="45.0" prefWidth="120.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <ImageView fx:id="sun" fitHeight="417.0" fitWidth="357.0" layoutX="440.0" layoutY="-53.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pngegg.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="day" alignment="CENTER_RIGHT" layoutX="639.0" layoutY="738.0" prefHeight="50.0" prefWidth="753.0" text="Day 0">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#00ccff" />
+                  <Stop color="#00ff60" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="26.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="48.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="1332.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@capitalists.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <Label id="wheatPercentage" fx:id="capitalistsPercentage" layoutX="1108.0" layoutY="26.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="98.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="120.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="communistsPercentage" layoutX="1108.0" layoutY="98.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="169.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="191.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="liberalistsPercentage" layoutX="1108.0" layoutY="169.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="240.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="262.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="religiousPercentage" layoutX="1108.0" layoutY="240.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="311.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Label id="wheatPercentage" fx:id="militaristsPercentage" layoutX="1108.0" layoutY="311.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="382.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="404.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="ecologistsPercentage" layoutX="1108.0" layoutY="382.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="453.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="475.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="nationalistsPercentage" layoutX="1108.0" layoutY="453.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="524.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="546.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="loyalistsPercentage" layoutX="1108.0" layoutY="524.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1336.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@communists.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1336.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@liberties.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="49.0" fitWidth="24.0" layoutX="1343.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@religious.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="38.0" layoutX="1335.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ecologists.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="45.0" layoutX="1332.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@nationalists.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1332.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@loyalists.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="333.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="1332.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@militaries.png" />
+         </image>
+         <effect>
+            <DropShadow color="WHITE" />
+         </effect>
+      </ImageView>
+      <Rectangle fx:id="eventAlert" arcHeight="5.0" arcWidth="5.0" height="397.0" layoutX="323.0" layoutY="206.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="767.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#419a5a" />
+                  <Stop color="#5895a4" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Label fx:id="eventLabel" alignment="CENTER" layoutX="315.0" layoutY="214.0" prefHeight="48.0" prefWidth="769.0" text="--- Your action is required ! ---" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+         <effect>
+            <Glow level="0.41" />
+         </effect>
+      </Label>
+      <Button fx:id="selectEvent" layoutX="617.0" layoutY="540.0" mnemonicParsing="false" onAction="#submitEventChoice" prefHeight="47.0" prefWidth="177.0" text="Select">
+         <font>
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Button>
+      <Text fx:id="eventDescription" fill="WHITE" layoutX="314.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event description" textAlignment="CENTER" wrappingWidth="769.9999084472656">
+         <font>
+            <Font name="System Italic" size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="eventEffects" fill="WHITE" layoutX="315.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event percents" textAlignment="CENTER" wrappingWidth="371.0000000000001">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+      </Text>
+      <Line fx:id="eventLine" endX="100.0" layoutX="707.0" layoutY="352.0" startX="-100.0" stroke="WHITE" />
+      <Text fx:id="eventEffects2" fill="WHITE" layoutX="715.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event effects (food, money)" textAlignment="CENTER" wrappingWidth="357.0">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+      </Text>
+      <Line fx:id="eventSeparator" endX="-100.0" endY="50.0" layoutX="806.0" layoutY="354.0" startX="-100.0" stroke="WHITE" />
+      <ComboBox fx:id="eventChoice" layoutX="344.0" layoutY="442.0" prefHeight="42.0" prefWidth="711.0" />
    </children>
 </AnchorPane>

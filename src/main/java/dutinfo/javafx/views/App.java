@@ -18,9 +18,9 @@ public class App extends Application {
         try {
             GridPane root = FXMLLoader.load(getClass().getResource("/view/menu.fxml"));
             root.setStyle("-fx-background-image: url('https://i.imgur.com/Y1uRiCV.jpg')");
-            Scene scene = new Scene(root, 1920, 1080);
+            Scene scene = new Scene(root, 1400, 788);
             stage.setScene(scene);
-            stage.setFullScreen(true);
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
