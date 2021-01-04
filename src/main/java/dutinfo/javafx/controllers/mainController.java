@@ -342,7 +342,9 @@ public class mainController implements EventHandler<MouseEvent> {
     }
 
     public void submitEOYChoice(){
-        valueEOY = Integer.parseInt(fieldEOY.getText());
+        if (chosenOption != 3) {
+            valueEOY = Integer.parseInt(fieldEOY.getText());
+        }
 
         if (chosenOption == 1){ // faction bribe
             game.getIsland().bribeFaction(GameUtils.idByHashString(factionEOY.getSelectionModel().getSelectedItem().toString()), valueEOY);
