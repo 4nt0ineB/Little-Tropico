@@ -5,6 +5,7 @@ import dutinfo.game.GameUtils;
 import dutinfo.game.environment.Season;
 import dutinfo.game.events.Action;
 import dutinfo.game.events.Event;
+import dutinfo.game.society.Faction;
 import dutinfo.game.society.President;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import dutinfo.javafx.models.Model;
@@ -30,16 +32,16 @@ public class mainController implements EventHandler<MouseEvent> {
     private ImageView sun, vein, sweat;
 
     @FXML
-    private Label moneyAmount, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label moneyAmount, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
 
     @FXML
-    private Rectangle eventAlert;
+    private Rectangle eventAlert, endYearAlert;
 
     @FXML
-    private ComboBox eventChoice;
+    private ComboBox eventChoice, choiceEOY, factionEOY;
 
     @FXML
-    private Button selectEvent;
+    private Button selectEvent, submitEOY;
 
     @FXML
     private Text eventDescription, eventEffects, eventEffects2;
@@ -47,8 +49,12 @@ public class mainController implements EventHandler<MouseEvent> {
     @FXML
     private Line eventLine, eventSeparator;
 
+    @FXML
+    private TextField fieldEOY;
+
     private Event currentEvent;
     private int currentActionId;
+    int chosenOption = 1;
 
 
     @Override
@@ -104,6 +110,9 @@ public class mainController implements EventHandler<MouseEvent> {
         vein.setVisible(false);
         sweat.setVisible(false);
 
+        // Hide end of year by default
+        closeEndYearWindow();
+
         islandName.setText(game.getIsland().getName());
         presidente.setText(game.getIsland().getPresident().getName());
         moneyAmount.setText("$"+game.getIsland().getTreasury()); // Treasury
@@ -117,17 +126,28 @@ public class mainController implements EventHandler<MouseEvent> {
         /* PERCENTAGES */
         refreshPercentages();
 
+        boolean running = true;
         game.nextTurn();
-        openEventWindow(game.getEvent()); // get random event by season
+        while (running) {
+
+            openEventWindow(game.getEvent()); // get random event by season
+
+            openEndYearWindow();
+
+            // if end of year make the recap (bribe or buy food)
+            if(game.getIsland().getSeason() == Season.Winter) {
+                openEndYearWindow();
+            }
+            break;
+
+        }
+
     }
 
     /**
      * Function that permits choice to be submitted to the MCP and launched when click on "Select" button during an event choice
      */
     public void submitEventChoice(){
-
-        // TODO: Event choice handler to make
-
         currentActionId = GameUtils.idByHashString(eventChoice.getSelectionModel().getSelectedItem().toString());
 
         game.playAction(currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == currentActionId).findFirst().get());
@@ -186,8 +206,6 @@ public class mainController implements EventHandler<MouseEvent> {
     public void openEventWindow(Event event){
 
         this.currentEvent = event;
-        // TODO: Handle Event fields
-
         eventDescription.setText(event.getTitle());
 
 
@@ -205,7 +223,7 @@ public class mainController implements EventHandler<MouseEvent> {
         eventChoice.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
                 Action temp = currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == GameUtils.idByHashString(newValue)).findFirst().get();
-                eventEffects.setText(temp.getEffectsPercentagesToString()); // change label to factions effects TODO: Format data! (shows adress)
+                eventEffects.setText(temp.getEffectsPercentagesToString()); // change label to factions effects
                 eventEffects2.setText(temp.getEffectsToString());
             }
         });
@@ -220,6 +238,114 @@ public class mainController implements EventHandler<MouseEvent> {
         eventEffects2.setVisible(true);
         eventLine.setVisible(true);
         eventSeparator.setVisible(true);
+    }
+
+    public void openEndYearWindow(){
+        endYearAlert.setVisible(true);
+        choiceEOY.setVisible(true);
+        fieldEOY.setVisible(false);
+        factionEOY.setVisible(false);
+        errorMsgEOY.setVisible(false);
+        submitEOY.setDisable(true);
+
+        choiceEOY.getItems().add(" ");
+        choiceEOY.getItems().add("1. Bribe a Faction (+10% satisfaction for $15 by supporters).");
+        choiceEOY.getItems().add("2. Buy some food $8 by unit.");
+        choiceEOY.getItems().add("3. Pass.");
+
+        // Select the first one
+        choiceEOY.getSelectionModel().selectFirst();
+
+        choiceEOY.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
+            @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
+                System.out.println(newValue);
+                if (newValue.startsWith("1")){ // first option
+                    chosenOption = 1;
+                    fieldEOY.setVisible(true);
+                    fieldEOY.setPromptText("Amount of 10% (5 -> 5 * 10%)");
+                    factionEOY.setVisible(true);
+                    errorMsgEOY.setVisible(false);
+
+                    for (Faction fac: game.getFactions()) {
+                        factionEOY.getItems().add(fac.getName());
+                    }
+                    factionEOY.getSelectionModel().selectFirst();
+
+                    fieldEOY.textProperty().addListener((observable, old, newv) -> {
+
+                        if (fieldEOY.getLength() > 0) {
+                            if (newv.matches("-?\\d+")) {
+                                if (!game.bribeFaction((GameUtils.idByHashString(factionEOY.getSelectionModel().getSelectedItem().toString())), Integer.parseInt(newv))) {
+                                    errorMsgEOY.setVisible(true);
+                                    errorMsgEOY.setText("You don't have enough money");
+                                    submitEOY.setDisable(true);
+                                } else {
+                                    submitEOY.setDisable(false);
+                                    errorMsgEOY.setVisible(false);
+                                    submitEOY.setDisable(false);
+                                }
+                            } else {
+                                errorMsgEOY.setVisible(true);
+                                errorMsgEOY.setText("You must enter a correct number");
+                                submitEOY.setDisable(true);
+                            }
+                        }
+                    });
+
+
+                } else if (newValue.startsWith("2")){ // second option
+                    chosenOption = 2;
+                    fieldEOY.setVisible(true);
+                    factionEOY.setVisible(false);
+                    errorMsgEOY.setVisible(false);
+                    fieldEOY.setPromptText("Amount of units");
+                    fieldEOY.textProperty().addListener((observable, old, newv) -> {
+                        if (fieldEOY.getLength() > 0) {
+                            if (newv.matches("-?\\d+")) {
+                                if (!game.buyFood(Integer.parseInt(newv))) {
+                                    errorMsgEOY.setVisible(true);
+                                    errorMsgEOY.setText("You don't have enough money");
+                                    submitEOY.setDisable(true);
+                                } else {
+                                    submitEOY.setDisable(false);
+                                    errorMsgEOY.setVisible(false);
+                                    submitEOY.setDisable(false);
+                                }
+                            } else {
+                                errorMsgEOY.setVisible(true);
+                                errorMsgEOY.setText("You must enter a correct number");
+                                submitEOY.setDisable(true);
+                            }
+                        }
+                    });
+                }  else if (newValue.startsWith(" ")){ // second option
+                    errorMsgEOY.setText("Select an option");
+                    submitEOY.setDisable(true);
+                    errorMsgEOY.setVisible(true);
+                    fieldEOY.setVisible(false);
+                    factionEOY.setVisible(false);
+                    submitEOY.setDisable(true);
+                }  else { // pass
+                    chosenOption = 3;
+                    submitEOY.setDisable(false);
+                    fieldEOY.setVisible(false);
+                    errorMsgEOY.setVisible(false);
+                    factionEOY.setVisible(false);
+                }
+            }
+        });
+
+        // Handle chosenOption for btn
+
+
+    }
+
+    public void closeEndYearWindow(){
+        endYearAlert.setVisible(false);
+        choiceEOY.setVisible(false);
+        fieldEOY.setVisible(false);
+        factionEOY.setVisible(false);
+        errorMsgEOY.setVisible(false);
     }
 
 
