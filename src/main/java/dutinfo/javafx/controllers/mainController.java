@@ -260,7 +260,6 @@ public class mainController implements EventHandler<MouseEvent> {
 
         choiceEOY.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
-                System.out.println(newValue);
                 if (newValue.startsWith("1")){ // first option
                     chosenOption = 1;
                     fieldEOY.clear();
