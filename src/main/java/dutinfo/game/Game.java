@@ -11,7 +11,9 @@ import dutinfo.game.society.Field;
 import dutinfo.console.App.Color;
 import dutinfo.game.society.President;
 
+import java.io.File;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.*;
 
 public class Game {
@@ -25,6 +27,10 @@ public class Game {
 		Difficulty(float multiplier, float minGlobalSatisfaction) {
 			this.multiplier = multiplier;
 			this.minGlobalSatisfaction = minGlobalSatisfaction;
+		}
+
+		public float getMultiplier(){
+			return multiplier;
 		}
 
 		public double getMinGlobalSatisfaction(){
@@ -47,6 +53,8 @@ public class Game {
 	private static List<Field> FIELDS; // All field in init file
 	private static List<Scenario> SCENARIOS; // All Scenarios in folders
 	private static final float monthlyPriceForDept = 0.3f; // on total value
+	private static final int bribingPrice = 15;
+	private static final int foodPrice = 8;
 
 	public Game(List<Faction> factions, List<Field> fields, List<Scenario> scenarios,
 				HashMap<Integer, List<Event>> events) {
@@ -223,15 +231,17 @@ public class Game {
 		}
 	}
 
+
 	public void setCurrentEvent(Event event) {
 		this.event = event;
 	}
 
 	public void playAction(Action action){
-		island.updateFactions(action.getFactionsEffects());
-		island.updateFields(action.getFieldsEffects());
-		island.updateFoodUnits(action.getFood());
-		island.updateTreasure(action.getTreasure());
+		float coef = difficulty.getMultiplier();
+		island.updateFactions(action.getFactionsEffects(), coef);
+		island.updateFields(action.getFieldsEffects(), coef);
+		island.updateFoodUnits((action.getFood()*coef));
+		island.updateTreasure(action.getTreasure()*coef);
 	}
 
 	/**
@@ -305,20 +315,20 @@ public class Game {
 		// https://stackoverflow.com/questions/3133006/jsonparser-getresourceasstream
 		// https://stackoverflow.com/questions/53542142/returning-json-file-as-jsonarray-in-spring-boot
 
-		/* When making jar */
-		/*
-		 * String pathToData = ""; try{ String jarPath = Game.class
-		 * .getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
-		 * File file = new File(jarPath); pathToData =
-		 * file.getParentFile().getPath()+"\\ress\\";
-		 *
-		 *
-		 * } catch (URISyntaxException e) { e.printStackTrace(); }
-		 *
-		 * String pathToFactionsFile = pathToData+"factions.json"; String
-		 * pathToFieldsFile = pathToData+"fields.json"; String pathToScenariosDir =
-		 * pathToData+"scenarios\\"; String pathToEventsDir = pathToData+"events\\";
-		 */
+		/* When making jar
+
+		  String pathToData = ""; try{ String jarPath = Game.class
+		  .getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
+		  File file = new File(jarPath); pathToData =
+		  file.getParentFile().getPath()+"\\resources\\";
+
+
+		  } catch (URISyntaxException e) { e.printStackTrace(); }
+
+		  String pathToFactionsFile = pathToData+"factions.json"; String
+		  pathToFieldsFile = pathToData+"fields.json"; String pathToScenariosDir =
+		  pathToData+"scenarios\\"; String pathToEventsDir = pathToData+"events\\";
+		*/
 
 		/* Paths */
 
@@ -346,5 +356,57 @@ public class Game {
 		Game game = new Game(factions, fields, scenarios, events);
 
 		return game;
+	}
+
+	public boolean bribeFaction(int factionId, int amount){
+		Faction f = island.getFactions().stream().filter(x -> x.getId() == factionId).findFirst().get();
+		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
+		if(this.island.getTreasury() < price){
+			return false;
+		}
+		island.getFactions().stream().filter(x -> x.getId() == factionId).findFirst().get().setApprobationPercentage(f.getApprobationPercentage()+(2*amount));
+		island.updateTreasure(price*(-1));
+		return true;
+	}
+
+	public boolean buyFood(int amount){
+		int price = (Game.foodPrice * amount);
+		if(price > island.getTreasury()){
+			return false;
+		}
+		System.out.println((Game.foodPrice * amount)+ " t :"+amount);
+		island.updateFoodUnits(amount);
+		island.updateTreasure(price*(-1));
+		return true;
+	}
+
+	public String updateResourcesEndofYear(){
+		String str = "";
+		float thenTreasure = island.getTreasury();
+		int npeople = island.updatePopulationAndTreasury();
+		float nowTreasure = island.getTreasury();
+		if(thenTreasure > nowTreasure){
+			str+= "- Your are in deficit you lost some money to pay the debts.\n";
+		}
+
+		if(npeople > 0){
+			str+= "- You had not enough food to feed all the population properly, some of them died. -"+npeople+" citizens. The approbation of all the factions has decreased.\n";
+		}else if(npeople < 0){
+			str+= "- You had more food than needed, some citizens appeared. +"+npeople+" citizens.\n";
+		}
+		return str;
+	}
+
+	public String generateYearlyResources(){
+		String str = "";
+		float thenTreasure = island.getTreasury();
+		float thenFood= island.getFoodUnits();
+		generateYearlyResources();
+		float nowTreasure = island.getTreasury();
+		float nowFood = island.getFoodUnits();
+
+		str+="- Your capital evolved thanks to your industry: +"+(nowTreasure - thenTreasure)+"$.\n";
+		str+="- Your number of food units evolved thanks to your agriculture: +"+(nowFood - thenFood)+" units.";
+		return "";
 	}
 }

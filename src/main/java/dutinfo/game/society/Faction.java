@@ -107,4 +107,9 @@ public class Faction {
 		factionNames.forEach(x -> { factions.add(new Faction((String) x)); });
 		return factions;
 	}
+
+	@Override
+	public String toString(){
+     	return name;
+	}
 }

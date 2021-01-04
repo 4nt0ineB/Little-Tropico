@@ -8,6 +8,7 @@ import dutinfo.game.society.Field;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Island {
@@ -54,7 +55,7 @@ public class Island {
 		treasury+=amount;
 	}
 
-	public void updateFoodUnits(int amount){
+	public void updateFoodUnits(float amount){
 		foodUnits+=amount;
 	}
 
@@ -83,17 +84,17 @@ public class Island {
 		return inputV;
 	}
 
-	public void updateFactions(HashMap<Integer, Float[]> factionsValues){
+	public void updateFactions(HashMap<Integer, Float[]> factionsValues, float coef){
 		factions.parallelStream().forEach(x -> {
 			var w = factionsValues.get(x.getId());
 			if(w != null){
-				x.setApprobationPercentage(x.getApprobationPercentage()+w[0]);
-				x.setNbrSupporters(x.getNbrSupporters()+w[1].intValue());
+				x.setApprobationPercentage(x.getApprobationPercentage()+(w[0]*coef));
+				x.setNbrSupporters(x.getNbrSupporters()+((int) (w[1].intValue()*coef)));
 			}
 		});
 	}
 
-	public void updateFields(HashMap<Integer, Float> fieldsValues){
+	public void updateFields(HashMap<Integer, Float> fieldsValues, float coef){
 		fields.stream().forEach(x -> {
 			var w = fieldsValues.get(x.getId());
 			float sum = x.getExploitationPercentage();
@@ -105,7 +106,7 @@ public class Island {
 				}else{
 					sum+=w;
 				}
-				x.setExploitationPercentage(sum);
+				x.setExploitationPercentage(sum*coef);
 			}
 		});
 	}
@@ -115,7 +116,7 @@ public class Island {
 		foodUnits+=fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get().generateProfit((float)foodUnits);
 	}
 
-	public void updateSeasonResources(){ //début du tour
+	public int updatePopulationAndTreasury(){ //début du tour
 		//treasure : the dept
 		if(treasury < 0){
 			treasury+=(treasury)*(-0.2);
@@ -125,15 +126,33 @@ public class Island {
 			while ((s*4)/foodUnits < 1){
 				 s--;
 			}
-			randomlyKillPeople(s);
+			return -s;
 		}else{ //create
-
+			Random r = new Random();
+			return ((r.nextInt((10 - 0) + 1) + 0)/100)*(totalSupporters());
 		}
-		//food ~ //supporters : kill or create
+	}
+
+	private void randomlyCreatePeople(int n){
+		Random r = new Random();
+		Faction f;
+		while (n > 0){
+			f = factions.get(r.nextInt((factions.size() - 0) + 1) + 0);
+			int nbtoCreate = r.nextInt((n - 0) + 1) + 0;
+			f.setNbrSupporters(f.getNbrSupporters()+nbtoCreate);
+			n-=nbtoCreate;
+		}
 	}
 
 	private void randomlyKillPeople(int n){
-
+		Random r = new Random();
+		Faction f;
+		while (n > 0){
+			f = factions.get(r.nextInt((factions.size() - 0) + 1) + 0);
+			int nbToKill = r.nextInt((n - 0) + 1) + 0;
+			f.setNbrSupporters(f.getNbrSupporters()-nbToKill);
+			n-=nbToKill;
+		}
 	}
 
 	/**
