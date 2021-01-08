@@ -7,6 +7,7 @@ module dutinfo {
     requires json.simple;
     requires org.fusesource.jansi;
     requires javafx.fxml;
+    requires javafx.media;
 
     exports dutinfo.javafx.controllers;
     exports dutinfo.javafx.views;

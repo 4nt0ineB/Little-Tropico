@@ -182,7 +182,6 @@ public class Game {
 	}
 
 	public boolean nextTurn() {
-		System.out.println(nextEvents);
 		event = null;
 		// add total random new event to stack
 		addNextEvents();

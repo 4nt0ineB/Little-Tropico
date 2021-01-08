@@ -10,6 +10,7 @@ import dutinfo.game.society.President;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,9 +20,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import dutinfo.javafx.models.Model;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+
 
 public class mainController implements EventHandler<MouseEvent> {
 
@@ -59,6 +63,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private int valueEOY;
     private boolean onGoingEvent;
     private boolean onGoingEOY;
+    private long firstTime;
 
     @Override
     public void handle(MouseEvent mouseEvent) {
@@ -107,6 +112,7 @@ public class mainController implements EventHandler<MouseEvent> {
      * Initialize all the game window (animations, texts, etc...)
      */
     public void initialize() {
+
         appModel.startAnimations(sun); // sun rolling
         selectEvent.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
         submitEOY.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
@@ -121,13 +127,26 @@ public class mainController implements EventHandler<MouseEvent> {
         game.nextTurn();
         updateAll();
         AnimationTimer timer = new AnimationTimer() { // GAME LOOP
+            MediaPlayer player;
+            MediaPlayer player2;
+
+            @Override
+            public void start() {
+                super.start();
+                // la musica
+
+                Media media = new Media(getClass().getClassLoader().getResource("italianmusic-cut.mp3").toString());
+                Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
+                player = new MediaPlayer(media);
+                player2 = new MediaPlayer(media2);
+                player.play();
+                player2.play();
+            }
+
             @Override
             public void handle(long l) {
-                System.out.println("none ");
                 if(!onGoingEvent && !onGoingEOY){
-                    System.out.println("--------------------------openwin");
                     Event ev = game.getEvent();
-                    System.out.println(ev);
                     if(ev != null){
                         openEventWindow(ev); // get random event for the current season
                     }else{
@@ -145,7 +164,9 @@ public class mainController implements EventHandler<MouseEvent> {
 
             }
         };
+
         timer.start();
+
     }
 
     public void updateAll(){
