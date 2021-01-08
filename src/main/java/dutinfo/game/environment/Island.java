@@ -20,6 +20,7 @@ public class Island {
 	private List<Field> fields;
 	private float treasury;
 	private int foodUnits;
+	private int nbPastYears;
 
 	public Island(String name, President president, List<Faction> factions, List<Field> fields, float treasury) {
 		this.name = name;
@@ -29,6 +30,14 @@ public class Island {
 		this.fields = fields;
 		this.treasury = treasury;
 		foodUnits = 0;
+	}
+
+	public int getNbPastYears() {
+		return nbPastYears;
+	}
+
+	public void incrementYears(){
+		nbPastYears++;
 	}
 
 	public int getFoodUnits(){

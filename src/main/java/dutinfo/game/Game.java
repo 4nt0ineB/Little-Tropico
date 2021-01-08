@@ -182,6 +182,7 @@ public class Game {
 	}
 
 	public boolean nextTurn() {
+		System.out.println(nextEvents);
 		event = null;
 		// add total random new event to stack
 		addNextEvents();
@@ -189,6 +190,9 @@ public class Game {
 		setCurrentEvent(pickNextEvents());
 		//update the season of the island
 		island.incrementSeason();
+		if(island.getSeason() == Season.Spring){
+			island.incrementYears();
+		}
 		//new year mode
 		/*
 			island.generateYearlyResources();
@@ -209,11 +213,14 @@ public class Game {
 	 * add an event from the scenario to the event stack
 	 */
 	public void addNextEvents() {
+
 		var ev = scenario.getRandomEvent();
+
 		if (ev == null) {
 			return;
 		}
 		nextEvents.add(ev);
+
 	}
 
 	/**
@@ -224,8 +231,10 @@ public class Game {
 	 */
 	public Event pickNextEvents() {
 		try {
-			return nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.getSeason() == null)
+			Event ev = nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.getSeason() == null)
 					.findFirst().get();
+			nextEvents.remove(ev);
+			return ev;
 		} catch (Exception e) {
 			return null;
 		}

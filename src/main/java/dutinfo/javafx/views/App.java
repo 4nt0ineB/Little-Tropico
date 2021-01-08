@@ -1,6 +1,8 @@
 package dutinfo.javafx.views;
 
 
+import dutinfo.game.events.Event;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,6 +27,11 @@ public class App extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
+
+
     }
 
     public static void main(String[] args) {

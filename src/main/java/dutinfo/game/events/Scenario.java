@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Scenario {
 
@@ -67,8 +68,9 @@ public class Scenario {
      * @return
      */
     public Event getRandomEvent() {
-        Collections.shuffle(events);
-        return events.parallelStream().filter(x -> !x.isOnlyARepercussion()).findFirst().get();
+        List<Event> evl = events.parallelStream().filter(x -> !x.isOnlyARepercussion()).collect(Collectors.toList());
+        Random rand = new Random();
+        return evl.get(rand.nextInt(((events.size()-1) - 0) + 1) + 0);
     }
 
     /**

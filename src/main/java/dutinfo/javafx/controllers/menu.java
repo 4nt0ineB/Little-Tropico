@@ -2,6 +2,7 @@ package dutinfo.javafx.controllers;
 
 import dutinfo.game.Game;
 import dutinfo.game.events.Scenario;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -62,5 +63,7 @@ public class menu implements Initializable {
 
         // Add the game to the first row and column of GP
         menu.add(jeu,0,1);
+
+
     }
 }
