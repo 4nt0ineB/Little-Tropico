@@ -55,7 +55,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private ComboBox eventChoice, choiceEOY, factionEOY;
 
     @FXML
-    private Button selectEvent, submitEOY;
+    private Button selectEvent, submitEOY, menuBtn;
 
     @FXML
     private Text eventDescription, eventEffects, eventEffects2;
@@ -126,6 +126,7 @@ public class mainController implements EventHandler<MouseEvent> {
         appModel.startAnimations(sun); // sun rolling
         selectEvent.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
         submitEOY.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
+        menuBtn.setStyle("-fx-background-color: #7a0000; -fx-text-fill: white;");
 
         // Hide president anger
         vein.setVisible(false);

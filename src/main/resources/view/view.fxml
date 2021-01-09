@@ -185,9 +185,9 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="26.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="48.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="1332.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="66.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="88.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="1332.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@capitalists.png" />
          </image>
@@ -195,7 +195,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <Label id="wheatPercentage" fx:id="capitalistsPercentage" layoutX="1108.0" layoutY="26.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Label id="wheatPercentage" fx:id="capitalistsPercentage" layoutX="1108.0" layoutY="66.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -203,9 +203,9 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="98.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="120.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="communistsPercentage" layoutX="1108.0" layoutY="98.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="138.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="160.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="communistsPercentage" layoutX="1108.0" layoutY="138.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -213,9 +213,9 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="169.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="191.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="liberalistsPercentage" layoutX="1108.0" layoutY="169.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="209.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="231.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="liberalistsPercentage" layoutX="1108.0" layoutY="209.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -223,9 +223,9 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="240.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="262.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="religiousPercentage" layoutX="1108.0" layoutY="240.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="280.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="302.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="religiousPercentage" layoutX="1108.0" layoutY="280.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -233,8 +233,8 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="311.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Label id="wheatPercentage" fx:id="militaristsPercentage" layoutX="1108.0" layoutY="311.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="351.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Label id="wheatPercentage" fx:id="militaristsPercentage" layoutX="1108.0" layoutY="351.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -242,9 +242,9 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="382.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="404.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="ecologistsPercentage" layoutX="1108.0" layoutY="382.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="422.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="444.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="ecologistsPercentage" layoutX="1108.0" layoutY="422.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -252,9 +252,9 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="453.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="475.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="nationalistsPercentage" layoutX="1108.0" layoutY="453.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="493.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="515.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="nationalistsPercentage" layoutX="1108.0" layoutY="493.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -262,9 +262,9 @@
             <Glow />
          </effect>
       </Label>
-      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="524.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="546.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <Label id="wheatPercentage" fx:id="loyalistsPercentage" layoutX="1108.0" layoutY="524.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1097.0" layoutY="564.0" stroke="#0000004a" strokeType="INSIDE" width="248.0" />
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="586.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <Label id="wheatPercentage" fx:id="loyalistsPercentage" layoutX="1108.0" layoutY="564.0" prefHeight="45.0" prefWidth="214.0" text="100%" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -272,7 +272,7 @@
             <Glow />
          </effect>
       </Label>
-      <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1336.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1336.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@communists.png" />
          </image>
@@ -280,7 +280,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1336.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1336.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@liberties.png" />
          </image>
@@ -288,7 +288,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="24.0" layoutX="1343.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="49.0" fitWidth="24.0" layoutX="1343.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@religious.png" />
          </image>
@@ -296,7 +296,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="38.0" layoutX="1335.0" layoutY="385.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="45.0" fitWidth="38.0" layoutX="1335.0" layoutY="425.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@ecologists.png" />
          </image>
@@ -304,7 +304,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="45.0" layoutX="1332.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="50.0" fitWidth="45.0" layoutX="1332.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@nationalists.png" />
          </image>
@@ -312,7 +312,7 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1332.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="38.0" fitWidth="45.0" layoutX="1332.0" layoutY="569.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@loyalists.png" />
          </image>
@@ -392,6 +392,6 @@
       <Label fx:id="errorMsgEOY" alignment="CENTER" layoutX="322.0" layoutY="385.0" prefHeight="17.0" prefWidth="769.0" text="Error msg" textFill="RED" />
       <Button fx:id="submitEOY" layoutX="673.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
       <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Your choice :" textFill="WHITE" />
-      <Button layoutX="593.0" layoutY="108.0" mnemonicParsing="false" onAction="#toMenu" text="Menu" />
+      <Button fx:id="menuBtn" layoutX="1202.0" layoutY="19.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="25.0" prefWidth="177.0" text="Back to main menu" />
    </children>
 </AnchorPane>
