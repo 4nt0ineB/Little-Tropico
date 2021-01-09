@@ -286,6 +286,13 @@ public class mainController implements EventHandler<MouseEvent> {
     }
 
     public void openEndYearWindow(){
+
+        MediaPlayer player;
+        Media media = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
+        player = new MediaPlayer(media);
+        player.play();
+
+
         onGoingEOY = true;
 
         endYearAlert.setVisible(true);
