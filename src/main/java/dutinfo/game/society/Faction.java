@@ -1,9 +1,17 @@
 package dutinfo.game.society;
 
-import dutinfo.game.GameUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.google.gson.Gson;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import dutinfo.game.GameUtils;
+
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class Faction {
@@ -97,15 +105,20 @@ public class Faction {
      * @return*/
 	public static List<Faction> initFaction(String pathToFactionsFile){
 
-		List<Faction> factions = new ArrayList<>();
-		Object jsonFactions = GameUtils.jsonToObject(pathToFactionsFile);
-		JSONArray factionsAr = (JSONArray) jsonFactions;
-		assert factionsAr != null;
-		Object o1 = factionsAr.get(0);
-		JSONObject ev1 = (JSONObject) o1;
-		JSONArray factionNames = (JSONArray) ev1.get("names");
-		factionNames.forEach(x -> { factions.add(new Faction((String) x)); });
-		return factions;
+     	try{
+			List<Faction> factions = new ArrayList<>();
+			String jsonString = GameUtils.getResourceFileAsString(pathToFactionsFile);
+			JsonObject convertedObject = new Gson().fromJson(jsonString, JsonObject.class);
+			JsonArray array = convertedObject.getAsJsonArray("names");
+			array.forEach(x -> {
+				factions.add(new Faction(x.getAsString()));
+			});
+
+			return factions;
+		}catch (Exception e){
+			System.out.println(e);
+		}
+     	return null;
 	}
 
 	@Override

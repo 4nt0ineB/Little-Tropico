@@ -1,8 +1,9 @@
 package dutinfo.game.society;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dutinfo.game.GameUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.*;
 
@@ -52,17 +53,20 @@ public class Field {
     }
 
     public static List<Field> initField(String pathToFieldsFile) {
-        List<Field> fields = new ArrayList<>();
-        Object jsonFields = GameUtils.jsonToObject(pathToFieldsFile);
-        JSONArray fieldsAr = (JSONArray) jsonFields;
-        assert fieldsAr != null;
-        Object o1 = fieldsAr.get(0);
-        JSONObject ev1 = (JSONObject) o1;
-        JSONArray fieldNames = (JSONArray) ev1.get("names");
-        fieldNames.forEach(x -> {
-            fields.add(new Field((String) x));
-        });
-        return fields;
+        try{
+            List<Field> fields = new ArrayList<>();
+            String jsonString = GameUtils.getResourceFileAsString(pathToFieldsFile);
+            JsonObject convertedObject = new Gson().fromJson(jsonString, JsonObject.class);
+            JsonArray array = convertedObject.getAsJsonArray("names");
+            array.forEach(x -> {
+                fields.add(new Field(x.getAsString()));
+            });
+
+            return fields;
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
 
     private static void addField(Field field) {

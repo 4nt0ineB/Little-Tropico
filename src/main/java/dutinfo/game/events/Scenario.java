@@ -1,12 +1,11 @@
 package dutinfo.game.events;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dutinfo.game.GameUtils;
 import dutinfo.game.environment.Season;
 import dutinfo.game.society.Faction;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -146,60 +145,61 @@ public class Scenario {
 
         scenariosJson.stream().forEach(f -> {
             // Global array of the file
-            JSONObject ar = (JSONObject) ((Object) GameUtils.jsonToObject(f.getPath()));
+            JsonObject ar = GameUtils.jsonToObject(f.getPath());
 
             // Title
             String title = f.getName().substring(0, f.getName().lastIndexOf("."));
 
             // Description
-            String description = (String) ((Object) ar.get("description"));
+            System.out.println(ar);
+            String description = ar.get("description").getAsString();
 
             // Satisfaction and exploitation
-            JSONObject satisfaction = (JSONObject) ((Object) ar.get("satisfaction"));
-            int generalSatisfaction = (int) (long) satisfaction.get("general");
+            JsonObject satisfaction = ar.getAsJsonObject("satisfaction");
+            int generalSatisfaction = satisfaction.get("general").getAsInt();
 
-            JSONArray factionException = (JSONArray) satisfaction.get("exceptions");
+            JsonArray factionException = satisfaction.getAsJsonArray("exceptions");
             HashMap<Integer, Float> facPercentage = new HashMap<>();
 
             factionException.forEach(fac -> {
-                JSONObject exc = (JSONObject) fac;
-                String name = (String) exc.get("name");
+                JsonObject exc = fac.getAsJsonObject();
+                String name = exc.get("name").getAsString();
                 assert (Faction.exist(name));
-                facPercentage.put(GameUtils.idByHashString(name), (float) (long) exc.get("percentage"));
+                facPercentage.put(GameUtils.idByHashString(name), exc.get("percentage").getAsFloat());
             });
 
             // Fields
-            JSONArray fields = (JSONArray) ar.get("fields");
+            JsonArray fields = ar.getAsJsonArray("fields");
             HashMap<Integer, Float[]> filPercentage = new HashMap<>();
             fields.forEach(fi -> {
-                JSONObject exc = (JSONObject) fi;
+                JsonObject exc = fi.getAsJsonObject();
 
                 Float[] vals = new Float[2];
                 int yieldPercent;
                 try{
-                    vals[0] = (float) (long) exc.get("percentage");
+                    vals[0] = exc.get("percentage").getAsFloat();
                 }catch (Exception e){
                     vals[0] = (float) generalSatisfaction;
                 }
                 try{
-                    vals[1] = ((float) (long) exc.get("yield"));
+                    vals[1] = exc.get("yield").getAsFloat();
                 }catch (Exception e){
                     vals[1] = 0f;
                 }
-                filPercentage.put(GameUtils.idByHashString((String) exc.get("name")),vals);
+                filPercentage.put(GameUtils.idByHashString(exc.get("name").getAsString()),vals);
             });
 
             // Followers
-            int followers = (int) (long) ar.get("followers");
+            int followers = ar.get("followers").getAsInt();
             // Treasure
-            int treasure = (int) (long) ar.get("treasure");
+            int treasure = ar.get("treasure").getAsInt();
 
             // Event packages
             Set<Integer> packageIds = new HashSet<>();
             packageIds.add(GameUtils.idByHashString("Commons")); // <---- Very important : add the common event package
             // (present in each scenario)
-            JSONArray pNames = (JSONArray) ar.get("event_packages");
-            pNames.forEach(x -> packageIds.add(GameUtils.idByHashString((String) x)));
+            JsonArray pNames = ar.getAsJsonArray("event_packages");
+            pNames.forEach(x -> packageIds.add(GameUtils.idByHashString(x.getAsString())));
 
             scenarios.add(new Scenario(description, title, generalSatisfaction, facPercentage, followers, filPercentage,
                     treasure, packageIds));

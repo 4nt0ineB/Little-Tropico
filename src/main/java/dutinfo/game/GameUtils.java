@@ -1,12 +1,10 @@
 package dutinfo.game;
 
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -17,17 +15,24 @@ import java.util.stream.Collectors;
 public class GameUtils {
 
     /**
-     * Return Object from parsing json file
+     * Return JsonObject from parsing json file without using resources
      *
      * @param path Path to json file
      */
-    public static Object jsonToObject(String path) {
+    public static JsonObject jsonToObject(String path) {
 
-        try (FileReader filereader = new FileReader(new File(path).getAbsolutePath())) {
-            JSONParser jsonTest = new JSONParser();
-            Object jsonObject = jsonTest.parse(filereader);
-            return jsonObject;
-        } catch (IOException | ParseException e) {
+        try{
+            String json = "";
+            InputStream inputStream = new DataInputStream(new FileInputStream(new File(path).getAbsolutePath()));
+            if (inputStream == null) return null;
+
+            try (InputStreamReader isr = new InputStreamReader(inputStream, "UTF-8");
+                 BufferedReader reader = new BufferedReader(isr)) {
+                json = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            }
+            JsonObject convertedObject = new Gson().fromJson(json, JsonObject.class);
+            return convertedObject;
+        } catch (IOException e) {
             // e.printStackTrace();
         }
         return null;
@@ -68,6 +73,25 @@ public class GameUtils {
         BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+
+    /**
+     * Reads given resource file as a string.
+     *
+     * @param fileName path to the resource file
+     * @return the file's contents
+     * @throws IOException if read fails for any reason
+     */
+    public static String getResourceFileAsString(String fileName) throws IOException {
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        try (InputStream is = classLoader.getResourceAsStream(fileName)) {
+            if (is == null) return null;
+            try (InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+                 BufferedReader reader = new BufferedReader(isr)) {
+                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            }
+        }
     }
 
 }

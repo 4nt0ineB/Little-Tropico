@@ -1,12 +1,13 @@
 package dutinfo.game.events;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dutinfo.game.Game;
 import dutinfo.game.GameUtils;
 import dutinfo.game.environment.Season;
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.Field;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -88,7 +89,7 @@ public class Event {
 		for(File f: alleventsFiles) {
 
 			// Global array of the file
-			JSONObject ev = (JSONObject) (GameUtils.jsonToObject(f.getPath()));
+			JsonObject ev = GameUtils.jsonToObject(f.getPath());
 			try{
 
 				//init Event() parameters
@@ -97,7 +98,7 @@ public class Event {
 				List<Action> actions = new ArrayList<>();
 
 				try{
-					int rs = (int) (long) ev.get("season");
+					int rs = ev.get("season").getAsInt();
 					if(rs == 0){
 						season = Season.Spring;
 					}else if(rs == 1){
@@ -118,7 +119,7 @@ public class Event {
 				if(eventName.isEmpty()) throw new IllegalArgumentException("the name of the file can't be empty.");
 
 				// Title : the string of the question/problem itself
-				title = (String) ev.get("title");
+				title = ev.get("title").getAsString();
 				assert title != null;
 
 				//Package title
@@ -130,26 +131,26 @@ public class Event {
 				if(x == null){
 					currEventOnlyRepercussion = false;
 				}else{
-					currEventOnlyRepercussion = (boolean) x;
+					currEventOnlyRepercussion = x.getAsBoolean();
 				}
 
 
 				//actions
 				HashMap<Integer, Float[]> factionsEffects = new HashMap<>();
 				HashMap<Integer, Float> fieldsEffects = new HashMap<>();
-				JSONArray actionsData = (JSONArray) ev.get("actions");
+				JsonArray actionsData = ev.getAsJsonArray("actions");
 				actionsData.forEach(a -> {
-					JSONObject action = (JSONObject)  a;
-					String actionTitle = (String) action.get("title");
+					JsonObject action = a.getAsJsonObject();
+					String actionTitle = action.get("title").getAsString();
 
 					String[] properties = {"factions", "fields"};
 					for (String prop: properties
 					) {
-						JSONArray propArray = (JSONArray) action.get(prop);
+						JsonArray propArray = action.getAsJsonArray(prop);
 						if(propArray != null){
 							propArray.forEach(obj ->{
-								JSONObject property = ((JSONObject) ((Object) obj));
-								String name = (String) property.get("name");
+								JsonObject property = obj.getAsJsonObject();
+								String name = property.get("name").getAsString();
 								if(prop.equals("factions")){
 									if(!Faction.exist(name)){
 										throw new IllegalArgumentException("Faction doesn't exist. Check factions.json");
@@ -165,12 +166,12 @@ public class Event {
 
 
 								try{
-									effect = (float) ((Number) property.get("effect")).doubleValue();
+									effect =  property.get("effect").getAsFloat();
 								}catch(Exception e){
 								}
 
 								try{
-									followers = (int) (long) property.get("followers");
+									followers = property.get("followers").getAsInt();
 								}catch (Exception e){
 								}
 
@@ -194,7 +195,7 @@ public class Event {
 					//Treasure
 					float treasure = 0.0f;
 					try{
-						treasure = (float) ((Number) action.get("treasure")).doubleValue();
+						treasure = action.get("treasure").getAsFloat();
 					}catch (Exception e){
 
 					}
@@ -202,16 +203,19 @@ public class Event {
 					//Food
 					int food = 0;
 					try{
-						food = (int) (long) action.get("food");
+						food = action.get("food").getAsInt();
 					}catch (Exception e){
 					}
 
 
 					// Repercussions
 					Set<Integer> repercussions = new HashSet<>();
-					JSONArray repO = (JSONArray) action.get("repercussions");
+					JsonArray repO = action.getAsJsonArray("repercussions");
 					if(repO != null){
-						repO.forEach(p -> { repercussions.add(GameUtils.idByHashString((String) p)); });
+						repO.forEach(p -> {
+							repercussions.add(GameUtils.idByHashString(p.getAsString()));
+						}
+						);
 					}
 
 					actions.add(new Action(actionTitle, treasure, food,(HashMap<Integer, Float[]>) factionsEffects.clone(), (HashMap<Integer, Float>) fieldsEffects.clone(), repercussions));
