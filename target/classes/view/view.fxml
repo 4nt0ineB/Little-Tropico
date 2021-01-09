@@ -392,5 +392,6 @@
       <Label fx:id="errorMsgEOY" alignment="CENTER" layoutX="322.0" layoutY="385.0" prefHeight="17.0" prefWidth="769.0" text="Error msg" textFill="RED" />
       <Button fx:id="submitEOY" layoutX="673.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
       <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Your choice :" textFill="WHITE" />
+      <Button layoutX="593.0" layoutY="108.0" mnemonicParsing="false" onAction="#toMenu" text="Menu" />
    </children>
 </AnchorPane>

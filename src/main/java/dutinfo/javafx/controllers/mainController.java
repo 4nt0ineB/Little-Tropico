@@ -7,11 +7,17 @@ import dutinfo.game.events.Action;
 import dutinfo.game.events.Event;
 import dutinfo.game.society.Faction;
 import dutinfo.game.society.President;
+import dutinfo.javafx.views.App;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -19,14 +25,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import dutinfo.javafx.models.Model;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 
 public class mainController implements EventHandler<MouseEvent> {
+
+    public static Scene menu;
 
     private static Game game;
 
@@ -63,6 +73,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private boolean onGoingEvent;
     private boolean onGoingEOY;
     private long firstTime;
+    private AnimationTimer timer;
 
     @Override
     public void handle(MouseEvent mouseEvent) {
@@ -125,7 +136,7 @@ public class mainController implements EventHandler<MouseEvent> {
 
         game.nextTurn();
         updateAll();
-        AnimationTimer timer = new AnimationTimer() { // GAME LOOP
+        timer = new AnimationTimer() { // GAME LOOP
             MediaPlayer player;
             MediaPlayer player2;
 
@@ -134,8 +145,8 @@ public class mainController implements EventHandler<MouseEvent> {
                 super.start();
                 // la musica
 
-                Media media = new Media(getClass().getClassLoader().getResource("sound/italianmusic-cut.mp3").toString());
-                Media media2 = new Media(getClass().getClassLoader().getResource("sound/beachambiance-cut.mp3").toString());
+                Media media = new Media(getClass().getClassLoader().getResource("italianmusic-cut.mp3").toString());
+                Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
                 player = new MediaPlayer(media);
                 player2 = new MediaPlayer(media2);
                 player.play();
@@ -160,7 +171,13 @@ public class mainController implements EventHandler<MouseEvent> {
                         openEndYearWindow();
                     }
                 }
-
+            }
+            
+            @Override
+            public void stop() {
+                super.stop();
+                player.stop();
+                player2.stop();
             }
         };
 
@@ -187,6 +204,7 @@ public class mainController implements EventHandler<MouseEvent> {
      * Function that permits choice to be submitted to the MCP and launched when click on "Select" button during an event choice
      */
     public void submitEventChoice(){
+
         currentActionId = GameUtils.idByHashString(eventChoice.getSelectionModel().getSelectedItem().toString());
 
         game.playAction(currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == currentActionId).findFirst().get());
@@ -203,6 +221,20 @@ public class mainController implements EventHandler<MouseEvent> {
         game.nextTurn(); // pass the turn
         updateAll();
     }
+
+    public void toMenu(){
+        timer.stop(); // Stop the sound and the game loop
+        try{
+            GridPane root = FXMLLoader.load(getClass().getResource("/view/menu.fxml"));
+            root.setStyle("-fx-background-image: url('https://i.imgur.com/Y1uRiCV.jpg')");
+            Scene scene = new Scene(root, 1400, 788);
+            App.mstage.setScene(scene);
+            App.mstage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Function that sets windows to invisible but it stills here
@@ -287,7 +319,7 @@ public class mainController implements EventHandler<MouseEvent> {
     public void openEndYearWindow(){
 
         MediaPlayer player;
-        Media media = new Media(getClass().getClassLoader().getResource("sound/eoy-sfx.mp3").toString());
+        Media media = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
         player = new MediaPlayer(media);
         player.play();
 

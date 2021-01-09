@@ -45,7 +45,7 @@ public class Game {
 	 * The events stack (next ev to pick if correspond to season) <------< (last ev
 	 * append to stack)
 	 */
-	private List<Event> nextEvents; // repercussions
+	private List<Event> nextEvents; // event stack
 	private Event event; // Current / last event
 	private Scenario scenario; // Current scenario
 
@@ -212,14 +212,11 @@ public class Game {
 	 * add an event from the scenario to the event stack
 	 */
 	public void addNextEvents() {
-
 		var ev = scenario.getRandomEvent();
-
 		if (ev == null) {
 			return;
 		}
 		nextEvents.add(ev);
-
 	}
 
 	/**
@@ -230,7 +227,7 @@ public class Game {
 	 */
 	public Event pickNextEvents() {
 		try {
-			Event ev = nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.getSeason() == null)
+			Event ev = nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.isOnlyARepercussion())
 					.findFirst().get();
 			nextEvents.remove(ev);
 			return ev;
@@ -250,6 +247,9 @@ public class Game {
 		island.updateFields(action.getFieldsEffects(), coef);
 		island.updateFoodUnits((action.getFood()*coef));
 		island.updateTreasure(action.getTreasure()*coef);
+		//append a repercussion if exist to the stack
+		Event ev = scenario.getEventById(action.getRandomRepercussionId());
+		if(ev != null) nextEvents.add(ev);
 	}
 
 	/**
@@ -288,6 +288,7 @@ public class Game {
 	 */
 	public static class MCP {
 		private static HashMap<String, Set<String>> failedEventsFiles;
+		private static String errorReporter = "";
 
 		/**
 		 * add all the data from parsing error in the field assigned for it in the class
@@ -296,6 +297,10 @@ public class Game {
 		 */
 		public static void addFailedEventFile(HashMap<String, Set<String>> files) {
 			failedEventsFiles.putAll(files);
+		}
+
+		public static void addErrorToReporter(String str){
+			errorReporter+="[info] "+str+"\n";
 		}
 
 		public static String print() {

@@ -61,6 +61,14 @@ public class Scenario {
          */
     }
 
+    public Event getEventById(int id){
+        try{
+            return events.parallelStream().filter(x -> x.getId() == id).findFirst().get();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     /**
      * Get a random event
      *
@@ -151,7 +159,6 @@ public class Scenario {
             String title = f.getName().substring(0, f.getName().lastIndexOf("."));
 
             // Description
-            System.out.println(ar);
             String description = ar.get("description").getAsString();
 
             // Satisfaction and exploitation

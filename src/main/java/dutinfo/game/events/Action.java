@@ -3,9 +3,8 @@ package dutinfo.game.events;
 import dutinfo.game.Game;
 import dutinfo.game.GameUtils;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Action {
 
@@ -63,6 +62,14 @@ public class Action {
 		return factionsEffects.get(GameUtils.idByHashString("Capitalists"));
 	}*/
 
+	public int getRandomRepercussionId(){
+		if(repercussions.isEmpty()){
+			return -1;
+		}
+		Random rand = new Random();
+		Integer[] l = repercussions.toArray(new Integer[repercussions.size()]);
+		return l[rand.nextInt(((repercussions.size()-1) - 0) + 1) + 0];
+	}
 
 	@Override
 	public String toString() {
@@ -74,6 +81,7 @@ public class Action {
 		return "Action{" + "\n\tid=" + id + "\n\t, title='" + title + '\'' + "\n\t, factionsEffects=" + factionsEffects
 				+ "\n\t, fieldsEffects=" + fieldsEffects + "\n\t, repercussions=" + repercussions + '}';
 	}
+
 	//faction and field
 	public String getEffectsPercentagesToString(){
 		StringBuilder sb = new StringBuilder();
