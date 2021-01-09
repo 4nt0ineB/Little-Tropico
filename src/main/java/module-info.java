@@ -11,4 +11,5 @@ module dutinfo {
 
     exports dutinfo.javafx.controllers;
     exports dutinfo.javafx.views;
+    
 }

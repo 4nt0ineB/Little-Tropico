@@ -10,7 +10,6 @@ import dutinfo.game.society.President;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -135,8 +134,8 @@ public class mainController implements EventHandler<MouseEvent> {
                 super.start();
                 // la musica
 
-                Media media = new Media(getClass().getClassLoader().getResource("italianmusic-cut.mp3").toString());
-                Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
+                Media media = new Media(getClass().getClassLoader().getResource("sound/italianmusic-cut.mp3").toString());
+                Media media2 = new Media(getClass().getClassLoader().getResource("sound/beachambiance-cut.mp3").toString());
                 player = new MediaPlayer(media);
                 player2 = new MediaPlayer(media2);
                 player.play();
@@ -288,7 +287,7 @@ public class mainController implements EventHandler<MouseEvent> {
     public void openEndYearWindow(){
 
         MediaPlayer player;
-        Media media = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
+        Media media = new Media(getClass().getClassLoader().getResource("sound/eoy-sfx.mp3").toString());
         player = new MediaPlayer(media);
         player.play();
 

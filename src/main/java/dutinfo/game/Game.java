@@ -323,7 +323,7 @@ public class Game {
 		// https://stackoverflow.com/questions/3133006/jsonparser-getresourceasstream
 		// https://stackoverflow.com/questions/53542142/returning-json-file-as-jsonarray-in-spring-boot
 
-		/* When making jar
+		/* When making jar */
 
 		  String pathToData = ""; try{ String jarPath = Game.class
 		  .getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
@@ -336,14 +336,15 @@ public class Game {
 		  String pathToFactionsFile = pathToData+"factions.json"; String
 		  pathToFieldsFile = pathToData+"fields.json"; String pathToScenariosDir =
 		  pathToData+"scenarios\\"; String pathToEventsDir = pathToData+"events\\";
-		*/
 
-		/* Paths */
+
+		/* Paths
 
 		String pathToFactionsFile = ".\\src\\main\\resources\\factions.json";
 		String pathToFieldsFile = ".\\src\\main\\resources\\fields.json";
 		String pathToScenariosDir = ".\\src\\main\\resources\\scenarios";
 		String pathToEventsDir = ".\\src\\main\\resources\\events\\";
+		 */
 
 		/* Init factions */
 		List<Faction> factions = Faction.initFaction(pathToFactionsFile);
