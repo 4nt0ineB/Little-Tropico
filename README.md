@@ -8,28 +8,28 @@ Little game of management simulation. You are the dictator of an island and your
 
 
 ```Bash
-            Game directory
-	│
-	│   trpc_xx.jar
-	│   Tropico.exe
-	│   README.txt
-	│
-	├───resources/
-	│   └───view/
-	│   └───scenarios/            <──── Append you custom scenario here. Unique scenario name !
-	│   │   │   sandbox.json
-	    │   │   coldwar.json 
-	    │   │   ...          
-	    │	       
-                ├───events
-                │   ├───Commons           <──── The events from "Commons" directory will be in every games.
-                │   │       base1.json
-                │   │
-                │   │ 		      <──── Make your own events and groups them together in a package 
-	    │   │		                 (e.g: the package "naturaldisasters" will contain for example 
-	    │   │				  "tsunami1.json","tsunami2.json","uricane.json", etc...")
-                │   └───"Custom event package"    
-                │           event_custom1.json
+    Game directory
+│
+│   trpc_xx.jar
+│   Tropico.exe
+│   README.txt
+│
+├───resources/
+│   └───view/
+│   └───scenarios/            <──── Append you custom scenario here. Unique scenario name !
+│   │   │   sandbox.json
+    │   │   coldwar.json 
+    │   │   ...          
+    │	       
+    ├───events
+    │   ├───Commons           <──── The events from "Commons" directory will be in every games.
+    │   │       base1.json
+    │   │
+    │   │ 		      <──── Make your own events and groups them together in a package 
+    │   │		                 (e.g: the package "naturaldisasters" will contain for example 
+    │   │				  "tsunami1.json","tsunami2.json","uricane.json", etc...")
+    │   └───"Custom event package"    
+    │           event_custom1.json
 ```
 
 
