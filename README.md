@@ -42,3 +42,7 @@ Present in the game at the moment :
     ▀ Factions: Capitalists, Communists, Liberals, Religious, Militarists, Ecologists, Nationalists, Loyalists
 
     ▀ Fields: Industry, Agriculture,
+    
+## Visuals
+![alt text](https://i.ibb.co/q7TWtHv/littletrpc1.png)
+![alt text](https://i.ibb.co/DDmwntk/littletrpc2.png)
