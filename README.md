@@ -37,8 +37,8 @@ To make your owns you can take example on the scenarios and events already creat
 
 Make sure that all events / event packages / scenarios / have unique names
 
-Present in the game at the moment
+Present in the game at the moment : 
 
-▀ Factions: Capitalists, Communists, Liberals, Religious, Militarists, Ecologists, Nationalists, Loyalists
+    ▀ Factions: Capitalists, Communists, Liberals, Religious, Militarists, Ecologists, Nationalists, Loyalists
 
-▀ Fields: Industry, Agriculture,
+    ▀ Fields: Industry, Agriculture,
