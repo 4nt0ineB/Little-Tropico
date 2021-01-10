@@ -18,6 +18,8 @@ import java.util.*;
 
 public class Game {
 
+	private static final boolean jarMode = false;
+
 	public enum Difficulty {
 		EASY(0.5f, 10f), NORMAL(1f, 20f), HARD(2f, 50f);
 
@@ -326,32 +328,41 @@ public class Game {
 	 */
 	public static Game initGame() {
 
-		// https://howtodoinjava.com/gson/gson-jsonparser/
-		// https://stackoverflow.com/questions/3133006/jsonparser-getresourceasstream
-		// https://stackoverflow.com/questions/53542142/returning-json-file-as-jsonarray-in-spring-boot
+
+		String pathToFactionsFile;
+		String pathToFieldsFile;
+		String pathToScenariosDir;
+		String pathToEventsDir;
+
+
+		if(jarMode){ // will use absolute path of the jar to look for exteral resources
+			String pathToData = ""; try{ String jarPath = Game.class
+					.getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
+				File file = new File(jarPath); pathToData =
+						file.getParentFile().getPath()+"\\resources\\";
+
+
+			} catch (URISyntaxException e) { e.printStackTrace(); }
+
+			pathToFactionsFile = "factions.json";
+			pathToFieldsFile = "fields.json";
+			pathToScenariosDir = pathToData+"scenarios\\";
+			pathToEventsDir = pathToData+"events\\";
+
+		}else{
+			pathToFactionsFile = "factions.json";
+			pathToFieldsFile = "fields.json";
+			pathToScenariosDir = ".\\src\\main\\resources\\scenarios";
+			pathToEventsDir = ".\\src\\main\\resources\\events\\";
+		}
 
 		/* WHEN MAKIN JAR
 
-		  String pathToData = ""; try{ String jarPath = Game.class
-		  .getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
-		  File file = new File(jarPath); pathToData =
-		  file.getParentFile().getPath()+"\\resources\\";
 
-
-		  } catch (URISyntaxException e) { e.printStackTrace(); }
-
-		  String pathToFactionsFile = "factions.json";
-		  String pathToFieldsFile = "fields.json";
-		  String pathToScenariosDir = pathToData+"scenarios\\";
-		  String pathToEventsDir = pathToData+"events\\";
 		*/
 
 		/* Paths */
 
-		String pathToFactionsFile = "factions.json";
-		String pathToFieldsFile = "fields.json";
-		String pathToScenariosDir = ".\\src\\main\\resources\\scenarios";
-		String pathToEventsDir = ".\\src\\main\\resources\\events\\";
 
 
 		/* Init factions */
