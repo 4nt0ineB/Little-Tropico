@@ -182,6 +182,7 @@ public class Game {
 	}
 
 	public boolean nextTurn() {
+
 		event = null;
 		// add total random new event to stack
 		addNextEvents();
@@ -227,7 +228,7 @@ public class Game {
 	 */
 	public Event pickNextEvents() {
 		try {
-			Event ev = nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.isOnlyARepercussion())
+			Event ev = nextEvents.stream().filter(x -> x.getSeason() == island.getSeason() || x.isOnlyARepercussion() || x.getSeason() == null )
 					.findFirst().get();
 			nextEvents.remove(ev);
 			return ev;
@@ -249,6 +250,7 @@ public class Game {
 		island.updateTreasure(action.getTreasure()*coef);
 		//append a repercussion if exist to the stack
 		Event ev = scenario.getEventById(action.getRandomRepercussionId());
+		System.out.println(ev);
 		if(ev != null) nextEvents.add(ev);
 	}
 
@@ -369,6 +371,8 @@ public class Game {
 
 		// System.out.println(events);
 		Game game = new Game(factions, fields, scenarios, events);
+
+		Game.MCP.print();
 
 		return game;
 	}

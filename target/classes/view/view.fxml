@@ -320,8 +320,8 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="333.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="1332.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="374.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="1332.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@militaries.png" />
          </image>

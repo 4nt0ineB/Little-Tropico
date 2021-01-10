@@ -77,7 +77,7 @@ public class Scenario {
     public Event getRandomEvent() {
         List<Event> evl = events.parallelStream().filter(x -> !x.isOnlyARepercussion()).collect(Collectors.toList());
         Random rand = new Random();
-        return evl.get(rand.nextInt(((events.size()-1) - 0) + 1) + 0);
+        return evl.get(rand.nextInt(((evl.size()-1) - 0) + 1) + 0);
     }
 
     /**
@@ -216,7 +216,7 @@ public class Scenario {
 
     @Override
     public String toString() {
-        return title + "|" + description + "\n";
+        return title + " | " + description + "\n";
     }
 
     public String datatoString() {

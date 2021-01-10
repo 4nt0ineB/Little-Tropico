@@ -66,6 +66,9 @@
           "name" : "Agriculture",
           "effect": 10
         }
+      ],
+      "repercussions": [
+        "trade_weapons_china"
       ]
     }
 

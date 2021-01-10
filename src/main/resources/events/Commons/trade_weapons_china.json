@@ -1,0 +1,69 @@
+
+{
+  "repercussion" : true,
+  "title" : "China wants to sell you weapons.",
+  "actions": [
+    {
+      "title": "Decline politely",
+      "treasure": 0,
+      "food": 0,
+      "factions": [
+        {
+          "name" : "Nationalists",
+          "effect": 0.1
+        },
+        {
+          "name" : "Ecologists",
+          "effect": 0.1
+        },
+        {
+          "name" : "Militarists",
+          "effect": -0.2
+        }
+      ]
+    },
+    {
+      "title": "Accept",
+      "treasure": -20,
+      "food": 0,
+      "factions": [
+        {
+          "name" : "Nationalists",
+          "effect": -0.1
+        },
+        {
+          "name" : "Ecologists",
+          "effect": -0.2
+        },
+        {
+          "name" : "Militarists",
+          "effect": 0.3
+        }
+      ]
+    },
+    {
+      "title": "Leave the negotiations and do the finger",
+      "treasure": 0,
+      "food": 0,
+      "factions": [
+        {
+          "name" : "Nationalists",
+          "effect": 0.4
+        },
+        {
+          "name" : "Ecologists",
+          "effect": 0.1
+        },
+        {
+          "name" : "Militarists",
+          "effect": -0.3
+        }
+      ],
+      "repercussions": [
+
+      ]
+    }
+
+  ]
+}
+
