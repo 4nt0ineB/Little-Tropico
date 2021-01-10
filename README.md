@@ -1,5 +1,5 @@
 # Tropico
-Very little game made with Java, inspired by Tropico or Reigns. ~~~In console first, with a GUI later~~ Game with a GUI.
+Very little game made with Java, inspired by Tropico or Reigns. ~~In console first, with a GUI later~~ Game with a GUI.
 
 This game is based on the original game Tropico or Reign. The main goal of this project was to learn more on java developpement and on production.
 
