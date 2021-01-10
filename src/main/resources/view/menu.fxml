@@ -30,8 +30,8 @@
       <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="145.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="714.0" minHeight="10.0" prefHeight="211.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="640.0" text="Island name" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -60,7 +60,7 @@
          </font>
       </Label>
       <ComboBox fx:id="difficulty" prefHeight="36.0" prefWidth="640.0" promptText="Easy" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#JeMeLance" prefHeight="62.0" prefWidth="540.0" text="Launch game" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="13">
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#JeMeLance" prefHeight="62.0" prefWidth="540.0" text="Start" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="13">
          <font>
             <Font size="34.0" />
          </font>
