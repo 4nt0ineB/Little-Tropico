@@ -75,6 +75,14 @@ public class mainController implements EventHandler<MouseEvent> {
     private long firstTime;
     private AnimationTimer timer;
 
+
+    Media media = new Media(getClass().getClassLoader().getResource("italianmusic-cut.mp3").toString());
+    Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
+    Media SoundClick = new Media(getClass().getClassLoader().getResource("click.mp3").toString());
+    Media SoundEOY = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
+
+    MediaPlayer ephemeralSound;
+
     @Override
     public void handle(MouseEvent mouseEvent) {
 
@@ -147,13 +155,12 @@ public class mainController implements EventHandler<MouseEvent> {
             public void start() {
                 super.start();
                 // la musica
-
-                Media media = new Media(getClass().getClassLoader().getResource("italianmusic-cut.mp3").toString());
-                Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
                 player = new MediaPlayer(media);
                 player2 = new MediaPlayer(media2);
-                player.play();
-                player2.play();
+                player.setAutoPlay(true);
+                player.setCycleCount(MediaPlayer.INDEFINITE);
+                player2.setAutoPlay(true);
+                player2.setCycleCount(MediaPlayer.INDEFINITE);
             }
 
             @Override
@@ -208,6 +215,9 @@ public class mainController implements EventHandler<MouseEvent> {
      */
     public void submitEventChoice(){
 
+        ephemeralSound = new MediaPlayer(SoundClick);
+        ephemeralSound.play();
+
         currentActionId = GameUtils.idByHashString(eventChoice.getSelectionModel().getSelectedItem().toString());
 
         game.playAction(currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == currentActionId).findFirst().get());
@@ -226,6 +236,8 @@ public class mainController implements EventHandler<MouseEvent> {
     }
 
     public void toMenu(){
+        ephemeralSound = new MediaPlayer(SoundClick);
+        ephemeralSound.play();
         timer.stop(); // Stop the sound and the game loop
         try{
             GridPane root = FXMLLoader.load(getClass().getResource("/view/menu.fxml"));
@@ -341,11 +353,8 @@ public class mainController implements EventHandler<MouseEvent> {
 
     public void openEndYearWindow(){
 
-        MediaPlayer player;
-        Media media = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
-        player = new MediaPlayer(media);
-        player.play();
-
+        ephemeralSound = new MediaPlayer(SoundEOY);
+        ephemeralSound.play();
 
         onGoingEOY = true;
 
@@ -368,7 +377,7 @@ public class mainController implements EventHandler<MouseEvent> {
         choiceEOY.getItems().add("3. Pass.");
 
         // Select the first one
-        choiceEOY.getSelectionModel().selectFirst();
+        choiceEOY.getSelectionModel().selectLast();
 
         choiceEOY.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
@@ -457,6 +466,9 @@ public class mainController implements EventHandler<MouseEvent> {
     }
 
     public void submitEOYChoice(){
+
+        ephemeralSound = new MediaPlayer(SoundClick);
+        ephemeralSound.play();
 
         if (chosenOption != 3) {
             valueEOY = Integer.parseInt(fieldEOY.getText());

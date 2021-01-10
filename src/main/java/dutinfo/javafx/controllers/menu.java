@@ -6,10 +6,13 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +33,9 @@ public class menu implements Initializable {
     @FXML
     private TextField islandName, presidentName;
 
+    Media SoundClick = new Media(getClass().getClassLoader().getResource("click.mp3").toString());
+    MediaPlayer ephemeralSound;
+
     private static Game game = Game.initGame();
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,6 +52,8 @@ public class menu implements Initializable {
 
     @FXML
     private void JeMeLance() throws IOException {
+        ephemeralSound = new MediaPlayer(SoundClick);
+        ephemeralSound.play();
         mainController.initParameters(game, difficulty.getSelectionModel().getSelectedItem().toString(), islandName.getText(), presidentName.getText(), scenario.getSelectionModel().getSelectedItem().toString());
 
         loader = new FXMLLoader(getClass().getResource("/view/view.fxml"));
@@ -62,7 +70,7 @@ public class menu implements Initializable {
         }
 
         // Add the game to the first row and column of GP
-        menu.add(jeu,0,1);
+        menu.add(jeu,0,0);
 
 
     }

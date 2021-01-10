@@ -57,7 +57,7 @@ public class Island {
 	}
 
 	public float getTreasury() {
-		return treasury;
+		return (float) GameUtils.round(treasury, 2);
 	}
 
 	public void updateTreasure(double amount){

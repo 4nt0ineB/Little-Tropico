@@ -71,5 +71,10 @@
          </font>
       </Label>
       <ComboBox fx:id="scenario" prefHeight="36.0" prefWidth="640.0" promptText="Scenario" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="640.0" text="Little Tropico" textFill="#ae3713f2" textOverrun="CLIP" GridPane.columnIndex="2">
+         <font>
+            <Font name="Berlin Sans FB" size="62.0" />
+         </font>
+      </Label>
    </children>
 </GridPane>
