@@ -150,6 +150,7 @@ public class Island {
 		if(treasury < 0){
 			treasury+=(treasury)*(-0.2);
 		}
+		if(foodUnits == 0) return 0;
 		if((totalSupporters()*4)/foodUnits < 1){ //kill
 			int s = totalSupporters();
 			while ((s*4)/foodUnits < 1){

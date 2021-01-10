@@ -339,9 +339,9 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label fx:id="eventLabel" alignment="CENTER" layoutX="315.0" layoutY="214.0" prefHeight="48.0" prefWidth="769.0" text="--- Your action is required ! ---" textFill="WHITE">
+      <Label fx:id="eventLabel" alignment="CENTER" layoutX="315.0" layoutY="214.0" prefHeight="48.0" prefWidth="769.0" text="Your action is required" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="28.0" />
+            <Font name="Berlin Sans FB" size="34.0" />
          </font>
          <effect>
             <Glow level="0.41" />
@@ -381,17 +381,22 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label fx:id="EOYLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="322.0" layoutY="218.0" prefHeight="17.0" prefWidth="770.0" text="End of the year" textAlignment="CENTER" textFill="WHITE" underline="true">
+      <Label fx:id="EOYLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="324.0" layoutY="222.0" prefHeight="17.0" prefWidth="770.0" text="End-Year" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="Berlin Sans FB" size="30.0" />
          </font>
       </Label>
       <ComboBox fx:id="choiceEOY" layoutX="455.0" layoutY="293.0" prefHeight="25.0" prefWidth="520.0" />
+      <Button fx:id="buttonPassEOYAction" layoutX="994.0" layoutY="224.0" mnemonicParsing="false" onAction="#closeEndYearWindow" prefHeight="29.0" prefWidth="78.0" text="Pass" textFill="#686868">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
       <TextField fx:id="fieldEOY" layoutX="544.0" layoutY="358.0" prefHeight="25.0" prefWidth="342.0" />
       <ComboBox fx:id="factionEOY" layoutX="544.0" layoutY="421.0" prefHeight="25.0" prefWidth="342.0" />
       <Label fx:id="errorMsgEOY" alignment="CENTER" layoutX="322.0" layoutY="385.0" prefHeight="17.0" prefWidth="769.0" text="Error msg" textFill="RED" />
-      <Button fx:id="submitEOY" layoutX="681.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
-      <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Your choice :" textFill="WHITE" />
+      <Button fx:id="submitEOY" layoutX="681.0" layoutY="493.0" mnemonicParsing="false" onAction="#submitEOYChoice" prefHeight="30.0" prefWidth="78.0" text="Buy" />
+      <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Actions" textFill="WHITE" />
       <Button fx:id="menuBtn" layoutX="1202.0" layoutY="19.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="25.0" prefWidth="177.0" text="Back to main menu" />
       <Rectangle fx:id="infoAlert" arcHeight="5.0" arcWidth="5.0" height="267.0" layoutX="323.0" layoutY="269.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="769.0">
          <fill>
@@ -404,12 +409,12 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label fx:id="infoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="281.0" prefHeight="17.0" prefWidth="770.0" text="Review for the end of the year" textAlignment="CENTER" textFill="WHITE" underline="true">
+      <Label fx:id="infoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="281.0" prefHeight="17.0" prefWidth="770.0" text="Review !" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="Berlin Sans FB" size="26.0" />
          </font>
       </Label>
-      <Button fx:id="infoBtn" layoutX="686.0" layoutY="503.0" mnemonicParsing="false" onAction="#closeInfoWindow" text="Close" textFill="WHITE" />
+      <Button fx:id="infoBtn" layoutX="681.0" layoutY="495.0" mnemonicParsing="false" onAction="#closeInfoWindow" prefHeight="25.0" prefWidth="78.0" text="Close" textFill="WHITE" />
       <Text fx:id="infoContent" fill="WHITE" layoutX="348.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nothing to see..." wrappingWidth="724.0000000000001">
          <font>
             <Font size="15.0" />

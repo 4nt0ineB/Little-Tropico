@@ -398,6 +398,7 @@ public class Game {
 
 	public void buyFood(int amount){
 		int price = (Game.foodPrice * amount);
+		if(price > island.getTreasury()) return;
 		island.updateFoodUnits(amount);
 		island.updateTreasure(price*(-1));
 	}

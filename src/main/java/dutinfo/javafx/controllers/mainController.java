@@ -55,7 +55,7 @@ public class mainController implements EventHandler<MouseEvent> {
     private ComboBox eventChoice, choiceEOY, factionEOY;
 
     @FXML
-    private Button selectEvent, submitEOY, menuBtn, infoBtn;
+    private Button selectEvent, submitEOY, menuBtn, infoBtn, buttonPassEOYAction;
 
     @FXML
     private Text eventDescription, eventEffects, eventEffects2, infoContent;
@@ -72,6 +72,8 @@ public class mainController implements EventHandler<MouseEvent> {
     private int valueEOY;
     private boolean onGoingEvent;
     private boolean onGoingEOY;
+    private boolean onGoingEOYInfo;
+
     private long firstTime;
     private AnimationTimer timer;
 
@@ -80,6 +82,7 @@ public class mainController implements EventHandler<MouseEvent> {
     Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
     Media SoundClick = new Media(getClass().getClassLoader().getResource("click.mp3").toString());
     Media SoundEOY = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
+    Media SoundReview = new Media(getClass().getClassLoader().getResource("pop-elec.mp3").toString());
 
     MediaPlayer ephemeralSound;
 
@@ -144,6 +147,7 @@ public class mainController implements EventHandler<MouseEvent> {
         // Hide end of year and recap by default
         closeEndYearWindow();
         closeInfoWindow();
+        onGoingEOYInfo = false;
 
         game.nextTurn();
         updateAll();
@@ -161,11 +165,12 @@ public class mainController implements EventHandler<MouseEvent> {
                 player.setCycleCount(MediaPlayer.INDEFINITE);
                 player2.setAutoPlay(true);
                 player2.setCycleCount(MediaPlayer.INDEFINITE);
+
             }
 
             @Override
             public void handle(long l) {
-                if(!onGoingEvent && !onGoingEOY){
+                if(!onGoingEvent && !onGoingEOY && !onGoingEOYInfo){
                     Event ev = game.getEvent();
                     if(ev != null){
                         openEventWindow(ev); // get random event for the current season
@@ -177,9 +182,10 @@ public class mainController implements EventHandler<MouseEvent> {
                 }
 
                 if(game.getIsland().getSeason() == Season.Winter) {
-                    if(!onGoingEOY){
+                    if(!onGoingEOY && !onGoingEOYInfo){
                         openEndYearWindow();
                     }
+
                 }
             }
             
@@ -209,7 +215,6 @@ public class mainController implements EventHandler<MouseEvent> {
         refreshPercentages();
     }
 
-
     /**
      * Function that permits choice to be submitted to the MCP and launched when click on "Select" button during an event choice
      */
@@ -229,12 +234,14 @@ public class mainController implements EventHandler<MouseEvent> {
         closeEventWindow();
 
         refreshPercentages(); // refresh to show new percentages
-        onGoingEvent = false;
         closeEventWindow();
         game.nextTurn(); // pass the turn
         updateAll();
     }
 
+    /**
+     * Replace the scene of the game window by the menu
+     */
     public void toMenu(){
         ephemeralSound = new MediaPlayer(SoundClick);
         ephemeralSound.play();
@@ -250,7 +257,6 @@ public class mainController implements EventHandler<MouseEvent> {
         }
     }
 
-
     /**
      * Function that sets windows to invisible but it stills here
      */
@@ -264,25 +270,39 @@ public class mainController implements EventHandler<MouseEvent> {
         eventEffects2.setVisible(false);
         eventLine.setVisible(false);
         eventSeparator.setVisible(false);
+        onGoingEvent = false;
     }
 
     public void closeInfoWindow(){
+        ephemeralSound = new MediaPlayer(SoundClick);
+        ephemeralSound.play();
+
         infoAlert.setVisible(false);
         infoBtn.setVisible(false);
         infoContent.setVisible(false);
         infoLabel.setVisible(false);
+        onGoingEOYInfo = false;
+        game.nextTurn(); // pass the turn
     }
 
     public void openInfoWindow(){
+        ephemeralSound = new MediaPlayer(SoundReview);
+        ephemeralSound.play();
+
+        closeEventWindow();
+        onGoingEOYInfo = true;
         infoAlert.setVisible(true);
         infoBtn.setVisible(true);
         infoContent.setVisible(true);
         infoLabel.setVisible(true);
 
-        if (game.updateResourcesEndofYear().length() == 0){ // if string is empty - no major incident
+        String updateResInfo = game.updateResourcesEndofYear();
+        System.out.println(updateResInfo);
+        updateAll();
+        if (updateResInfo.isEmpty()){ // if string is empty - no major incident
             infoContent.setText("Nothing really important to report on this year.");
         } else {
-            infoContent.setText(game.updateResourcesEndofYear());
+            infoContent.setText(updateResInfo);
         }
     }
 
@@ -367,23 +387,23 @@ public class mainController implements EventHandler<MouseEvent> {
         submitEOY.setVisible(true);
         EOYLabel.setVisible(true);
         EOYChoiceLabel.setVisible(true);
+        buttonPassEOYAction.setVisible(true);
 
         choiceEOY.getSelectionModel().clearSelection();
         choiceEOY.getItems().clear();
 
-        choiceEOY.getItems().add("1. Bribe a Faction (+10% satisfaction for $15 by supporters).");
-        choiceEOY.getItems().add("2. Buy some food $8 by unit.");
-        choiceEOY.getItems().add("3. Pass.");
+        choiceEOY.getItems().add("1. Buy some food $8 by unit.");
+        choiceEOY.getItems().add("2. Bribe a Faction (+10% satisfaction for $15 by supporter).");
 
         // Select the last one - pass
-        choiceEOY.getSelectionModel().selectLast();
+
 
         choiceEOY.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {
                 if(newValue != null) {
 
 
-                    if (newValue.startsWith("1")) { // first option
+                    if (newValue.startsWith("2")) { // first option
                         chosenOption = 1;
                         fieldEOY.clear();
                         fieldEOY.setVisible(true);
@@ -418,7 +438,7 @@ public class mainController implements EventHandler<MouseEvent> {
                         });
 
 
-                    } else if (newValue.startsWith("2")) { // second option
+                    } else if (newValue.startsWith("1")) { // second option
                         chosenOption = 2;
                         fieldEOY.setVisible(true);
                         fieldEOY.clear();
@@ -444,16 +464,13 @@ public class mainController implements EventHandler<MouseEvent> {
                                 }
                             }
                         });
-                    } else { // pass
-                        chosenOption = 3;
-                        submitEOY.setDisable(false);
-                        fieldEOY.setVisible(false);
-                        errorMsgEOY.setVisible(false);
-                        factionEOY.setVisible(false);
                     }
                 }
             }
         });
+
+        choiceEOY.getSelectionModel().selectFirst();
+        fieldEOY.setVisible(true);
     }
 
     public void submitEOYChoice(){
@@ -471,10 +488,6 @@ public class mainController implements EventHandler<MouseEvent> {
             game.buyFood(valueEOY);
         }
         updateAll();
-        closeEndYearWindow();
-        openInfoWindow();
-        onGoingEOY = false;
-        game.nextTurn(); // pass the turn
     }
 
     public void closeEndYearWindow(){
@@ -486,6 +499,11 @@ public class mainController implements EventHandler<MouseEvent> {
         submitEOY.setVisible(false);
         EOYLabel.setVisible(false);
         EOYChoiceLabel.setVisible(false);
+        buttonPassEOYAction.setVisible(false);
+        openInfoWindow();
+        onGoingEOY = false;
+        onGoingEOYInfo = true;
+
     }
 
 
