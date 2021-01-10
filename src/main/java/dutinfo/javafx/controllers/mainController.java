@@ -151,9 +151,11 @@ public class mainController implements EventHandler<MouseEvent> {
 
         game.nextTurn();
         updateAll();
-        timer = new AnimationTimer() { // GAME LOOP
+        timer = new AnimationTimer() { //////////////  GAME LOOP
+
             MediaPlayer player;
             MediaPlayer player2;
+            private long lastUpdate = 0 ;
 
             @Override
             public void start() {
@@ -170,22 +172,26 @@ public class mainController implements EventHandler<MouseEvent> {
 
             @Override
             public void handle(long l) {
-                if(!onGoingEvent && !onGoingEOY && !onGoingEOYInfo){
-                    Event ev = game.getEvent();
-                    if(ev != null){
-                        openEventWindow(ev); // get random event for the current season
-                    }else{
-                        closeEventWindow();
-                        game.nextTurn(); // pass the turn
-                        updateAll();
-                    }
-                }
 
-                if(game.getIsland().getSeason() == Season.Winter) {
-                    if(!onGoingEOY && !onGoingEOYInfo){
-                        openEndYearWindow();
+                if(l - lastUpdate >= 1_500_000_000L){ // only consider events each 1.5 seconds
+                    lastUpdate = l;
+                    if(!onGoingEvent && !onGoingEOY && !onGoingEOYInfo){
+                        Event ev = game.getEvent();
+                        if(ev != null){
+                            openEventWindow(ev); // get random event for the current season
+                        }else{
+                            closeEventWindow();
+                            game.nextTurn(); // pass the turn
+                            updateAll();
+                        }
                     }
 
+                    if(game.getIsland().getSeason() == Season.Winter) {
+                        if(!onGoingEOY && !onGoingEOYInfo){
+                            openEndYearWindow();
+                        }
+                        
+                    }
                 }
             }
             
