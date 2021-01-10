@@ -165,15 +165,19 @@ public class Scenario {
             JsonObject satisfaction = ar.getAsJsonObject("satisfaction");
             int generalSatisfaction = satisfaction.get("general").getAsInt();
 
-            JsonArray factionException = satisfaction.getAsJsonArray("exceptions");
             HashMap<Integer, Float> facPercentage = new HashMap<>();
-
-            factionException.forEach(fac -> {
-                JsonObject exc = fac.getAsJsonObject();
-                String name = exc.get("name").getAsString();
-                assert (Faction.exist(name));
-                facPercentage.put(GameUtils.idByHashString(name), exc.get("percentage").getAsFloat());
-            });
+            try{
+            JsonArray factionException = satisfaction.getAsJsonArray("exceptions");
+            
+                factionException.forEach(fac -> {
+                    JsonObject exc = fac.getAsJsonObject();
+                    String name = exc.get("name").getAsString();
+                    assert (Faction.exist(name));
+                    facPercentage.put(GameUtils.idByHashString(name), exc.get("percentage").getAsFloat());
+                });
+            }catch(Exception e){
+                //no factionException
+            }
 
             // Fields
             JsonArray fields = ar.getAsJsonArray("fields");

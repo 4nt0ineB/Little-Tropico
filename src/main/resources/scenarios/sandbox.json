@@ -17,12 +17,12 @@
     {
       "name": "Industry",
       "percentage": 15,
-      "yield": "40"
+      "yield": 40
     },
     {
       "name": "Agriculture",
       "percentage": 15,
-      "yield": "40"
+      "yield": 40
     }
   ],
   "treasure": 200,
