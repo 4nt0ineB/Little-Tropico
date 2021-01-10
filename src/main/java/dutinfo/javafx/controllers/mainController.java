@@ -68,7 +68,7 @@ public class mainController implements EventHandler<MouseEvent> {
 
     private Event currentEvent;
     private int currentActionId;
-    private int chosenOption = 1;
+    private int chosenOption = 3;
     private int valueEOY;
     private boolean onGoingEvent;
     private boolean onGoingEOY;
@@ -363,7 +363,7 @@ public class mainController implements EventHandler<MouseEvent> {
         fieldEOY.setVisible(false);
         factionEOY.setVisible(false);
         errorMsgEOY.setVisible(false);
-        submitEOY.setDisable(true);
+        submitEOY.setDisable(false);
         submitEOY.setVisible(true);
         EOYLabel.setVisible(true);
         EOYChoiceLabel.setVisible(true);
@@ -371,12 +371,11 @@ public class mainController implements EventHandler<MouseEvent> {
         choiceEOY.getSelectionModel().clearSelection();
         choiceEOY.getItems().clear();
 
-        choiceEOY.getItems().add(" ");
         choiceEOY.getItems().add("1. Bribe a Faction (+10% satisfaction for $15 by supporters).");
         choiceEOY.getItems().add("2. Buy some food $8 by unit.");
         choiceEOY.getItems().add("3. Pass.");
 
-        // Select the first one
+        // Select the last one - pass
         choiceEOY.getSelectionModel().selectLast();
 
         choiceEOY.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
@@ -445,14 +444,6 @@ public class mainController implements EventHandler<MouseEvent> {
                                 }
                             }
                         });
-                    } else if (newValue.startsWith(" ")) { // empty option
-                        chosenOption = 0;
-                        errorMsgEOY.setText("Select an option");
-                        submitEOY.setDisable(true);
-                        errorMsgEOY.setVisible(true);
-                        fieldEOY.setVisible(false);
-                        factionEOY.setVisible(false);
-                        submitEOY.setDisable(true);
                     } else { // pass
                         chosenOption = 3;
                         submitEOY.setDisable(false);
@@ -470,7 +461,7 @@ public class mainController implements EventHandler<MouseEvent> {
         ephemeralSound = new MediaPlayer(SoundClick);
         ephemeralSound.play();
 
-        if (chosenOption != 3) {
+        if (chosenOption != 3 || chosenOption == 0) {
             valueEOY = Integer.parseInt(fieldEOY.getText());
         }
 
