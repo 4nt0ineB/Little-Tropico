@@ -8,7 +8,7 @@ Little game of management simulation. You are the dictator of an island and your
 
 
 ```Bash
-    Game directory
+Game directory
 │
 │   trpc_xx.jar
 │   Tropico.exe
