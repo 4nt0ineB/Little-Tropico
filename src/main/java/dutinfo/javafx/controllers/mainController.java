@@ -46,19 +46,19 @@ public class mainController implements EventHandler<MouseEvent> {
     private ImageView sun, vein, sweat;
 
     @FXML
-    private Label moneyAmount, EOYLabel, EOYChoiceLabel, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label moneyAmount, EOYLabel, infoLabel, EOYChoiceLabel, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
 
     @FXML
-    private Rectangle eventAlert, endYearAlert;
+    private Rectangle eventAlert, endYearAlert, infoAlert;
 
     @FXML
     private ComboBox eventChoice, choiceEOY, factionEOY;
 
     @FXML
-    private Button selectEvent, submitEOY, menuBtn;
+    private Button selectEvent, submitEOY, menuBtn, infoBtn;
 
     @FXML
-    private Text eventDescription, eventEffects, eventEffects2;
+    private Text eventDescription, eventEffects, eventEffects2, infoContent;
 
     @FXML
     private Line eventLine, eventSeparator;
@@ -127,13 +127,15 @@ public class mainController implements EventHandler<MouseEvent> {
         selectEvent.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
         submitEOY.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
         menuBtn.setStyle("-fx-background-color: #7a0000; -fx-text-fill: white;");
+        infoBtn.setStyle("-fx-background-color: #7a0000; -fx-text-fill: white;");
 
         // Hide president anger
         vein.setVisible(false);
         sweat.setVisible(false);
 
-        // Hide end of year by default
+        // Hide end of year and recap by default
         closeEndYearWindow();
+        closeInfoWindow();
 
         game.nextTurn();
         updateAll();
@@ -250,6 +252,26 @@ public class mainController implements EventHandler<MouseEvent> {
         eventEffects2.setVisible(false);
         eventLine.setVisible(false);
         eventSeparator.setVisible(false);
+    }
+
+    public void closeInfoWindow(){
+        infoAlert.setVisible(false);
+        infoBtn.setVisible(false);
+        infoContent.setVisible(false);
+        infoLabel.setVisible(false);
+    }
+
+    public void openInfoWindow(){
+        infoAlert.setVisible(true);
+        infoBtn.setVisible(true);
+        infoContent.setVisible(true);
+        infoLabel.setVisible(true);
+
+        if (game.updateResourcesEndofYear().length() == 0){ // if string is empty - no major incident
+            infoContent.setText("Nothing really important to report on this year.");
+        } else {
+            infoContent.setText(game.updateResourcesEndofYear());
+        }
     }
 
     public void refreshPercentages(){
@@ -447,6 +469,7 @@ public class mainController implements EventHandler<MouseEvent> {
         }
         updateAll();
         closeEndYearWindow();
+        openInfoWindow();
         onGoingEOY = false;
         game.nextTurn(); // pass the turn
     }

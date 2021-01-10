@@ -320,8 +320,8 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
-      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="333.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
-      <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="1332.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+      <Circle fill="#e4e4e4" layoutX="1354.0" layoutY="373.0" radius="32.0" stroke="#0000004a" strokeType="INSIDE" strokeWidth="3.0" />
+      <ImageView fitHeight="44.0" fitWidth="45.0" layoutX="1332.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@militaries.png" />
          </image>
@@ -390,8 +390,30 @@
       <TextField fx:id="fieldEOY" layoutX="544.0" layoutY="358.0" prefHeight="25.0" prefWidth="342.0" />
       <ComboBox fx:id="factionEOY" layoutX="544.0" layoutY="421.0" prefHeight="25.0" prefWidth="342.0" />
       <Label fx:id="errorMsgEOY" alignment="CENTER" layoutX="322.0" layoutY="385.0" prefHeight="17.0" prefWidth="769.0" text="Error msg" textFill="RED" />
-      <Button fx:id="submitEOY" layoutX="673.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
+      <Button fx:id="submitEOY" layoutX="681.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
       <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Your choice :" textFill="WHITE" />
       <Button fx:id="menuBtn" layoutX="1202.0" layoutY="19.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="25.0" prefWidth="177.0" text="Back to main menu" />
+      <Rectangle fx:id="infoAlert" arcHeight="5.0" arcWidth="5.0" height="267.0" layoutX="323.0" layoutY="269.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="769.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#435399" />
+                  <Stop color="#8e4399" offset="0.007662835249042145" />
+                  <Stop color="#d18b28" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Label fx:id="infoLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="281.0" prefHeight="17.0" prefWidth="770.0" text="Review for the end of the year" textAlignment="CENTER" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="infoBtn" layoutX="686.0" layoutY="503.0" mnemonicParsing="false" onAction="#closeInfoWindow" text="Close" textFill="WHITE" />
+      <Text fx:id="infoContent" fill="WHITE" layoutX="348.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nothing to see..." wrappingWidth="724.0000000000001">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
