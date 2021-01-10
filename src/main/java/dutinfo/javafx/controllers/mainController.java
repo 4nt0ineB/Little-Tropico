@@ -355,7 +355,7 @@ public class mainController implements EventHandler<MouseEvent> {
         choiceEOY.getItems().add("3. Pass.");
 
         // Select the first one
-        choiceEOY.getSelectionModel().selectFirst();
+        choiceEOY.getSelectionModel().selectLast();
 
         choiceEOY.valueProperty().addListener(new ChangeListener<String>() { // change effects when changing combobox value
             @Override public void changed(ObservableValue ov, String oldValue, String newValue) {

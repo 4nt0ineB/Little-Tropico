@@ -329,6 +329,28 @@
             <DropShadow color="WHITE" />
          </effect>
       </ImageView>
+      <Rectangle fx:id="endYearAlert" arcHeight="5.0" arcWidth="5.0" height="397.0" layoutX="323.0" layoutY="206.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="767.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#435399" />
+                  <Stop color="#435399" offset="0.007662835249042145" />
+                  <Stop color="#a36e58" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Label fx:id="EOYLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="322.0" layoutY="218.0" prefHeight="17.0" prefWidth="770.0" text="Year-end recap" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Berlin Sans FB" size="23.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="choiceEOY" layoutX="455.0" layoutY="293.0" prefHeight="25.0" prefWidth="520.0" />
+      <TextField fx:id="fieldEOY" layoutX="544.0" layoutY="358.0" prefHeight="25.0" prefWidth="342.0" />
+      <ComboBox fx:id="factionEOY" layoutX="544.0" layoutY="421.0" prefHeight="25.0" prefWidth="342.0" />
+      <Label fx:id="errorMsgEOY" alignment="CENTER" layoutX="322.0" layoutY="385.0" prefHeight="17.0" prefWidth="769.0" text="Error msg" textFill="RED" />
+      <Button fx:id="submitEOY" layoutX="673.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
+      <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Actions" textFill="WHITE" />
       <Rectangle fx:id="eventAlert" arcHeight="5.0" arcWidth="5.0" height="397.0" layoutX="323.0" layoutY="206.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="767.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
@@ -339,9 +361,10 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label fx:id="eventLabel" alignment="CENTER" layoutX="315.0" layoutY="214.0" prefHeight="48.0" prefWidth="769.0" text="--- Your action is required ! ---" textFill="WHITE">
+      <ComboBox fx:id="eventChoice" layoutX="344.0" layoutY="474.0" prefHeight="42.0" prefWidth="711.0" />
+      <Label fx:id="eventLabel" alignment="CENTER" layoutX="315.0" layoutY="214.0" prefHeight="48.0" prefWidth="769.0" text=" Your action is required" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="28.0" />
+            <Font name="Berlin Sans FB" size="28.0" />
          </font>
          <effect>
             <Glow level="0.41" />
@@ -369,29 +392,6 @@
          </font>
       </Text>
       <Line fx:id="eventSeparator" endX="-100.0" endY="50.0" layoutX="806.0" layoutY="354.0" startX="-100.0" stroke="WHITE" />
-      <ComboBox fx:id="eventChoice" layoutX="344.0" layoutY="474.0" prefHeight="42.0" prefWidth="711.0" />
-      <Rectangle fx:id="endYearAlert" arcHeight="5.0" arcWidth="5.0" height="397.0" layoutX="323.0" layoutY="206.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="767.0">
-         <fill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop color="#435399" />
-                  <Stop color="#435399" offset="0.007662835249042145" />
-                  <Stop color="#a36e58" offset="1.0" />
-               </stops>
-            </LinearGradient>
-         </fill>
-      </Rectangle>
-      <Label fx:id="EOYLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="322.0" layoutY="218.0" prefHeight="17.0" prefWidth="770.0" text="End of the year" textAlignment="CENTER" textFill="WHITE" underline="true">
-         <font>
-            <Font name="System Bold Italic" size="20.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="choiceEOY" layoutX="455.0" layoutY="293.0" prefHeight="25.0" prefWidth="520.0" />
-      <TextField fx:id="fieldEOY" layoutX="544.0" layoutY="358.0" prefHeight="25.0" prefWidth="342.0" />
-      <ComboBox fx:id="factionEOY" layoutX="544.0" layoutY="421.0" prefHeight="25.0" prefWidth="342.0" />
-      <Label fx:id="errorMsgEOY" alignment="CENTER" layoutX="322.0" layoutY="385.0" prefHeight="17.0" prefWidth="769.0" text="Error msg" textFill="RED" />
-      <Button fx:id="submitEOY" layoutX="673.0" layoutY="551.0" mnemonicParsing="false" onAction="#submitEOYChoice" text="Submit" />
-      <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Your choice :" textFill="WHITE" />
       <Button fx:id="menuBtn" layoutX="1202.0" layoutY="19.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="25.0" prefWidth="177.0" text="Back to main menu" />
    </children>
 </AnchorPane>

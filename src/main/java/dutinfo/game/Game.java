@@ -252,7 +252,6 @@ public class Game {
 		island.updateTreasure(action.getTreasure()*coef);
 		//append a repercussion if exist to the stack
 		Event ev = scenario.getEventById(action.getRandomRepercussionId());
-		System.out.println(ev);
 		if(ev != null) nextEvents.add(ev);
 	}
 
