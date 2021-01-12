@@ -53,7 +53,8 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="season" layoutX="6.0" layoutY="738.0" prefHeight="50.0" prefWidth="753.0" text="Current season: ">
+      <Rectangle fx:id="rectSeason" arcHeight="30.0" arcWidth="30.0" fill="#3d4346" height="45.0" layoutX="-7.0" layoutY="747.0" stroke="BLACK" strokeType="INSIDE" style="-fx-border-radius: 5px;" width="142.0" />
+      <Label fx:id="season" layoutX="6.0" layoutY="729.0" prefHeight="81.0" prefWidth="135.0" text="Autumn">
          <font>
             <Font size="30.0" />
          </font>
@@ -169,7 +170,7 @@
             <Image url="@pngegg.png" />
          </image>
       </ImageView>
-      <Label fx:id="day" alignment="CENTER_RIGHT" layoutX="639.0" layoutY="738.0" prefHeight="50.0" prefWidth="753.0" text="Day 0">
+      <Label fx:id="day" alignment="CENTER_RIGHT" layoutX="1298.0" layoutY="738.0" prefHeight="50.0" prefWidth="94.0" text="Day 0">
          <font>
             <Font size="30.0" />
          </font>
@@ -398,7 +399,7 @@
       <Button fx:id="submitEOY" layoutX="681.0" layoutY="493.0" mnemonicParsing="false" onAction="#submitEOYChoice" prefHeight="30.0" prefWidth="78.0" text="Buy" />
       <Label fx:id="EOYChoiceLabel" alignment="CENTER" layoutX="322.0" layoutY="272.0" prefHeight="17.0" prefWidth="769.0" text="Actions" textFill="WHITE" />
       <Button fx:id="menuBtn" layoutX="1202.0" layoutY="19.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="25.0" prefWidth="177.0" text="Back to main menu" />
-      <Rectangle fx:id="infoAlert" arcHeight="5.0" arcWidth="5.0" height="267.0" layoutX="323.0" layoutY="269.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="769.0">
+      <Rectangle fx:id="infoAlert" arcHeight="5.0" arcWidth="5.0" height="269.0" layoutX="322.0" layoutY="268.0" stroke="#2f0000" strokeLineJoin="ROUND" strokeMiterLimit="50.0" strokeType="OUTSIDE" width="763.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -420,5 +421,26 @@
             <Font size="15.0" />
          </font>
       </Text>
+      <Rectangle fx:id="EOGAlert" arcHeight="20.0" arcWidth="5.0" fill="#f2f2f2" height="399.0" layoutX="453.0" layoutY="206.0" stroke="BLACK" strokeType="INSIDE" width="494.0" />
+      <Text fx:id="msgEndGame" layoutX="490.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="too bad." wrappingWidth="419.419921875" />
+      <Button fx:id="EOGClose" layoutX="630.0" layoutY="516.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="42.0" prefWidth="152.0" text="Close" textFill="#545454">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Button>
+      <Text fx:id="EOGTitle" fill="#7c7c7c" layoutX="634.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game over" textAlignment="CENTER" wrappingWidth="152.0">
+         <font>
+            <Font name="Berlin Sans FB" size="25.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#00000012" height="45.0" layoutX="1259.0" layoutY="640.0" stroke="#0000004a" strokeType="INSIDE" width="120.0" />
+      <Label id="wheatPercentage" fx:id="globalSatisfac" alignment="CENTER_RIGHT" layoutX="1267.0" layoutY="644.0" prefHeight="38.0" prefWidth="101.0" text="100%" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
    </children>
 </AnchorPane>

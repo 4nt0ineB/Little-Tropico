@@ -11,18 +11,18 @@
       "factions": [
         {
           "name" : "Communists",
-          "effect": -0.3,
+          "effect": -100,
           "followers": -1
 
         },
         {
           "name" : "Capitalists",
-          "effect": 0.3,
+          "effect": -100,
           "followers": 1
         },
         {
           "name" : "Loyalists",
-          "effect": 0.3
+          "effect": -100
         }
       ],
       "fields" : [
