@@ -43,22 +43,22 @@ public class mainController implements EventHandler<MouseEvent> {
     private Model appModel = new Model();
 
     @FXML
-    private ImageView sun, vein, sweat;
+    private ImageView sun, vein, sweat, stars;
 
     @FXML
-    private Label moneyAmount, EOYLabel, infoLabel, EOYChoiceLabel, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
+    private Label globalSatisfac, moneyAmount, EOYLabel, infoLabel, EOYChoiceLabel, errorMsgEOY, citizensCount, foodAmount, season, day, presidente, eventLabel, industryPercentage, farmingPercentage, capitalistsPercentage, communistsPercentage, liberalistsPercentage, religiousPercentage, militaristsPercentage, ecologistsPercentage, nationalistsPercentage, loyalistsPercentage, islandName;
 
     @FXML
-    private Rectangle eventAlert, endYearAlert, infoAlert;
+    private Rectangle eventAlert, endYearAlert, infoAlert, EOGAlert, rectSeason;
 
     @FXML
     private ComboBox eventChoice, choiceEOY, factionEOY;
 
     @FXML
-    private Button selectEvent, submitEOY, menuBtn, infoBtn, buttonPassEOYAction;
+    private Button selectEvent, submitEOY, menuBtn, infoBtn, buttonPassEOYAction, EOGClose;
 
     @FXML
-    private Text eventDescription, eventEffects, eventEffects2, infoContent;
+    private Text eventDescription, eventEffects, eventEffects2, infoContent, msgEndGame, EOGTitle;
 
     @FXML
     private Line eventLine, eventSeparator;
@@ -73,18 +73,27 @@ public class mainController implements EventHandler<MouseEvent> {
     private boolean onGoingEvent;
     private boolean onGoingEOY;
     private boolean onGoingEOYInfo;
+    private boolean onGoingEndOfGame;
+
+
 
     private long firstTime;
     private AnimationTimer timer;
 
+    MediaPlayer player;
+    MediaPlayer player2;
 
     Media media = new Media(getClass().getClassLoader().getResource("italianmusic-cut.mp3").toString());
     Media media2 = new Media(getClass().getClassLoader().getResource("beachambiance-cut.mp3").toString());
     Media SoundClick = new Media(getClass().getClassLoader().getResource("click.mp3").toString());
     Media SoundEOY = new Media(getClass().getClassLoader().getResource("eoy-sfx.mp3").toString());
     Media SoundReview = new Media(getClass().getClassLoader().getResource("pop-elec.mp3").toString());
+    Media SoundLose = new Media(getClass().getClassLoader().getResource("lose.mp3").toString());
 
     MediaPlayer ephemeralSound;
+
+
+
 
     @Override
     public void handle(MouseEvent mouseEvent) {
@@ -139,6 +148,8 @@ public class mainController implements EventHandler<MouseEvent> {
         submitEOY.setStyle("-fx-background-color: #3f7886; -fx-text-fill: white;");
         menuBtn.setStyle("-fx-background-color: #7a0000; -fx-text-fill: white;");
         infoBtn.setStyle("-fx-background-color: #7a0000; -fx-text-fill: white;");
+        rectSeason.setStyle("-fx-border-radius: 10px;");
+
 
         // Hide president anger
         vein.setVisible(false);
@@ -147,26 +158,30 @@ public class mainController implements EventHandler<MouseEvent> {
         // Hide end of year and recap by default
         closeEndYearWindow();
         closeInfoWindow();
+        closeGameOver();
         onGoingEOYInfo = false;
+        onGoingEndOfGame = false;
 
-        game.nextTurn();
+
+        // la musica
+        player = new MediaPlayer(media);
+        player2 = new MediaPlayer(media2);
+        player.setAutoPlay(true);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player2.setAutoPlay(true);
+        player2.setCycleCount(MediaPlayer.INDEFINITE);
+
+        passTurn();
         updateAll();
         timer = new AnimationTimer() { //////////////  GAME LOOP
 
-            MediaPlayer player;
-            MediaPlayer player2;
+
             private long lastUpdate = 0 ;
 
             @Override
             public void start() {
                 super.start();
-                // la musica
-                player = new MediaPlayer(media);
-                player2 = new MediaPlayer(media2);
-                player.setAutoPlay(true);
-                player.setCycleCount(MediaPlayer.INDEFINITE);
-                player2.setAutoPlay(true);
-                player2.setCycleCount(MediaPlayer.INDEFINITE);
+
 
             }
 
@@ -175,18 +190,18 @@ public class mainController implements EventHandler<MouseEvent> {
 
                 if(l - lastUpdate >= 1_500_000_000L){ // only consider events each 1.5 seconds
                     lastUpdate = l;
-                    if(!onGoingEvent && !onGoingEOY && !onGoingEOYInfo){
+                    if(!onGoingEvent && !onGoingEOY && !onGoingEOYInfo && !onGoingEndOfGame){
                         Event ev = game.getEvent();
                         if(ev != null){
                             openEventWindow(ev); // get random event for the current season
                         }else{
                             closeEventWindow();
-                            game.nextTurn(); // pass the turn
+                            passTurn(); // pass the turn
                             updateAll();
                         }
                     }
 
-                    if(game.getIsland().getSeason() == Season.Winter) {
+                    if(game.getIsland().getSeason() == Season.Winter && !onGoingEndOfGame) {
                         if(!onGoingEOY && !onGoingEOYInfo){
                             openEndYearWindow();
                         }
@@ -208,7 +223,8 @@ public class mainController implements EventHandler<MouseEvent> {
     }
 
     public void updateAll(){
-        season.setText("Current season: "+game.getIsland().getSeason()); // season
+        sweat.setVisible(false);
+        season.setText(""+game.getIsland().getSeason()); // season
         day.setText("Year "+game.getIsland().getNbPastYears());
 
         islandName.setText(game.getIsland().getName());
@@ -216,6 +232,7 @@ public class mainController implements EventHandler<MouseEvent> {
         moneyAmount.setText("$"+game.getIsland().getTreasury()); // Treasury
         foodAmount.setText(game.getIsland().getFoodUnits()+"");
         citizensCount.setText(game.getIsland().totalSupporters()+"");
+        globalSatisfac.setText(""+game.getIsland().globalSatisfaction()+"%");
 
         /* PERCENTAGES */
         refreshPercentages();
@@ -234,14 +251,13 @@ public class mainController implements EventHandler<MouseEvent> {
         game.playAction(currentEvent.getActions().stream().filter(x -> GameUtils.idByHashString(x.getTitle()) == currentActionId).findFirst().get());
 
         // test: show president anger if he lose pts
-        vein.setVisible(true);
         sweat.setVisible(true);
         /* Close event window by setting it to false */
         closeEventWindow();
 
         refreshPercentages(); // refresh to show new percentages
         closeEventWindow();
-        game.nextTurn(); // pass the turn
+        passTurn(); // pass the turn
         updateAll();
     }
 
@@ -288,7 +304,7 @@ public class mainController implements EventHandler<MouseEvent> {
         infoContent.setVisible(false);
         infoLabel.setVisible(false);
         onGoingEOYInfo = false;
-        game.nextTurn(); // pass the turn
+        passTurn(); // pass the turn
     }
 
     public void openInfoWindow(){
@@ -510,6 +526,35 @@ public class mainController implements EventHandler<MouseEvent> {
         onGoingEOY = false;
         onGoingEOYInfo = true;
 
+    }
+
+    private void passTurn(){
+        if(!game.nextTurn()){
+            showGameOver();
+        }
+    }
+
+    private void showGameOver(){
+        stars.setVisible(false);
+        player.stop();
+        player2.stop();
+        ephemeralSound = new MediaPlayer(SoundLose);
+        ephemeralSound.play();
+        vein.setVisible(true);
+
+        onGoingEndOfGame = true;
+        EOGAlert.setVisible(true);
+        EOGTitle.setVisible(true);
+        msgEndGame.setText("Too bad, the level of satisfaction of the population has passed the critical stage and you have been dismissed by the citizens of "+game.getIsland().getName()+"!");
+        msgEndGame.setVisible(true);
+        EOGClose.setVisible(true);
+    }
+    private void closeGameOver(){
+        EOGAlert.setVisible(false);
+        EOGTitle.setVisible(false);
+        msgEndGame.setVisible(false);
+        EOGClose.setVisible(false);
+        onGoingEndOfGame = false;
     }
 
 
