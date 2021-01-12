@@ -1,0 +1,25 @@
+
+{
+
+  "description": "The COVID-19 Global Pandemic",
+  "satisfaction": {
+    "general": 100
+  },
+  "followers": 150,
+  "fields": [
+    {
+      "name": "Industry",
+      "percentage": 100,
+      "yield": "10"
+    },
+    {
+      "name": "Agriculture",
+      "percentage": 50,
+      "yield": "5"
+    }
+  ],
+  "treasure": 200,
+  "event_packages": [
+    "covid"
+  ]
+}

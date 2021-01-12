@@ -1,0 +1,46 @@
+{
+   "title":"The China wants to offer you 2 million masks.",
+   "actions":[
+      {
+         "id":0,
+         "title":"Accept.",
+         "food":0,
+         "factions":[
+            {
+               "name":"Communists",
+               "effect":-40.0
+            },
+            {
+               "name":"Ecologists",
+               "effect":-20.0
+            },
+            {
+               "name":"Capitalists",
+               "effect":10
+            }
+         ],
+         "fields":[
+            {
+               "name":"Industry",
+               "effect":-15
+            }
+         ]
+      },
+      {
+         "id":1,
+         "title":"Decline.",
+         "factions":[
+            {
+               "name":"Liberals",
+               "effect":30.0
+            }
+         ],
+         "fields":[
+            {
+               "name":"Industry",
+               "effect":15
+            }
+         ]
+      }
+   ]
+}
