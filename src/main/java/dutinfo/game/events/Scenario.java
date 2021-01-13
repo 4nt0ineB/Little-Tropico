@@ -24,12 +24,13 @@ public class Scenario {
     private final int followers;
     private final HashMap<Integer, Float[]> filPercentage;
     private final float treasure;
+    private final int food;
 
     private final Set<Integer> eventPackIds;
     private List<Event> events;
 
     private Scenario(String description, String title, float generalSatisfaction,
-                     HashMap<Integer, Float> facPercentage, int followers, HashMap<Integer, Float[]> filPercentage, int treasure,
+                     HashMap<Integer, Float> facPercentage, int followers, HashMap<Integer, Float[]> filPercentage, int food, int treasure,
                      Set<Integer> packageIds) {
         this.description = description;
         this.title = Objects.requireNonNull(title);
@@ -40,6 +41,7 @@ public class Scenario {
         this.filPercentage = filPercentage;
         this.followers = followers;
         this.treasure = treasure;
+        this.food = food;
         this.eventPackIds = packageIds;
     }
 
@@ -201,9 +203,29 @@ public class Scenario {
             });
 
             // Followers
-            int followers = ar.get("followers").getAsInt();
+            int followers = 0;
+            try{
+                followers = ar.get("followers").getAsInt();
+            }catch(Exception e){
+
+            }
+
+
             // Treasure
-            int treasure = ar.get("treasure").getAsInt();
+            int treasure = 0;
+            try{
+                treasure = ar.get("treasure").getAsInt();
+            }catch(Exception e){
+
+            }
+
+            // food
+            int food = 0;
+            try{
+                food = ar.get("food").getAsInt();
+            }catch(Exception e){
+
+            }
 
             // Event packages
             Set<Integer> packageIds = new HashSet<>();
@@ -213,7 +235,7 @@ public class Scenario {
             pNames.forEach(x -> packageIds.add(GameUtils.idByHashString(x.getAsString())));
 
             scenarios.add(new Scenario(description, title, generalSatisfaction, facPercentage, followers, filPercentage,
-                    treasure, packageIds));
+                    food, treasure, packageIds));
         });
         return scenarios;
     }
@@ -229,5 +251,9 @@ public class Scenario {
         str += "Followers by factions : " + followers + "\n";
         str += "Starting treasure : " + treasure + "\n";
         return str;
+    }
+
+    public int getFood() {
+        return food;
     }
 }

@@ -7,7 +7,7 @@
     {
       "title": "Decline politely",
       "treasure": 2.65,
-      "food": -12,
+      "food": -120,
       "factions": [
         {
           "name" : "Communists",

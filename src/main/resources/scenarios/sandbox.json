@@ -17,7 +17,7 @@
     {
       "name": "Industry",
       "percentage": 15,
-      "yield": 40
+      "yield": 10
     },
     {
       "name": "Agriculture",
@@ -26,6 +26,7 @@
     }
   ],
   "treasure": 200,
+  "food": 480,
   "event_packages": [
     "developp"
   ]

@@ -22,14 +22,14 @@ public class Island {
 	private int foodUnits;
 	private int nbPastYears;
 
-	public Island(String name, President president, List<Faction> factions, List<Field> fields, float treasury) {
+	public Island(String name, President president, List<Faction> factions, List<Field> fields, float treasury, int foodUnits) {
 		this.name = name;
 		this.currentSeason = Season.Spring;
 		this.president = president;
 		this.factions = factions;
 		this.fields = fields;
 		this.treasury = treasury;
-		foodUnits = 0;
+		this.foodUnits = foodUnits;
 	}
 
 	public int getNbPastYears() {
@@ -65,6 +65,7 @@ public class Island {
 	}
 
 	public void updateFoodUnits(float amount){
+		if(foodUnits == 0) return;
 		foodUnits+=amount;
 	}
 
@@ -121,8 +122,8 @@ public class Island {
 	}
 
 	public void generateYearlyResources(){ // Début d'année
-		treasury+=fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Industry")).findFirst().get().generateProfit(treasury);
-		foodUnits+=fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get().generateProfit((float)foodUnits);
+		treasury+=(fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Industry")).findFirst().get()).generateProfit(treasury);
+		foodUnits+=(fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get()).generateProfit((float)foodUnits);
 	}
 
 
@@ -136,7 +137,6 @@ public class Island {
 	}
 
 
-
 	public void bribeFaction(int factionId, int amount){
 		Faction f = factions.stream().filter(x -> x.getId() == factionId).findFirst().get();
 		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
@@ -146,20 +146,27 @@ public class Island {
 
 
 	public int updatePopulationAndTreasury(){ //début du tour
-		//treasure : the dept
+		//treasure : the debt
 		if(treasury < 0){
 			treasury+=(treasury)*(-0.2);
 		}
-		if(foodUnits == 0) return 0;
-		if((totalSupporters()*4)/foodUnits < 1){ //kill
+		if(foodUnits == 0) {
+			int x = totalSupporters();
+			randomlyKillPeople(x);
+			return x;
+		} else if((totalSupporters()*4) > foodUnits){ //kill
 			int s = totalSupporters();
 			while ((s*4)/foodUnits < 1){
 				 s--;
 			}
+			randomlyKillPeople(s);
 			return -s;
 		}else{ //create
 			Random r = new Random();
-			return ((r.nextInt((10 - 0) + 1) + 0)/100)*(totalSupporters());
+			int x = ((r.nextInt((10 - 0) + 1) + 0)/100)*(totalSupporters());
+			System.out.println(x);
+			randomlyCreatePeople(x);
+			return x;
 		}
 	}
 
@@ -167,7 +174,7 @@ public class Island {
 		Random r = new Random();
 		Faction f;
 		while (n > 0){
-			f = factions.get(r.nextInt((factions.size() - 0) + 1) + 0);
+			f = factions.get(r.nextInt(((factions.size()-1) - 0) + 1) + 0);
 			int nbtoCreate = r.nextInt((n - 0) + 1) + 0;
 			f.setNbrSupporters(f.getNbrSupporters()+nbtoCreate);
 			n-=nbtoCreate;
@@ -175,14 +182,28 @@ public class Island {
 	}
 
 	private void randomlyKillPeople(int n){
+		System.out.println("tokill: "+n);
 		Random r = new Random();
 		Faction f;
 		while (n > 0){
-			f = factions.get(r.nextInt((factions.size() - 0) + 1) + 0);
-			int nbToKill = r.nextInt((n - 0) + 1) + 0;
-			f.setNbrSupporters(f.getNbrSupporters()-nbToKill);
-			n-=nbToKill;
+			int i = r.nextInt(((factions.size() -1) - 0) + 1) + 0;
+			if(factions.get(i).getNbrSupporters() != 0){
+				int nbToKill = r.nextInt((n - 0) + 1) + 0;
+				int thenpop = factions.get(i).getNbrSupporters();
+				int rest = factions.get(i).getNbrSupporters()-nbToKill;
+				//System.out.println("| "+thenpop+" | -"+nbToKill + " => "+rest);
+				factions.get(i).setNbrSupporters(rest);
+				factions.get(i).setApprobationPercentage(factions.get(i).getApprobationPercentage()-((((thenpop-nbToKill) <= 0 )? thenpop: nbToKill)*2));
+				if(rest < 0){
+					n-=(rest + nbToKill);
+				}else if(rest >= 0){
+					n-= nbToKill;
+				}
+
+			}
+
 		}
+
 	}
 
 	/**

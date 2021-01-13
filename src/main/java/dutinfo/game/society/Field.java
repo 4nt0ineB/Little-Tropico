@@ -82,7 +82,7 @@ public class Field {
     }
 
     public int generateProfit(float capital){
-        Integer profit = (int) (capital*yieldPercentage);
+        Integer profit = (int) (capital*(yieldPercentage/100));
         return profit;
     }
 

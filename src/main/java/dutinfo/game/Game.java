@@ -98,7 +98,7 @@ public class Game {
 
 		//set
 
-		this.island = new Island(islandName, president, facs, fields, scenario.getTreasure());
+		this.island = new Island(islandName, president, facs, fields, scenario.getTreasure(), scenario.getFood());
 	}
 
 	public void setScenario(Scenario scenario) {
@@ -409,7 +409,7 @@ public class Game {
 		int npeople = island.updatePopulationAndTreasury();
 		float nowTreasure = island.getTreasury();
 		if(thenTreasure > nowTreasure){
-			str+= "- Your are in deficit you lost some money to pay the debts.\n";
+			str+= "- Your are in deficit you lost some money to pay the debts. "+(nowTreasure-thenTreasure)+"\n";
 		}
 
 		if(npeople > 0){
@@ -417,6 +417,7 @@ public class Game {
 		}else if(npeople < 0){
 			str+= "- You had more food than needed, some citizens appeared. +"+npeople+" citizens.\n";
 		}
+
 		return str;
 	}
 
@@ -424,12 +425,18 @@ public class Game {
 		String str = "";
 		float thenTreasure = island.getTreasury();
 		float thenFood= island.getFoodUnits();
-		generateYearlyResources();
+		island.generateYearlyResources();
 		float nowTreasure = island.getTreasury();
 		float nowFood = island.getFoodUnits();
 
-		str+="- Your capital evolved thanks to your industry: +"+(nowTreasure - thenTreasure)+"$.\n";
-		str+="- Your number of food units evolved thanks to your agriculture: +"+(nowFood - thenFood)+" units.";
-		return "";
+		if((nowTreasure - thenTreasure) > 0){
+			str+="- Your capital evolved thanks to your industry: +"+(nowTreasure - thenTreasure)+"$.\n";
+		}
+		if((nowFood - thenFood) > 0){
+			str+="- Your number of food units evolved thanks to your agriculture: +"+(nowFood - thenFood)+" units.\n";
+		}
+
+
+		return str;
 	}
 }

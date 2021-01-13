@@ -157,7 +157,12 @@ public class mainController implements EventHandler<MouseEvent> {
 
         // Hide end of year and recap by default
         closeEndYearWindow();
-        closeInfoWindow();
+        //
+        infoAlert.setVisible(false);
+        infoBtn.setVisible(false);
+        infoContent.setVisible(false);
+        infoLabel.setVisible(false);
+        //
         closeGameOver();
         onGoingEOYInfo = false;
         onGoingEndOfGame = false;
@@ -232,7 +237,7 @@ public class mainController implements EventHandler<MouseEvent> {
         moneyAmount.setText("$"+game.getIsland().getTreasury()); // Treasury
         foodAmount.setText(game.getIsland().getFoodUnits()+"");
         citizensCount.setText(game.getIsland().totalSupporters()+"");
-        globalSatisfac.setText(""+game.getIsland().globalSatisfaction()+"%");
+        globalSatisfac.setText(""+GameUtils.round(game.getIsland().globalSatisfaction(), 2)+"%");
 
         /* PERCENTAGES */
         refreshPercentages();
@@ -318,13 +323,14 @@ public class mainController implements EventHandler<MouseEvent> {
         infoContent.setVisible(true);
         infoLabel.setVisible(true);
 
+
         String updateResInfo = game.updateResourcesEndofYear();
-        System.out.println(updateResInfo);
+        String updateFieldRes = game.generateYearlyResources();
         updateAll();
-        if (updateResInfo.isEmpty()){ // if string is empty - no major incident
+        if (updateResInfo.isEmpty() && updateFieldRes.isEmpty()){ // if string is empty - no major incident
             infoContent.setText("Nothing really important to report on this year.");
         } else {
-            infoContent.setText(updateResInfo);
+            infoContent.setText(updateResInfo+"\n"+updateFieldRes);
         }
     }
 
