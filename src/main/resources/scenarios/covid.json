@@ -19,6 +19,7 @@
     }
   ],
   "treasure": 200,
+  "food": 4800,
   "event_packages": [
     "covid"
   ]

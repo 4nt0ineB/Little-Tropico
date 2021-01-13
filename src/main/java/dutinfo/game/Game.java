@@ -430,10 +430,10 @@ public class Game {
 		float nowFood = island.getFoodUnits();
 
 		if((nowTreasure - thenTreasure) > 0){
-			str+="- Your capital evolved thanks to your industry: +"+(nowTreasure - thenTreasure)+"$.\n";
+			str+="- Your capital evolved thanks to your industry: +"+GameUtils.round((nowTreasure - thenTreasure), 2)+"$.\n";
 		}
 		if((nowFood - thenFood) > 0){
-			str+="- Your number of food units evolved thanks to your agriculture: +"+(nowFood - thenFood)+" units.\n";
+			str+="- Your number of food units evolved thanks to your agriculture: +"+GameUtils.round((nowFood - thenFood), 2)+" units.\n";
 		}
 
 
