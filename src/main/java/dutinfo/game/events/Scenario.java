@@ -56,11 +56,6 @@ public class Scenario {
         return events.parallelStream()
                 .filter(x -> x.getSeason() == season || x.getSeason() == null && !x.isOnlyARepercussion()).findFirst()
                 .get();
-
-        /*
-         * VS Collections.shuffle(events); Event ev = null; for (Event e: events ) {
-         * if(e.getSeason() == season){ ev = e; } } return ev;
-         */
     }
 
     public Event getEventById(int id){
@@ -237,6 +232,7 @@ public class Scenario {
             scenarios.add(new Scenario(description, title, generalSatisfaction, facPercentage, followers, filPercentage,
                     food, treasure, packageIds));
         });
+
         return scenarios;
     }
 

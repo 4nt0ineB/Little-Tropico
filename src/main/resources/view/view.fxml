@@ -422,7 +422,10 @@
          </font>
       </Text>
       <Rectangle fx:id="EOGAlert" arcHeight="20.0" arcWidth="5.0" fill="#f2f2f2" height="399.0" layoutX="453.0" layoutY="206.0" stroke="BLACK" strokeType="INSIDE" width="494.0" />
-      <Text fx:id="msgEndGame" layoutX="490.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="too bad." wrappingWidth="419.419921875" />
+      <Text fx:id="msgEndGame" layoutX="490.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="too bad." wrappingWidth="419.419921875">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
       <Button fx:id="EOGClose" layoutX="630.0" layoutY="516.0" mnemonicParsing="false" onAction="#toMenu" prefHeight="42.0" prefWidth="152.0" text="Close" textFill="#545454">
          <font>
             <Font name="Berlin Sans FB" size="18.0" />

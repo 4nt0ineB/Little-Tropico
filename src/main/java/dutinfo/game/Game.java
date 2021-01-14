@@ -333,8 +333,7 @@ public class Game {
 		String pathToScenariosDir;
 		String pathToEventsDir;
 
-
-		if(jarMode){ // will use absolute path of the jar to look for exteral resources
+		if(jarMode){ // will use absolute path of the jar to look for external resources : set jarMode to true
 			String pathToData = ""; try{ String jarPath = Game.class
 					.getProtectionDomain() .getCodeSource() .getLocation() .toURI() .getPath();
 				File file = new File(jarPath); pathToData =

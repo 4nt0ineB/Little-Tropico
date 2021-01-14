@@ -1,0 +1,87 @@
+{
+  "title":"The workers went on strike to protest against the recent rejection of the request for an increase.",
+  "repercussion": true,
+  "actions":[
+    {
+      "title":"Surrender and raise the salaries.",
+      "treasure": -200,
+      "factions":[
+        {
+          "name":"Liberals",
+          "effect": -0.25
+        },
+        {
+          "name":"Capitalists",
+          "effect": -2.5
+        },
+        {
+          "name":"Nationalists",
+          "effect": 2.5
+        }
+      ],
+      "fields":[
+        {
+          "name":"Industry",
+          "effect": 0.5
+        }
+      ]
+    },
+    {
+      "title":"Repress the strike",
+      "factions":[
+        {
+          "name":"Liberals",
+          "effect": 0.5
+        },
+        {
+          "name":"Capitalists",
+          "effect": 1.5
+        },
+        {
+          "name":"Nationalists",
+          "effect": -2
+        },
+        {
+          "name":"Communists",
+          "effect": -2,
+          "followers": -2
+        }
+      ],
+      "fields":[
+        {
+          "name":"Industry",
+          "effect": -1.5
+        }
+      ],
+      "repercussions":[
+        "general_strike1"
+      ]
+    },
+    {
+      "title":"Do nothing.",
+      "factions":[
+        {
+          "name":"Capitalists",
+          "effect": 1
+        },
+        {
+          "name":"Nationalists",
+          "effect": -2
+        },
+        {
+          "name":"Communists",
+          "effect": -1.5
+        }
+      ],
+      "fields":[
+        {
+          "name":"Industry",
+          "effect": -1.5
+        }
+      ],
+      "repercussions":[
+        "general_strike1"
+      ]
+    }
+  ]
+}

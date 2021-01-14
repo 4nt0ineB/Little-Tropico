@@ -1,0 +1,60 @@
+{
+  "season": 4,
+  "title":"The workers ask for a raise.",
+  "actions":[
+    {
+      "title":"Okay, here you go.",
+      "treasure": -100,
+      "factions":[
+        {
+          "name":"Liberals",
+          "effect": -0.5
+        },
+        {
+          "name":"Capitalists",
+          "effect": -2
+        },
+        {
+          "name":"Nationalists",
+          "effect": 1
+        }
+      ],
+      "fields":[
+        {
+          "name":"Industry",
+          "effect": 1
+        }
+      ]
+    },
+    {
+      "title":"Certainly not",
+      "factions":[
+        {
+          "name":"Liberals",
+          "effect": 0.5
+        },
+        {
+          "name":"Capitalists",
+          "effect": 1
+        },
+        {
+          "name":"Nationalists",
+          "effect": -2
+        },
+        {
+          "name":"Communists",
+          "effect": -1
+        }
+      ],
+      "fields":[
+        {
+          "name":"Industry",
+          "effect": -2
+        }
+      ],
+      "repercussions":[
+        "workers_strike1"
+      ]
+    }
+  ]
+}

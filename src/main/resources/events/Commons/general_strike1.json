@@ -1,0 +1,42 @@
+{
+  "title":"A general strike started because of previous represses.",
+  "repercussion": true,
+  "actions":[
+    {
+      "title":"Deploy the National Guard and extinguish protests by killing citizens of rebellious factions.",
+      "treasure": -100,
+      "factions":[
+        {
+          "name":"Nationalists",
+          "effect": -5,
+          "followers": -3
+        },
+        {
+          "name":"Communists",
+          "effect": -5,
+          "followers": -4
+        },
+        {
+          "name":"Ecologists",
+          "effect": -3,
+          "followers": -2
+        },
+        {
+          "name":"Loyalists",
+          "effect": 1,
+          "followers": -1
+        }
+      ],
+      "fields":[
+        {
+          "name":"Industry",
+          "effect": -2
+        },
+        {
+          "name":"Agriculture",
+          "effect": -2
+        }
+      ]
+    }
+  ]
+}
