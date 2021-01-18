@@ -46,7 +46,7 @@ public class Field {
         if(exploitationPercentage >= 100){
             this.exploitationPercentage = 100;
         }else if(exploitationPercentage <= 0){
-            this.exploitationPercentage = 100;
+            this.exploitationPercentage = 0;
         }else{
             this.exploitationPercentage = exploitationPercentage;
         }

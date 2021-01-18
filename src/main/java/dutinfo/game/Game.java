@@ -78,6 +78,11 @@ public class Game {
 		return this.island;
 	}
 
+	/**
+	 * set the island of the game. Init the parameters of the islands
+	 * @param islandName
+	 * @param president
+	 */
 	public void setIsland(String islandName, President president) {
 
 		Objects.requireNonNull(scenario, "Can't process new island without scenario");
@@ -92,13 +97,16 @@ public class Game {
 		//set the fields
 		List<Field> fields = FIELDS;
 		fields.stream().forEach(x -> {
-			x.setExploitationPercentage(scenario.getExploitField(x.getId()));
+
+			var c = (100 - (fields.parallelStream().filter(y -> y.getId() != x.getId()).findFirst().get().getExploitationPercentage())); // reste
+			///System.out.println((c < scenario.getExploitField(x.getId())) ? c: scenario.getExploitField(x.getId()));
+			x.setExploitationPercentage((Math.min(c, scenario.getExploitField(x.getId()))));
 			x.setYieldPercentage(scenario.getFieldYieldPercentage(x.getId()));
 		});
 
 		//set
 
-		this.island = new Island(islandName, president, facs, fields, scenario.getTreasure(), scenario.getFood());
+		island = new Island(islandName, president, facs, fields, scenario.getTreasure(), scenario.getFood());
 	}
 
 	public void setScenario(Scenario scenario) {
@@ -183,6 +191,10 @@ public class Game {
 		return !(island.globalSatisfaction() > difficulty.getMinGlobalSatisfaction());
 	}
 
+	/**
+	 * pass the turn, set the new current event, increment island year
+	 * @return false if the player lost
+	 */
 	public boolean nextTurn() {
 
 		event = null;
@@ -195,11 +207,6 @@ public class Game {
 		if(island.getSeason() == Season.Spring){
 			island.incrementYears();
 		}
-		//new year mode
-		/*
-			island.generateYearlyResources();
-			island.ger
-		 */
 		return !checkLose();
 	}
 
@@ -239,16 +246,23 @@ public class Game {
 		}
 	}
 
-
+	/**
+	 * set the given event as the current events
+	 * @param event
+	 */
 	public void setCurrentEvent(Event event) {
 		this.event = event;
 	}
 
+	/**
+	 * play the given action by applying difficulty coef
+	 * @param action
+	 */
 	public void playAction(Action action){
 		float coef = difficulty.getMultiplier();
 		island.updateFactions(action.getFactionsEffects(), coef);
 		island.updateFields(action.getFieldsEffects(), coef);
-		island.updateFoodUnits((action.getFood()*coef));
+		island.updateFoodUnits(action.getFood()*coef);
 		island.updateTreasure(action.getTreasure()*coef);
 		//append a repercussion if exist to the stack
 		Event ev = scenario.getEventById(action.getRandomRepercussionId());
@@ -265,25 +279,6 @@ public class Game {
 		return (Faction) FACTIONS.stream().filter(f -> f.getId() == id);
 	}
 
-	public String printStats() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\n\n" + Color.ANSI_WHITE_BACKGROUND + "" + Color.ANSI_BLACK + "---- "+island.getName()+" : Infos ----\n");
-		sb.append(Color.ANSI_RESET + "" + Color.ANSI_ITALIC + "Treasury : " + Color.ANSI_RESET + Color.ANSI_GREEN + "$"
-				+ getIsland().getTreasury());
-		sb.append("\n Food: ").append(island.getFoodUnits());
-		sb.append("\nCitizens : ").append(island.totalSupporters());
-		sb.append(Color.ANSI_RESET + "" + Color.ANSI_ITALIC + "\nCurrent season : " + Color.ANSI_RESET
-				+ getIsland().getSeason());
-		sb.append(Color.ANSI_ITALIC + "\nFactions satisfaction : ");
-		getIsland().getFactions().stream().forEach(x -> {
-			sb.append("\n" + Color.ANSI_RESET + Color.ANSI_RED + x.getName() + ": " + Color.ANSI_BOLD + Color.ANSI_WHITE
-					+ GameUtils.round(x.getApprobationPercentage(),2) + "%");
-			sb.append(" | Supporters : ").append(x.getNbrSupporters());
-		});
-
-		return sb.toString();
-	}
 
 	/**
 	 * Master Control Program This nested class store all errors of the game from

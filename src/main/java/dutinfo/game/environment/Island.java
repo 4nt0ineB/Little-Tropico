@@ -1,5 +1,6 @@
 package dutinfo.game.environment;
 
+import dutinfo.console.App;
 import dutinfo.game.Game;
 import dutinfo.game.GameUtils;
 import dutinfo.game.society.Faction;
@@ -98,10 +99,34 @@ public class Island {
 		factions.parallelStream().forEach(x -> {
 			var w = factionsValues.get(x.getId());
 			if(w != null){
-				x.setApprobationPercentage(x.getApprobationPercentage()+(w[0]*coef));
-				x.setNbrSupporters(x.getNbrSupporters()+((int) (w[1].intValue()*coef)));
+				x.setApprobationPercentage(x.getApprobationPercentage()+(w[0]*((w[0] < 0)?coef: -1*coef)));
+				x.setNbrSupporters(x.getNbrSupporters()+((int) (w[1].intValue()*((w[1] < 0)?coef: -1*coef))));
 			}
 		});
+	}
+
+	/**
+	 * print the stat of the island (for the console interface)
+	 * @return
+	 */
+	public String printStats() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n\n" + App.Color.ANSI_WHITE_BACKGROUND + "" + App.Color.ANSI_BLACK + "---- "+getName()+" : Infos ----\n");
+		sb.append(App.Color.ANSI_RESET + "" + App.Color.ANSI_ITALIC + "Treasury : " + App.Color.ANSI_RESET + App.Color.ANSI_GREEN + "$"
+				+ getTreasury());
+		sb.append("\n Food: ").append(getFoodUnits());
+		sb.append("\nCitizens : ").append(totalSupporters());
+		sb.append(App.Color.ANSI_RESET + "" + App.Color.ANSI_ITALIC + "\nCurrent season : " + App.Color.ANSI_RESET
+				+ getSeason());
+		sb.append(App.Color.ANSI_ITALIC + "\nFactions satisfaction : ");
+		getFactions().stream().forEach(x -> {
+			sb.append("\n" + App.Color.ANSI_RESET + App.Color.ANSI_RED + x.getName() + ": " + App.Color.ANSI_BOLD + App.Color.ANSI_WHITE
+					+ GameUtils.round(x.getApprobationPercentage(),2) + "%");
+			sb.append(" | Supporters : ").append(x.getNbrSupporters());
+		});
+
+		return sb.toString();
 	}
 
 	public void updateFields(HashMap<Integer, Float> fieldsValues, float coef){
@@ -116,17 +141,25 @@ public class Island {
 				}else{
 					sum+=w;
 				}
-				x.setExploitationPercentage(sum*coef);
+				x.setExploitationPercentage(sum*((sum < 0)?coef: -1*coef));
 			}
 		});
 	}
 
+	/**
+	 * update the resource by the proft that can make the fieldss
+	 */
 	public void generateYearlyResources(){ // Début d'année
 		treasury+=(fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Industry")).findFirst().get()).generateProfit(treasury);
 		foodUnits+=(fields.stream().filter(x -> x.getId() == GameUtils.idByHashString("Agriculture")).findFirst().get()).generateProfit((float)foodUnits);
 	}
 
-
+	/**
+	 *
+	 * @param factionId
+	 * @param amount
+	 * @return
+	 */
 	public boolean canBeBribed(int factionId, int amount){
 		Faction f = factions.stream().filter(x -> x.getId() == factionId).findFirst().get();
 		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
@@ -136,7 +169,11 @@ public class Island {
 		return true;
 	}
 
-
+	/**
+	 *
+	 * @param factionId
+	 * @param amount
+	 */
 	public void bribeFaction(int factionId, int amount){
 		Faction f = factions.stream().filter(x -> x.getId() == factionId).findFirst().get();
 		int price = (f.getNbrSupporters() * Game.bribingPrice)*amount;
@@ -225,6 +262,10 @@ public class Island {
 		return x;
 	}
 
+	/**
+	 *
+	 * @return the global satisfaction (weighted average)
+	 */
 	public float globalSatisfaction(){
 		int totalsupp = totalSupporters();
 		return (totalsupp != 0)? (float) factions.stream().mapToDouble(x -> x.getNbrSupporters()*x.getApprobationPercentage()).sum()/totalsupp : 0f;
